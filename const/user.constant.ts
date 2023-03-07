@@ -8,17 +8,17 @@ export const UserPasswordLength = {
   MAX: 12
 };
 
-export const DescriptionLength = {
+export const CoachDescriptionLength = {
   MIN: 10,
   MAX: 140
 };
 
-export const DailyCaloriesCount = {
+export const UserDailyCaloriesCount = {
   MIN: 1000,
   MAX: 5000
 };
 
-export const TotalCaloriesCount = {
+export const UserTotalCaloriesCount = {
   MIN: 1000,
   MAX: 5000
 };

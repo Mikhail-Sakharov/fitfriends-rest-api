@@ -1,8 +1,8 @@
-import {Gender} from '../types/gender.enum';
-import {SubwayStation} from '../types/subway-station.enum';
-import {TrainingLevel} from '../types/training-level.enum';
-import {TrainingType} from '../types/training-type.enum';
-import {UserRole} from '../types/user-role.enum';
+import {Gender} from '../types/user/gender.enum';
+import {SubwayStation} from '../types/common/subway-station.enum';
+import {TrainingLevel} from '../types/common/training-level.enum';
+import {TrainingType} from '../types/common/training-type.enum';
+import {UserRole} from '../types/user/user-role.enum';
 
 export enum Duration {
   TenToThirty = '10-30 мин',
@@ -28,7 +28,7 @@ export type Questionnaire = CoachQuestionnaire | UserQuestionnaire;
 
 export default class CreateUserDto {
   public userName!: string;
-  public avatarPath!: string;
+  public avatarUrl!: string;
   public gender!: Gender;
   public birthday?: string;
   public userRole!: UserRole;
