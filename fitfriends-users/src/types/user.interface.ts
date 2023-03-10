@@ -34,7 +34,7 @@ export interface User {
   trainingLevel: TrainingLevel;
   trainingTypes: TrainingType[];
   questionnaire: Questionnaire;
-  myFriends: User[];
-  myPurchases: string[]; // массив айдишников сущности
-  myGyms: string[]; // массив айдишников сущности
+  myFriends?: User[];
+  myPurchases?: string[]; // массив айдишников сущности
+  myGyms?: string[]; // массив айдишников сущности
 }
