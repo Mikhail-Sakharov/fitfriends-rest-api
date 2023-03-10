@@ -28,7 +28,9 @@ export type Questionnaire = CoachQuestionnaire | UserQuestionnaire;
 
 export default class CreateUserDto {
   public userName!: string;
-  public avatarUrl!: string;
+  public email!: string;
+  public avatarUrl?: string;
+  public password!: string;
   public gender!: Gender;
   public birthday?: string;
   public userRole!: UserRole;
