@@ -29,7 +29,7 @@ export class UserModel extends Document implements User {
   @Prop({
     required: true
   })
-  password: string;
+  passwordHash: string;
 
   @Prop({
     required: true

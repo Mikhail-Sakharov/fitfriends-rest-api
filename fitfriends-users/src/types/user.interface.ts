@@ -26,7 +26,7 @@ export interface User {
   userName: string;
   email: string;
   avatarUrl?: string;
-  password: string;
+  passwordHash: string;
   gender: Gender;
   birthday?: string;
   userRole: UserRole;
