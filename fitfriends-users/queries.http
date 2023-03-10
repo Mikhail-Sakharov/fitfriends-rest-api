@@ -1,0 +1,42 @@
+### Создание пользователя
+POST http://localhost:5678/users/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "userName": "Михаил",
+  "email": "qwe@qwe.qwe",
+  "password": "123456",
+  "gender": "мужской",
+  "birthday": "09.03.1989",
+  "userRole": "пользователь",
+  "location": "Петроградская",
+  "trainingLevel": "любитель",
+  "trainingTypes": ["бег", "кроссфит"],
+  "questionnaire": {
+    "trainingDuration": "30-50 мин",
+    "dailyCaloriesCount": "1000",
+    "totalCaloriesCount": "5000",
+    "isReadyToGetTrained": true
+  }
+}
+
+### Создание тренера
+POST http://localhost:5678/users/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "userName": "John",
+  "email": "john@qwe.qwe",
+  "password": "123456",
+  "gender": "мужской",
+  "birthday": "01.01.1989",
+  "userRole": "тренер",
+  "location": "Спортивная",
+  "trainingLevel": "профессионал",
+  "trainingTypes": ["бег", "кроссфит", "бокс"],
+  "questionnaire": {
+    "certificates": ["myCoolCertificate.pdf"],
+    "description": "The best coach ever",
+    "isReadyToTrain": true
+  }
+}

@@ -7,7 +7,9 @@ import {UserEntity} from './user.entity';
 import {UserModel} from './user.model';
 
 @Injectable()
-export class UserRepository implements CRUDRepository<UserEntity, string, User> {
+export class UserRepository
+  implements CRUDRepository<UserEntity, string, User>
+{
   constructor(
     @InjectModel(UserModel.name) private readonly userModel: Model<UserModel>
   ) {}
