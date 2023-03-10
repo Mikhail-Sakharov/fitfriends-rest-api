@@ -5,9 +5,7 @@ import CreateUserDto from './dto/create-user.dto';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private readonly userRepository: UserRepository
-  ) {}
+  constructor(private readonly userRepository: UserRepository) {}
 
   async register(dto: CreateUserDto) {
     const existingUser = await this.userRepository.findByEmail(dto.email);
