@@ -4,6 +4,7 @@ import {MongooseModule} from '@nestjs/mongoose';
 import {ENV_FILE_PATH} from './app.constant';
 import {AuthModule} from './auth/auth.module';
 import databaseConfig, {getMongoDbConfig} from './config/database.config';
+import {UserRepository} from './users/user.repository';
 import {UsersModule} from './users/users.module';
 
 @Module({
@@ -21,6 +22,6 @@ import {UsersModule} from './users/users.module';
     UsersModule
   ],
   controllers: [],
-  providers: []
+  providers: [UserRepository]
 })
 export class AppModule {}
