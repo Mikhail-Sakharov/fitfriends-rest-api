@@ -15,7 +15,7 @@ export class UsersService {
     const user = this.usersRepository.findById(id);
 
     if (!user) {
-      Logger.warn('UsersService.getUser: No user with such id');
+      Logger.warn('UsersService.getUser: No user with such id'); // удалить
       throw new NotFoundException('No user with such id');
     }
 
@@ -26,7 +26,7 @@ export class UsersService {
     const user = await this.usersRepository.findById(id);
 
     if (!user) {
-      Logger.warn('UsersService.getUser: No user with such id');
+      Logger.warn('UsersService.updateUser: No user with such id'); // удалить
       throw new NotFoundException('No user with such id');
     }
 
