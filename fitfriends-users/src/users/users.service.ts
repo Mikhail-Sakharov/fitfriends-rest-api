@@ -1,4 +1,4 @@
-import {Injectable, Logger, NotFoundException} from '@nestjs/common';
+import {Injectable, NotFoundException} from '@nestjs/common';
 import UpdateUserDto from 'src/dto/update-user.dto';
 import {UserEntity} from './user.entity';
 import {UsersRepository} from './users.repository';
@@ -15,7 +15,6 @@ export class UsersService {
     const user = this.usersRepository.findById(id);
 
     if (!user) {
-      Logger.warn('UsersService.getUser: No user with such id'); // удалить
       throw new NotFoundException('No user with such id');
     }
 
@@ -26,7 +25,6 @@ export class UsersService {
     const user = await this.usersRepository.findById(id);
 
     if (!user) {
-      Logger.warn('UsersService.updateUser: No user with such id'); // удалить
       throw new NotFoundException('No user with such id');
     }
 

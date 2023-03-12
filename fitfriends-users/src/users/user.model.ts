@@ -102,6 +102,11 @@ export class UserModel extends Document implements User {
     default: []
   })
   myGyms: string[];
+
+  @Prop({
+    default: null
+  })
+  refreshToken: string | null;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserModel);

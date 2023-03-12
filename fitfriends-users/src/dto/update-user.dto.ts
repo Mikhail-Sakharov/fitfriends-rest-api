@@ -28,4 +28,5 @@ export default class UpdateUserDto {
   public trainingLevel?: TrainingLevel;
   public trainingTypes?: TrainingType[];
   public questionnaire?: Questionnaire;
+  public refreshToken?: string | null;
 }

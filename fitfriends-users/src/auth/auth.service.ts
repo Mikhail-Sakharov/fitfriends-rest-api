@@ -8,6 +8,7 @@ import {JwtService} from '@nestjs/jwt';
 import LoginUserDto from 'src/dto/login-user.dto';
 import {UserEntity} from 'src/users/user.entity';
 import {UsersRepository} from 'src/users/users.repository';
+import {UsersService} from 'src/users/users.service';
 import CreateUserDto from '../dto/create-user.dto';
 
 type Payload = {
@@ -21,12 +22,16 @@ type Payload = {
 export class AuthService {
   constructor(
     private readonly usersRepository: UsersRepository,
+    private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService
   ) {}
 
   public async register(dto: CreateUserDto) {
-    const userExists = await this.usersRepository.findByEmail(dto.email);
+    const email = dto.email;
+    const password = dto.password;
+
+    const userExists = await this.usersRepository.findByEmail(email);
 
     if (userExists) {
       throw new Error('User with the email already exists!');
@@ -35,11 +40,16 @@ export class AuthService {
     const userEntity = await new UserEntity({
       ...dto,
       passwordHash: ''
-    }).setPassword(dto.password);
+    }).setPassword(password);
 
-    const createdUser = await this.usersRepository.create(userEntity);
+    await this.usersRepository.create(userEntity);
 
-    return createdUser;
+    const loggedUser = await this.loginUser({
+      email,
+      password
+    });
+
+    return loggedUser;
   }
 
   public async loginUser(dto: LoginUserDto) {
@@ -63,6 +73,11 @@ export class AuthService {
     };
 
     const tokens = await this.getTokens(payload);
+
+    // захешировать перед отправкой в БД
+    await this.usersService.updateUser(user._id, {
+      refreshToken: tokens.refreshToken
+    });
 
     return {
       user,

@@ -24,6 +24,7 @@ export class UserEntity implements User, Entity<User> {
   public myFriends?: User[];
   public myPurchases?: string[];
   public myGyms?: string[];
+  public refreshToken?: string | null;
 
   constructor(user: User) {
     this.fillEntity(user);
@@ -58,5 +59,6 @@ export class UserEntity implements User, Entity<User> {
     this.myFriends = user.myFriends;
     this.myPurchases = user.myPurchases;
     this.myGyms = user.myGyms;
+    this.refreshToken = user.refreshToken;
   }
 }

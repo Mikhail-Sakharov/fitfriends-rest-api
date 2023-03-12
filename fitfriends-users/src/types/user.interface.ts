@@ -37,4 +37,5 @@ export interface User {
   myFriends?: User[];
   myPurchases?: string[]; // массив айдишников сущности
   myGyms?: string[]; // массив айдишников сущности
+  refreshToken?: string | null;
 }

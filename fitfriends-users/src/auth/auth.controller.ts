@@ -2,7 +2,6 @@ import {Body, Controller, HttpCode, HttpStatus, Post} from '@nestjs/common';
 import {fillObject} from 'common/helpers';
 import {AuthService} from './auth.service';
 import CreateUserDto from '../dto/create-user.dto';
-import {UserRdo} from '../rdo/user.rdo';
 import LoginUserDto from 'src/dto/login-user.dto';
 import {LoggedUserRdo} from 'src/rdo/logged-user.rdo';
 
@@ -15,17 +14,14 @@ export class AuthController {
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() dto: CreateUserDto) {
     const newUser = await this.authService.register(dto);
-    return fillObject(UserRdo, newUser);
+    return fillObject(LoggedUserRdo, newUser);
   }
 
   // ВХОД
-  // ----- сервер возвращает соответствующий код и текущий токен. Новая пара токенов не создаётся.
-  // ----- Время жизни Access Token — 15 минут.
-  // ----- Время жизни Refresh Token: 7 дней.
-  // ----- Время жизни токенов может быть переназначено через переменные окружения.
-  // ----- Для формирования Access Token и Refresh Token используются разные секреты.
-  // ----- Секреты передаются через переменные окружения.
-  // ----- Сервис предусматривает сценарий отзыва Refresh Token. (?)
+  // ----- Если авторизованный клиент входит в систему,
+  // сервер возвращает соответствующий код и текущий токен. Новая пара токенов не создаётся.
+  // (например, сразу после регистрации)
+  // ----- Войти в систему могут только анонимные клиенты
   @Post('login')
   @HttpCode(HttpStatus.OK)
   public async loginUser(@Body() dto: LoginUserDto) {
@@ -34,6 +30,8 @@ export class AuthController {
   }
 
   // ВЫХОД
+  // @UseGuards(AccessTokenGuard)
 
   // ОБНОВЛЕНИЕ ТОКЕНА
+  // @UseGuards(RefreshTokenGuard)
 }
