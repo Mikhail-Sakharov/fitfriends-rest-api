@@ -86,7 +86,7 @@ export class UserModel extends Document implements User {
   @Prop({
     required: true
   })
-  questionnaire: Questionnaire;
+  questionnaire: Questionnaire; // нужен union type
 
   @Prop({
     default: []

@@ -1,11 +1,11 @@
 import {Injectable} from '@nestjs/common';
 import {UserEntity} from 'src/users/user.entity';
-import {UserRepository} from 'src/users/user.repository';
-import CreateUserDto from './dto/create-user.dto';
+import {UsersRepository} from 'src/users/users.repository';
+import CreateUserDto from '../dto/create-user.dto';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(private readonly userRepository: UsersRepository) {}
 
   async register(dto: CreateUserDto) {
     const existingUser = await this.userRepository.findByEmail(dto.email);

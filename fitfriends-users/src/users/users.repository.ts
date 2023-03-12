@@ -7,7 +7,7 @@ import {UserEntity} from './user.entity';
 import {UserModel} from './user.model';
 
 @Injectable()
-export class UserRepository
+export class UsersRepository
   implements CRUDRepository<UserEntity, string, User>
 {
   constructor(
@@ -17,6 +17,10 @@ export class UserRepository
   public async create(item: UserEntity): Promise<User> {
     const newUser = new this.userModel(item);
     return newUser.save();
+  }
+
+  public async find(): Promise<User[]> {
+    return this.userModel.find();
   }
 
   public async findById(id: string): Promise<User | null> {
