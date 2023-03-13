@@ -1,9 +1,21 @@
-import {Body, Controller, HttpCode, HttpStatus, Post} from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Post,
+  RawBodyRequest,
+  Req,
+  UseGuards
+} from '@nestjs/common';
 import {fillObject} from 'common/helpers';
 import {AuthService} from './auth.service';
 import CreateUserDto from '../dto/create-user.dto';
 import LoginUserDto from 'src/dto/login-user.dto';
 import {LoggedUserRdo} from 'src/rdo/logged-user.rdo';
+import {Payload} from 'src/types/payload.interface';
+import {RefreshTokenGuard} from './guards/refresh-token.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -33,5 +45,16 @@ export class AuthController {
   // @UseGuards(AccessTokenGuard)
 
   // ОБНОВЛЕНИЕ ТОКЕНА
-  // @UseGuards(RefreshTokenGuard)
+  @UseGuards(RefreshTokenGuard)
+  @Get('refresh')
+  @HttpCode(HttpStatus.OK)
+  public async refreshTokens(
+    @Req() req: RawBodyRequest<{user: Payload & {refreshToken: string}}>
+  ) {
+    const userId = req.user.sub;
+    const refreshToken = req.user.refreshToken;
+    // Logger.log(req.user);
+    // форматировать ответ
+    return this.authService.refreshTokens(userId, refreshToken);
+  }
 }

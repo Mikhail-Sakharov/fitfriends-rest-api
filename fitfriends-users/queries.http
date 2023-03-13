@@ -50,6 +50,10 @@ Content-Type: application/json
   "password": "123456"
 }
 
+### Рефреш
+GET http://localhost:5678/auth/refresh HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDBmMjQxNGNlNDkwZmIzODNhMGNkMWEiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY3ODcxMzg3NiwiZXhwIjoxNjc5MzE4Njc2fQ.yY1tonBS_Qc-upsgP7THBA4VJWAEpGxAZW8msHudxSg
+
 ### Запрос всех пользователей
 GET http://localhost:5678/users HTTP/1.1
 

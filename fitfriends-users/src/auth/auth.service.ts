@@ -1,25 +1,20 @@
 import {
+  ForbiddenException,
   Injectable,
   NotFoundException,
   UnauthorizedException
 } from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
 import {JwtService} from '@nestjs/jwt';
-import {hash, genSalt} from 'bcrypt';
+import {hash, genSalt, compare} from 'bcrypt';
 import LoginUserDto from 'src/dto/login-user.dto';
+import {Payload} from 'src/types/payload.interface';
 import {UserEntity} from 'src/users/user.entity';
 import {UsersRepository} from 'src/users/users.repository';
 import {UsersService} from 'src/users/users.service';
 import CreateUserDto from '../dto/create-user.dto';
 
 const SALT_ROUNDS = 10;
-
-type Payload = {
-  sub: string;
-  email: string;
-  userName: string;
-  userRole: string;
-};
 
 @Injectable()
 export class AuthService {
@@ -68,6 +63,7 @@ export class AuthService {
       throw new UnauthorizedException('The provided password is incorrect!');
     }
 
+    // нужен рефакторинг
     const payload = {
       sub: user._id,
       email: user.email,
@@ -109,5 +105,25 @@ export class AuthService {
     await this.usersService.updateUser(userId, {
       refreshToken: hashedRefreshToken
     });
+  }
+
+  public async refreshTokens(userId: string, refreshToken: string) {
+    const user = await this.usersRepository.findById(userId);
+    if (!user || !user.refreshToken)
+      throw new ForbiddenException('Access Denied');
+
+    const refreshTokenMatches = await compare(refreshToken, user.refreshToken);
+    if (!refreshTokenMatches) throw new ForbiddenException('Access Denied');
+
+    // нужен рефакторинг
+    const payload = {
+      sub: user._id,
+      email: user.email,
+      userName: user.userName,
+      userRole: user.userRole
+    };
+    const tokens = await this.getTokens(payload);
+    await this.updateRefreshToken(user._id, tokens.refreshToken);
+    return tokens;
   }
 }
