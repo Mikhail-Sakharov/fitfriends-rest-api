@@ -8,7 +8,7 @@ import {ConfigService} from '@nestjs/config';
 import {JwtService} from '@nestjs/jwt';
 import {hash, genSalt, compare} from 'bcrypt';
 import LoginUserDto from 'src/dto/login-user.dto';
-import {Payload} from 'src/types/payload.interface';
+import {User} from 'src/types/user.interface';
 import {UserEntity} from 'src/users/user.entity';
 import {UsersRepository} from 'src/users/users.repository';
 import {UsersService} from 'src/users/users.service';
@@ -63,15 +63,7 @@ export class AuthService {
       throw new UnauthorizedException('The provided password is incorrect!');
     }
 
-    // нужен рефакторинг
-    const payload = {
-      sub: user._id,
-      email: user.email,
-      userName: user.userName,
-      userRole: user.userRole
-    };
-
-    const tokens = await this.getTokens(payload);
+    const tokens = await this.getTokens(user);
 
     await this.updateRefreshToken(user._id, tokens.refreshToken);
 
@@ -81,7 +73,14 @@ export class AuthService {
     };
   }
 
-  public async getTokens(payload: Payload) {
+  public async getTokens(user: User) {
+    const payload = {
+      sub: user._id,
+      email: user.email,
+      userName: user.userName,
+      userRole: user.userRole
+    };
+
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(payload, {
         secret: this.configService.get<string>('jwt.accessTokenSecret'),
@@ -115,15 +114,15 @@ export class AuthService {
     const refreshTokenMatches = await compare(refreshToken, user.refreshToken);
     if (!refreshTokenMatches) throw new ForbiddenException('Access Denied');
 
-    // нужен рефакторинг
-    const payload = {
-      sub: user._id,
-      email: user.email,
-      userName: user.userName,
-      userRole: user.userRole
-    };
-    const tokens = await this.getTokens(payload);
+    const tokens = await this.getTokens(user);
     await this.updateRefreshToken(user._id, tokens.refreshToken);
-    return tokens;
+    return {
+      user,
+      tokens
+    };
+  }
+
+  public async logout(userId: string) {
+    return await this.usersService.updateUser(userId, {refreshToken: null});
   }
 }

@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  ForbiddenException,
   Get,
   HttpCode,
   HttpStatus,
@@ -16,33 +17,53 @@ import LoginUserDto from 'src/dto/login-user.dto';
 import {LoggedUserRdo} from 'src/rdo/logged-user.rdo';
 import {Payload} from 'src/types/payload.interface';
 import {RefreshTokenGuard} from './guards/refresh-token.guard';
+import {AccessTokenGuard} from './guards/access-token.guard';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  // доступно только анонимным пользователям
+  // РЕГИСТРАЦИЯ
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
-  async create(@Body() dto: CreateUserDto) {
+  async create(
+    @Body() dto: CreateUserDto,
+    @Req() req: RawBodyRequest<{headers: {authorization: string}}>
+  ) {
+    console.log(req.headers.authorization);
+    if (req.headers.authorization) {
+      throw new ForbiddenException('Access Denied');
+    }
     const newUser = await this.authService.register(dto);
     return fillObject(LoggedUserRdo, newUser);
   }
 
   // ВХОД
-  // ----- Если авторизованный клиент входит в систему,
-  // сервер возвращает соответствующий код и текущий токен. Новая пара токенов не создаётся.
-  // (например, сразу после регистрации)
-  // ----- Войти в систему могут только анонимные клиенты
   @Post('login')
   @HttpCode(HttpStatus.OK)
-  public async loginUser(@Body() dto: LoginUserDto) {
+  public async loginUser(
+    @Body() dto: LoginUserDto,
+    @Req() req: RawBodyRequest<{headers: {authorization: string}}>
+  ) {
+    if (req.headers.authorization) {
+      throw new ForbiddenException('Access Denied');
+    }
     const response = await this.authService.loginUser(dto);
     return fillObject(LoggedUserRdo, response);
   }
 
   // ВЫХОД
-  // @UseGuards(AccessTokenGuard)
+  // ----- на стороне клиента удаляем accessToken из localStorage
+  // ----- на сервере удаляем из БД refreshToken
+  @UseGuards(AccessTokenGuard)
+  @Get('logout')
+  @HttpCode(HttpStatus.OK)
+  public async logout(
+    @Req() req: RawBodyRequest<{user: Payload & {refreshToken: string}}>
+  ) {
+    const userId = req.user.sub;
+    await this.authService.logout(userId);
+  }
 
   // ОБНОВЛЕНИЕ ТОКЕНА
   @UseGuards(RefreshTokenGuard)
@@ -53,8 +74,7 @@ export class AuthController {
   ) {
     const userId = req.user.sub;
     const refreshToken = req.user.refreshToken;
-    // Logger.log(req.user);
-    // форматировать ответ
-    return this.authService.refreshTokens(userId, refreshToken);
+    const response = this.authService.refreshTokens(userId, refreshToken);
+    return fillObject(LoggedUserRdo, response);
   }
 }
