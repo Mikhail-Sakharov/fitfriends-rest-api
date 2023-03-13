@@ -5,11 +5,14 @@ import {
 } from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
 import {JwtService} from '@nestjs/jwt';
+import {hash, genSalt} from 'bcrypt';
 import LoginUserDto from 'src/dto/login-user.dto';
 import {UserEntity} from 'src/users/user.entity';
 import {UsersRepository} from 'src/users/users.repository';
 import {UsersService} from 'src/users/users.service';
 import CreateUserDto from '../dto/create-user.dto';
+
+const SALT_ROUNDS = 10;
 
 type Payload = {
   sub: string;
@@ -74,10 +77,7 @@ export class AuthService {
 
     const tokens = await this.getTokens(payload);
 
-    // захешировать перед отправкой в БД
-    await this.usersService.updateUser(user._id, {
-      refreshToken: tokens.refreshToken
-    });
+    await this.updateRefreshToken(user._id, tokens.refreshToken);
 
     return {
       user,
@@ -101,5 +101,13 @@ export class AuthService {
       accessToken,
       refreshToken
     };
+  }
+
+  public async updateRefreshToken(userId: string, refreshToken: string) {
+    const salt = await genSalt(SALT_ROUNDS);
+    const hashedRefreshToken = await hash(refreshToken, salt);
+    await this.usersService.updateUser(userId, {
+      refreshToken: hashedRefreshToken
+    });
   }
 }
