@@ -100,7 +100,7 @@ export class AuthService {
 
   public async updateRefreshToken(userId: string, refreshToken: string) {
     const salt = await genSalt(SALT_ROUNDS);
-    const hashedRefreshToken = await hash(refreshToken, salt);
+    const hashedRefreshToken = (await hash(refreshToken, salt)) as string;
     await this.usersService.updateUser(userId, {
       refreshToken: hashedRefreshToken
     });

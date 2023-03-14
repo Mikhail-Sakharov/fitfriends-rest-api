@@ -7,15 +7,22 @@ import {
   Param,
   Patch
 } from '@nestjs/common';
+import {ApiResponse, ApiTags} from '@nestjs/swagger';
 import {fillObject} from 'common/helpers';
 import UpdateUserDto from 'src/dto/update-user.dto';
 import {UserRdo} from 'src/rdo/user.rdo';
 import {UsersService} from './users.service';
 
+@ApiTags('users')
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @ApiResponse({
+    type: UserRdo,
+    status: HttpStatus.OK,
+    description: 'The list of users is received'
+  })
   // СПИСОК ПОЛЬЗОВАТЕЛЕЙ
   @Get('')
   @HttpCode(HttpStatus.OK)
@@ -24,6 +31,11 @@ export class UsersController {
     return fillObject(UserRdo, users);
   }
 
+  @ApiResponse({
+    type: UserRdo,
+    status: HttpStatus.OK,
+    description: 'The detailed info is received'
+  })
   // ДЕТАЛЬНАЯ ИНФ О ПОЛЬЗОВАТЕЛЕ
   @Get(':id')
   @HttpCode(HttpStatus.OK)
@@ -32,6 +44,11 @@ export class UsersController {
     return fillObject(UserRdo, user);
   }
 
+  @ApiResponse({
+    type: UserRdo,
+    status: HttpStatus.OK,
+    description: "The user's info was updated"
+  })
   // РЕДАКТИРОВАНИЕ ИНФ О ПОЛЬЗОВАТЕЛЕ
   @Patch(':id')
   @HttpCode(HttpStatus.OK)

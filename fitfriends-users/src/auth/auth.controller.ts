@@ -18,11 +18,21 @@ import {LoggedUserRdo} from 'src/rdo/logged-user.rdo';
 import {Payload} from 'src/types/payload.interface';
 import {RefreshTokenGuard} from './guards/refresh-token.guard';
 import {AccessTokenGuard} from './guards/access-token.guard';
+import {ApiBody, ApiResponse, ApiTags} from '@nestjs/swagger';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @ApiBody({
+    type: CreateUserDto
+  })
+  @ApiResponse({
+    type: LoggedUserRdo,
+    status: HttpStatus.CREATED,
+    description: 'A user has been signed up'
+  })
   // РЕГИСТРАЦИЯ
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
@@ -37,6 +47,11 @@ export class AuthController {
     return fillObject(LoggedUserRdo, newUser);
   }
 
+  @ApiResponse({
+    type: LoggedUserRdo,
+    status: HttpStatus.OK,
+    description: 'The user is signed in'
+  })
   // ВХОД
   @Post('login')
   @HttpCode(HttpStatus.OK)
@@ -51,6 +66,10 @@ export class AuthController {
     return fillObject(LoggedUserRdo, response);
   }
 
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'The user has been logged out'
+  })
   // ВЫХОД
   // ----- на стороне клиента удаляем accessToken из localStorage
   // ----- на сервере удаляем из БД refreshToken
@@ -64,6 +83,11 @@ export class AuthController {
     await this.authService.logout(userId);
   }
 
+  @ApiResponse({
+    type: LoggedUserRdo,
+    status: HttpStatus.OK,
+    description: 'A new pair of tokens is received'
+  })
   // ОБНОВЛЕНИЕ ТОКЕНА
   @UseGuards(RefreshTokenGuard)
   @Get('refresh')
