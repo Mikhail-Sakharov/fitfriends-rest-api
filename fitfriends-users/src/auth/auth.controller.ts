@@ -30,7 +30,6 @@ export class AuthController {
     @Body() dto: CreateUserDto,
     @Req() req: RawBodyRequest<{headers: {authorization: string}}>
   ) {
-    console.log(req.headers.authorization);
     if (req.headers.authorization) {
       throw new ForbiddenException('Access Denied');
     }
