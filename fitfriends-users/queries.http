@@ -14,8 +14,8 @@ Content-Type: application/json
   "trainingTypes": ["бег", "кроссфит"],
   "questionnaire": {
     "trainingDuration": "30-50 мин",
-    "dailyCaloriesCount": "1000",
-    "totalCaloriesCount": "5000",
+    "dailyCaloriesCount": 1000,
+    "totalCaloriesCount": 5000,
     "isReadyToGetTrained": true
   }
 }
