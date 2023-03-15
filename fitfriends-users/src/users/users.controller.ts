@@ -88,13 +88,14 @@ export class UsersController {
     description: "The user's info was updated"
   })
   // РЕДАКТИРОВАНИЕ ИНФ О ПОЛЬЗОВАТЕЛЕ
-  @Patch(':id')
+  @UseGuards(AccessTokenGuard)
+  @Patch('')
   @HttpCode(HttpStatus.OK)
   public async updateUser(
-    @Param('id') id: string,
-    @Body() dto: UpdateUserDto
-    //@Request() req: RawBodyRequest<LoggedUser>
+    @Body() dto: UpdateUserDto,
+    @Req() req: RawBodyRequest<{user: Payload}>
   ) {
+    const id = req.user.sub;
     const user = await this.usersService.updateUser(id, dto);
     return user;
   }

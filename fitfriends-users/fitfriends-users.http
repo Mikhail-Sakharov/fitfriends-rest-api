@@ -74,8 +74,9 @@ GET http://localhost:5678/users HTTP/1.1
 GET http://localhost:5678/users/64119f8a4df4601762479d0c HTTP/1.1
 
 ### Редактирование информации о пользователе
-PATCH http://localhost:5678/users/6410b434be65641f3a66f562 HTTP/1.1
+PATCH http://localhost:5678/users HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDExOWY4YTRkZjQ2MDE3NjI0NzlkMGMiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY3ODg5ODIxMiwiZXhwIjoxNjc4ODk5MTEyfQ.WCkPldDyoddiKGnNaXMt1Vm-NxIStOEkZk5tyEYv_gA
 
 {
   "userName": "Asdfgh",
