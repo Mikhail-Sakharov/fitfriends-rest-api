@@ -16,8 +16,8 @@ import CreateUserDto from '../dto/create-user.dto';
 import LoginUserDto from 'src/dto/login-user.dto';
 import {LoggedUserRdo} from 'src/rdo/logged-user.rdo';
 import {Payload} from 'src/types/payload.interface';
-import {RefreshTokenGuard} from './guards/refresh-token.guard';
-import {AccessTokenGuard} from './guards/access-token.guard';
+import {RefreshTokenGuard} from '../guards/refresh-token.guard';
+import {AccessTokenGuard} from '../guards/access-token.guard';
 import {ApiBody, ApiResponse, ApiTags} from '@nestjs/swagger';
 
 @ApiTags('auth')

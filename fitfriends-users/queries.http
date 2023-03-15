@@ -46,6 +46,15 @@ POST http://localhost:5678/auth/login HTTP/1.1
 Content-Type: application/json
 
 {
+  "email": "qwe@qwe.qwe",
+  "password": "123456"
+}
+
+### Вход
+POST http://localhost:5678/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
   "email": "john@qwe.qwe",
   "password": "123456"
 }
@@ -75,3 +84,4 @@ Content-Type: application/json
 
 ### Запрос друзей
 GET http://localhost:5678/users/friends HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDExOWY4YTRkZjQ2MDE3NjI0NzlkMGMiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY3ODg4MjAyNiwiZXhwIjoxNjc4ODgyOTI2fQ.Op6itGILWfJa5_Un63y33gTlwXKfFvFGy1hXK2zPYBQ

@@ -5,12 +5,17 @@ import {
   HttpCode,
   HttpStatus,
   Param,
-  Patch
+  Patch,
+  RawBodyRequest,
+  Req,
+  UseGuards
 } from '@nestjs/common';
 import {ApiResponse, ApiTags} from '@nestjs/swagger';
 import {fillObject} from 'common/helpers';
 import UpdateUserDto from 'src/dto/update-user.dto';
+import {AccessTokenGuard} from 'src/guards/access-token.guard';
 import {UserRdo} from 'src/rdo/user.rdo';
+import {Payload} from 'src/types/payload.interface';
 import {UsersService} from './users.service';
 
 @ApiTags('users')
@@ -24,10 +29,14 @@ export class UsersController {
     description: 'The list of friends is received'
   })
   // СПИСОК ДРУЗЕЙ
+  @UseGuards(AccessTokenGuard)
   @Get('friends')
   @HttpCode(HttpStatus.OK)
-  public async getFriends() {
-    return await this.usersService.getFriends('64119f8a4df4601762479d0c');
+  public async getFriends(
+    @Req() req: RawBodyRequest<{user: Payload}>
+  ) {
+    const userId = req.user.sub;
+    return await this.usersService.getFriends(userId);
   }
 
   @ApiResponse({
