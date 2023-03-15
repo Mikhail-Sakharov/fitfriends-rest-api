@@ -94,3 +94,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDExOWY4Y
 ### Удалить из друзей / удалиться из друзей
 GET http://localhost:5678/users/friends/remove/6411e9b3f5722ab2d98bb8ad HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDExOWY4YTRkZjQ2MDE3NjI0NzlkMGMiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiJBc2RmZ2giLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY3ODkwMjk4MiwiZXhwIjoxNjc4OTAzODgyfQ.8HkC-5dhh0Y2_Kp1adWT_fCkFf4vYFBWeJBN4hijgZc
+
+### Загрузка аватара
+POST http://localhost:5678/users/avatar HTTP/1.1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDExOWY4YTRkZjQ2MDE3NjI0NzlkMGMiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiJBc2RmZ2giLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY3ODkwNzQxNSwiZXhwIjoxNjc4OTA4MzE1fQ.CsYAP1dJZy9XcrSWcbV9AyBGzFK0puOZ5jf0TVr-lTg
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="avatar"; filename="avatar.png"
+Content-Type: image/png
+
+< /home/mikhail/tmp/avatar.png
+------WebKitFormBoundary7MA4YWxkTrZu0gW--

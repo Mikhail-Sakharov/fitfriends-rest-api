@@ -85,4 +85,8 @@ export class UsersService {
 
     return this.usersRepository.update(id, userEntity);
   }
+
+  public async setAvatarPath(userId: string, avatarUrl: string) {
+    return this.updateUser(userId, {avatarUrl});
+  }
 }
