@@ -77,7 +77,7 @@ export class AuthController {
   @Get('logout')
   @HttpCode(HttpStatus.OK)
   public async logout(
-    @Req() req: RawBodyRequest<{user: Payload & {refreshToken: string}}>
+    @Req() req: RawBodyRequest<{user: Payload}>
   ) {
     const userId = req.user.sub;
     await this.authService.logout(userId);

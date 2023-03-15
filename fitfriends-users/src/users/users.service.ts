@@ -8,11 +8,11 @@ export class UsersService {
   constructor(private readonly usersRepository: UsersRepository) {}
 
   public async getUsers() {
-    return this.usersRepository.find();
+    return await this.usersRepository.find();
   }
 
   public async getUser(id: string) {
-    const user = this.usersRepository.findById(id);
+    const user = await this.usersRepository.findById(id);
 
     if (!user) {
       throw new NotFoundException('No user with such id');

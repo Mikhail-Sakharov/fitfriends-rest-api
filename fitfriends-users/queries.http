@@ -50,6 +50,10 @@ Content-Type: application/json
   "password": "123456"
 }
 
+### Выход
+GET http://localhost:5678/auth/logout HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDExOWJmZWM0NGRmYjFjYWNmMmNmZDAiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY3ODg3NTY0NiwiZXhwIjoxNjc4ODc2NTQ2fQ.naf-rEZT7yO-6XIleMdQzEHQ5MVQ9Z4ZHtdHSrI8qB4
+
 ### Рефреш
 GET http://localhost:5678/auth/refresh HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDEwYjQzNGJlNjU2NDFmM2E2NmY1NjIiLCJlbWFpbCI6ImpvaG5AcXdlLnF3ZSIsInVzZXJOYW1lIjoiSm9obiIsInVzZXJSb2xlIjoi0YLRgNC10L3QtdGAIiwiaWF0IjoxNjc4ODE2MzM1LCJleHAiOjE2Nzk0MjExMzV9.vgYgk3drZn15G-nuvtL4XxD7-tZWiHYLODOGrEIJsLk
@@ -58,7 +62,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDEwYjQzN
 GET http://localhost:5678/users HTTP/1.1
 
 ### Запрос детальной информации о пользователе
-GET http://localhost:5678/users/6410b434be65641f3a66f562 HTTP/1.1
+GET http://localhost:5678/users/64119f8a4df4601762479d0c HTTP/1.1
 
 ### Редактирование информации о пользователе
 PATCH http://localhost:5678/users/6410b434be65641f3a66f562 HTTP/1.1
@@ -68,3 +72,6 @@ Content-Type: application/json
   "userName": "Asdfgh",
   "birthday": "03.01.1988"
 }
+
+### Запрос друзей
+GET http://localhost:5678/users/qwerty HTTP/1.1
