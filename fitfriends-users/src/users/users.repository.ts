@@ -23,6 +23,13 @@ export class UsersRepository
     return this.userModel.find();
   }
 
+  public async findFriends(id: string): Promise<User[]> {
+    const user = await this.findById(id);
+    const friendsIds = user.myFriends;
+    console.log(friendsIds);
+    return this.userModel.find({_id: {$in: friendsIds }});
+  }
+
   public async findById(id: string): Promise<User | null> {
     return this.userModel.findById(id);
   }

@@ -74,4 +74,4 @@ Content-Type: application/json
 }
 
 ### Запрос друзей
-GET http://localhost:5678/users/qwerty HTTP/1.1
+GET http://localhost:5678/users/friends HTTP/1.1

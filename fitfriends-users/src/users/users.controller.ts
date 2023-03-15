@@ -21,6 +21,18 @@ export class UsersController {
   @ApiResponse({
     type: UserRdo,
     status: HttpStatus.OK,
+    description: 'The list of friends is received'
+  })
+  // СПИСОК ДРУЗЕЙ
+  @Get('friends')
+  @HttpCode(HttpStatus.OK)
+  public async getFriends() {
+    return await this.usersService.getFriends('64119f8a4df4601762479d0c');
+  }
+
+  @ApiResponse({
+    type: UserRdo,
+    status: HttpStatus.OK,
     description: 'The list of users is received'
   })
   // СПИСОК ПОЛЬЗОВАТЕЛЕЙ
@@ -60,8 +72,6 @@ export class UsersController {
     const user = await this.usersService.updateUser(id, dto);
     return user;
   }
-
-  // СПИСОК ДРУЗЕЙ
 
   // ДОБАВИТЬ В ДРУЗЬЯ
 
