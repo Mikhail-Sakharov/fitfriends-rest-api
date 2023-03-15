@@ -21,7 +21,7 @@ export class UserEntity implements User, Entity<User> {
   public trainingLevel: TrainingLevel;
   public trainingTypes: TrainingType[];
   public questionnaire: Questionnaire;
-  public myFriends?: User[];
+  public myFriends?: string[];
   public myPurchases?: string[];
   public myGyms?: string[];
   public refreshToken?: string | null;

@@ -53,6 +53,23 @@ export class UsersController {
   }
 
   @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'The user added in friends'
+  })
+  // ДОБАВИТЬ В ДРУЗЬЯ / ДОБАВИТЬСЯ В ДРУЗЬЯ
+  @UseGuards(AccessTokenGuard)
+  @Get('friends/:id')
+  @HttpCode(HttpStatus.OK)
+  public async becomeFriends(
+    @Param('id') id: string,
+    @Req() req: RawBodyRequest<{user: Payload}>
+  ) {
+    const myId = req.user.sub;
+    const myNewFriendId = id;
+    await this.usersService.becomeFriends(myId, myNewFriendId);
+  }
+
+  @ApiResponse({
     type: UserRdo,
     status: HttpStatus.OK,
     description: 'The detailed info is received'
@@ -82,9 +99,7 @@ export class UsersController {
     return user;
   }
 
-  // ДОБАВИТЬ В ДРУЗЬЯ
-
-  // УДАЛИТЬ ИЗ ДРУЗЕЙ (?)
+  // УДАЛИТЬ ИЗ ДРУЗЕЙ
 
   // ДОБАВИТЬ ПОКУПКУ
 

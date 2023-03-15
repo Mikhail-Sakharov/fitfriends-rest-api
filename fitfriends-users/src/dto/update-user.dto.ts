@@ -167,7 +167,7 @@ export default class UpdateUserDto {
   })
   public questionnaire?: Questionnaire;
 
-  public myFriends?: User[];
+  public myFriends?: string[];
   public myPurchases?: string[];
   public myGyms?: string[];
   public refreshToken?: string | null;

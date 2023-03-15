@@ -91,7 +91,7 @@ export class UserModel extends Document implements User {
   @Prop({
     default: []
   })
-  myFriends: User[];
+  myFriends: string[];
 
   @Prop({
     default: []
