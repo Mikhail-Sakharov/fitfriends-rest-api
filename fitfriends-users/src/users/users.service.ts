@@ -11,25 +11,53 @@ export class UsersService {
     return await this.usersRepository.findFriends(id);
   }
 
-  public async becomeFriends(myId: string, myNewFriendId: string) {
-    const myNewFriend = await this.usersRepository.findById(myNewFriendId);
-    if (!myNewFriend) {
+  public async addFriend(myId: string, myNewFriendId: string) {
+    const myData = await this.usersRepository.findById(myId);
+    const myNewFriendData = await this.usersRepository.findById(myNewFriendId);
+    if (!myNewFriendData) {
       throw new NotFoundException('No user with such id');
     }
 
-    const friendsOfMyNewFriend = [...myNewFriend.myFriends];
-    const weAreFriends = friendsOfMyNewFriend.some((friend) => friend === myId);
+    const myFriends = [...myData.myFriends];
+    const friendsOfMyNewFriend = [...myNewFriendData.myFriends];
+    const userInMyFriends = myFriends.some((friendId) => friendId === myNewFriendId);
+    const meInUserFriends = friendsOfMyNewFriend.some((friendId) => friendId === myId);
+    const weAreFriends = userInMyFriends && meInUserFriends;
     if (weAreFriends) {
       throw new BadRequestException('The user is in friends');
     }
 
-    const myData = await this.usersRepository.findById(myId);
-    const myFriends = [...myData.myFriends];
-    myFriends.push(myNewFriendId);
-    friendsOfMyNewFriend.push(myId);
+    const myUpdatedFriends = myFriends.filter((friendId) => friendId !== myNewFriendId);
+    const userUpdatedFriends = friendsOfMyNewFriend.filter((friendId) => friendId !== myId);
 
-    await this.updateUser(myId, {myFriends});
-    await this.updateUser(myNewFriendId, {myFriends: friendsOfMyNewFriend});
+    myUpdatedFriends.push(myNewFriendId);
+    userUpdatedFriends.push(myId);
+
+    await this.updateUser(myId, {myFriends: myUpdatedFriends});
+    await this.updateUser(myNewFriendId, {myFriends: userUpdatedFriends});
+  }
+
+  public async removeFriend(myId: string, removedFriendId: string) {
+    const myData = await this.usersRepository.findById(myId);
+    const removedFriendData = await this.usersRepository.findById(removedFriendId);
+    if (!removedFriendData) {
+      throw new NotFoundException('No user with such id');
+    }
+
+    const myFriends = [...myData.myFriends];
+    const friendsOfRemovedFriend = [...removedFriendData.myFriends];
+    const userInMyFriends = myFriends.some((friendId) => friendId === removedFriendId);
+    const meInUserFriends = friendsOfRemovedFriend.some((friendId) => friendId === myId);
+    const weAreFriends = userInMyFriends || meInUserFriends;
+    if (!weAreFriends) {
+      throw new BadRequestException('The user isn\'t in friends');
+    }
+
+    const myUpdatedFriends = myFriends.filter((friendId) => friendId !== removedFriendId);
+    const userUpdatedFriends = friendsOfRemovedFriend.filter((friendId) => friendId !== myId);
+
+    await this.updateUser(myId, {myFriends: myUpdatedFriends});
+    await this.updateUser(removedFriendId, {myFriends: userUpdatedFriends});
   }
 
   public async getUsers() {

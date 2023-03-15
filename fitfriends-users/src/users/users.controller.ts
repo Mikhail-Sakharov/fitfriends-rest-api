@@ -53,36 +53,6 @@ export class UsersController {
   }
 
   @ApiResponse({
-    status: HttpStatus.OK,
-    description: 'The user added in friends'
-  })
-  // ДОБАВИТЬ В ДРУЗЬЯ / ДОБАВИТЬСЯ В ДРУЗЬЯ
-  @UseGuards(AccessTokenGuard)
-  @Get('friends/:id')
-  @HttpCode(HttpStatus.OK)
-  public async becomeFriends(
-    @Param('id') id: string,
-    @Req() req: RawBodyRequest<{user: Payload}>
-  ) {
-    const myId = req.user.sub;
-    const myNewFriendId = id;
-    await this.usersService.becomeFriends(myId, myNewFriendId);
-  }
-
-  @ApiResponse({
-    type: UserRdo,
-    status: HttpStatus.OK,
-    description: 'The detailed info is received'
-  })
-  // ДЕТАЛЬНАЯ ИНФ О ПОЛЬЗОВАТЕЛЕ
-  @Get(':id')
-  @HttpCode(HttpStatus.OK)
-  public async getUser(@Param('id') id: string) {
-    const user = await this.usersService.getUser(id);
-    return fillObject(UserRdo, user);
-  }
-
-  @ApiResponse({
     type: UserRdo,
     status: HttpStatus.OK,
     description: "The user's info was updated"
@@ -100,7 +70,52 @@ export class UsersController {
     return user;
   }
 
+  @ApiResponse({
+    type: UserRdo,
+    status: HttpStatus.OK,
+    description: 'The detailed info is received'
+  })
+  // ДЕТАЛЬНАЯ ИНФ О ПОЛЬЗОВАТЕЛЕ
+  @Get(':id')
+  @HttpCode(HttpStatus.OK)
+  public async getUser(@Param('id') id: string) {
+    const user = await this.usersService.getUser(id);
+    return fillObject(UserRdo, user);
+  }
+
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'The user added in friends'
+  })
+  // ДОБАВИТЬ В ДРУЗЬЯ / ДОБАВИТЬСЯ В ДРУЗЬЯ
+  @UseGuards(AccessTokenGuard)
+  @Get('friends/add/:id')
+  @HttpCode(HttpStatus.OK)
+  public async addFriend(
+    @Param('id') id: string,
+    @Req() req: RawBodyRequest<{user: Payload}>
+  ) {
+    const myId = req.user.sub;
+    const myNewFriendId = id;
+    await this.usersService.addFriend(myId, myNewFriendId);
+  }
+
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'The user removed from friends'
+  })
   // УДАЛИТЬ ИЗ ДРУЗЕЙ
+  @UseGuards(AccessTokenGuard)
+  @Get('friends/remove/:id')
+  @HttpCode(HttpStatus.OK)
+  public async removeFriend(
+    @Param('id') id: string,
+    @Req() req: RawBodyRequest<{user: Payload}>
+  ) {
+    const myId = req.user.sub;
+    const removedFriendId = id;
+    await this.usersService.removeFriend(myId, removedFriendId);
+  }
 
   // ДОБАВИТЬ ПОКУПКУ
 
