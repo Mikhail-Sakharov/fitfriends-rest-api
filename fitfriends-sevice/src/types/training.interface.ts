@@ -11,7 +11,7 @@ export interface Training {
   level: TrainingLevel;
   type: TrainingType;
   duration: Duration;
-  price: number;
+  price?: number;
   caloriesCount: number;
   description: string;
   gender: TrainingGenderType;
