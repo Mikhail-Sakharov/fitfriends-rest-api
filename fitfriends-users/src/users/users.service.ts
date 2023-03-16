@@ -1,3 +1,4 @@
+import * as fs from 'fs';
 import {BadRequestException, Injectable, NotFoundException} from '@nestjs/common';
 import UpdateUserDto from 'src/dto/update-user.dto';
 import {UserEntity} from './user.entity';
@@ -87,6 +88,18 @@ export class UsersService {
   }
 
   public async setAvatarPath(userId: string, avatarUrl: string) {
+    const user = await this.usersRepository.findById(userId);
+    const prevAvatarUrl = user.avatarUrl;
+
+    if (fs.existsSync(prevAvatarUrl)) {
+      console.log('yes');
+      fs.unlink(prevAvatarUrl, (err) => {
+        if (err) {
+         console.error(err);
+         return err;
+        }
+      });
+    }
     return this.updateUser(userId, {avatarUrl});
   }
 }

@@ -16,7 +16,6 @@ import {
 } from '@nestjs/common';
 import {FileInterceptor} from '@nestjs/platform-express';
 import {ApiResponse, ApiTags} from '@nestjs/swagger';
-import {diskStorage} from 'multer';
 import {Express} from 'express';
 import {fillObject} from 'common/helpers';
 import UpdateUserDto from 'src/dto/update-user.dto';
@@ -24,19 +23,17 @@ import {AccessTokenGuard} from 'src/guards/access-token.guard';
 import {UserRdo} from 'src/rdo/user.rdo';
 import {Payload} from 'src/types/payload.interface';
 import {UsersService} from './users.service';
-import {extname} from 'path';
-import * as crypto from 'crypto';
-
-export const editFileName = (req, file, callback) => {
-  const fileName = crypto.randomUUID();
-  const fileExtName = extname(file.originalname);
-  callback(null, `${fileName}${fileExtName}`);
-};
+import {ConfigService} from '@nestjs/config';
+import {getFileInterceptorOptions} from 'src/config/multer.config';
+import {AVATAR_MAX_SIZE, AVATAR_URL_REG_EXP, UPLOAD_DIRECTORY_REG_EXP} from 'src/app.constant';
 
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly configService: ConfigService
+  ) {}
 
   @ApiResponse({
     type: UserRdo,
@@ -88,21 +85,16 @@ export class UsersController {
   @UseGuards(AccessTokenGuard)
   @Post('avatar')
   @UseInterceptors(
-    FileInterceptor('avatar', {
-      storage: diskStorage({
-        destination: './files',
-        filename: editFileName
-      })
-    })
+    FileInterceptor('avatar', getFileInterceptorOptions())
   )
   public async uploadFile(
     @UploadedFile(
       new ParseFilePipeBuilder()
         .addFileTypeValidator({
-          fileType: /(jpg|jpeg|png)$/i,
+          fileType: AVATAR_URL_REG_EXP,
         })
         .addMaxSizeValidator({
-          maxSize: 1000000
+          maxSize: AVATAR_MAX_SIZE
         })
         .build({
           errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY
@@ -110,7 +102,9 @@ export class UsersController {
     ) file: Express.Multer.File,
     @Req() req: RawBodyRequest<{user: Payload}>
   ) {
-    return this.usersService.setAvatarPath(req.user.sub, file.filename);
+    const uploadDirectory = this.configService.get('multer.uploadDirectory').match(UPLOAD_DIRECTORY_REG_EXP);
+    const user = this.usersService.setAvatarPath(req.user.sub, `${uploadDirectory}/${file.filename}`)
+    return fillObject(UserRdo, user);
   }
 
   @ApiResponse({

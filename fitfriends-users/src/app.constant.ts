@@ -36,3 +36,5 @@ export const AVATAR_URL_REG_EXP = /^.+(?:.jpg)|.+(?:.png)$/;
 export const AVATAR_MAX_SIZE = 1000000;
 
 export const BIRTHDAY_REG_EXP = /^\d{2}.\d{2}.\d{4}$/;
+
+export const UPLOAD_DIRECTORY_REG_EXP = /\w+/;
