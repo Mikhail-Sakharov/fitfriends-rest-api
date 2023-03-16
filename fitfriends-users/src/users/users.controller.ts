@@ -82,6 +82,12 @@ export class UsersController {
     return user;
   }
 
+  @ApiResponse({
+    type: UserRdo,
+    status: HttpStatus.OK,
+    description: 'The avatar file uploading route'
+  })
+  // ВЫГРУЗКА ФАЙЛА
   @UseGuards(AccessTokenGuard)
   @Post('avatar')
   @UseInterceptors(
@@ -157,7 +163,4 @@ export class UsersController {
   // ДОБАВИТЬ ПОКУПКУ
 
   // ДОБАВИТЬ ЗАЛ
-
-  // ДОБАВЛЕНИЕ/ИЗМЕНЕНИЕ АВАТАРА
-  // ----- Для процедуры аутентификации и авторизации клиент передаёт электронную почту и пароль.
 }

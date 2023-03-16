@@ -92,7 +92,6 @@ export class UsersService {
     const prevAvatarUrl = user.avatarUrl;
 
     if (fs.existsSync(prevAvatarUrl)) {
-      console.log('yes');
       fs.unlink(prevAvatarUrl, (err) => {
         if (err) {
          console.error(err);
