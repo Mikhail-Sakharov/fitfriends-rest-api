@@ -5,7 +5,7 @@ import {TrainingLevel} from 'src/types/training-level.enum';
 import {TrainingType} from 'src/types/training-type.enum';
 import {Training} from 'src/types/training.interface';
 
-export class UserEntity implements Training, Entity<Training> {
+export class TrainingEntity implements Training, Entity<Training> {
   public _id?: string;
   public createdAt?: string;
   public title: string;
