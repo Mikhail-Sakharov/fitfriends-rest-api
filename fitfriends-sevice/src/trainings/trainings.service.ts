@@ -18,4 +18,9 @@ export class TrainingsService {
     const trainings = await this.trainingRepository.find();
     return trainings;
   }
+
+  public async showTraining(id: string) {
+    const training = await this.trainingRepository.findById(id);
+    return training;
+  }
 }

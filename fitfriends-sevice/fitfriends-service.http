@@ -17,3 +17,6 @@ Content-Type: application/json
 
 ### Запрос всех тренировок
 GET http://localhost:5679/trainings HTTP/1.1
+
+### Запрос детальной информации
+GET http://localhost:5679/trainings/64135cc8216c4629857ec49e HTTP/1.1

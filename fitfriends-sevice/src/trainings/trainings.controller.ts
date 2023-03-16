@@ -1,4 +1,4 @@
-import {Body, Controller, Get, HttpCode, HttpStatus, Post} from '@nestjs/common';
+import {Body, Controller, Get, HttpCode, HttpStatus, Param, Post} from '@nestjs/common';
 import {fillObject} from 'common/helpers';
 import CreateTrainingDto from 'src/dto/create-training.dto';
 import {TrainingRdo} from 'src/rdo/training.rdo';
@@ -24,5 +24,14 @@ export class TrainingsController {
   public async getTrainings() {
     const trainings = await this.trainingService.findTrainings();
     return fillObject(TrainingRdo, trainings);
+  }
+
+  @Get(':id')
+  @HttpCode(HttpStatus.OK)
+  public async showTraining(
+    @Param('id') id: string
+  ) {
+    const training = await this.trainingService.showTraining(id);
+    return fillObject(TrainingRdo, training);
   }
 }
