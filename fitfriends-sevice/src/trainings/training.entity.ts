@@ -6,8 +6,6 @@ import {TrainingType} from 'src/types/training-type.enum';
 import {Training} from 'src/types/training.interface';
 
 export class TrainingEntity implements Training, Entity<Training> {
-  public _id?: string;
-  public createdAt?: string;
   public title: string;
   public bgImageUrl: string;
   public level: TrainingLevel;
@@ -31,8 +29,6 @@ export class TrainingEntity implements Training, Entity<Training> {
   }
 
   public fillEntity(training: Training) {
-    this._id = training._id;
-    this.createdAt = training.createdAt;
     this.title = training.title;
     this.bgImageUrl = training.bgImageUrl;
     this.level = training.level;

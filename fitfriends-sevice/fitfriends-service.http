@@ -1,0 +1,16 @@
+### Создание тренировки
+POST http://localhost:5679/trainings HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "energy",
+  "bgImageUrl": "img/content/thumbnails/training-02.jpg",
+  "level": "любитель",
+  "type": "стрейчинг",
+  "duration": "30-50 мин",
+  "caloriesCount": 1500,
+  "description": "Упражнения укрепляют мышечный корсет, делают суставы более гибкими, улучшают осанку и координацию.",
+  "gender": "для всех",
+  "videoUrl": "videos/0q3874yr-4q3rq3-q34r-erq74.mp4",
+  "coachId": "6411af71fba5eba2ef3f7bc0"
+}
