@@ -14,3 +14,6 @@ Content-Type: application/json
   "videoUrl": "videos/0q3874yr-4q3rq3-q34r-erq74.mp4",
   "coachId": "6411af71fba5eba2ef3f7bc0"
 }
+
+### Запрос всех тренировок
+GET http://localhost:5679/trainings HTTP/1.1

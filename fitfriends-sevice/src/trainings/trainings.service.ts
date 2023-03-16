@@ -9,8 +9,13 @@ export class TrainingsService {
     private readonly trainingRepository: TrainingRepository
   ) {}
 
-  async create(dto: CreateTrainingDto) {
+  public async create(dto: CreateTrainingDto) {
     const trainingEntity = new TrainingEntity(dto);
     return await this.trainingRepository.create(trainingEntity);
+  }
+
+  public async findTrainings() {
+    const trainings = await this.trainingRepository.find();
+    return trainings;
   }
 }

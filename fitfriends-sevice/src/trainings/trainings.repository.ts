@@ -17,12 +17,12 @@ export class TrainingRepository implements CRUDRepository<TrainingEntity, string
     return newTraining.save();
   }
 
-  public async findById(id: string): Promise<Training | null> {
-    return this.trainingModel.findById(id);
+  public async find(): Promise<Training[]> {
+    return this.trainingModel.find();
   }
 
-  public async findByEmail(email: string): Promise<Training | null> {
-    return this.trainingModel.findOne({ email });
+  public async findById(id: string): Promise<Training | null> {
+    return this.trainingModel.findById(id);
   }
 
   public async update(id: string, item: TrainingEntity): Promise<Training> {
