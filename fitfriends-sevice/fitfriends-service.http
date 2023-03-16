@@ -15,6 +15,20 @@ Content-Type: application/json
   "coachId": "6411af71fba5eba2ef3f7bc0"
 }
 
+### Редактирование тренировки
+PATCH http://localhost:5679/trainings/64135cc8216c4629857ec49e HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "energy-2",
+  "bgImageUrl": "img/content/thumbnails/training-05.jpg",
+  "level": "профессионал",
+  "duration": "больше 80 мин",
+  "caloriesCount": 4500,
+  "description": "Будешь прокачан по полной",
+  "videoUrl": "videos/0q3874yr-4q3rq3-q34r-QWERTY.mp4"
+}
+
 ### Запрос всех тренировок
 GET http://localhost:5679/trainings HTTP/1.1
 

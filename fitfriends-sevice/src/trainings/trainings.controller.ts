@@ -1,6 +1,7 @@
-import {Body, Controller, Get, HttpCode, HttpStatus, Param, Post} from '@nestjs/common';
+import {Body, Controller, Get, HttpCode, HttpStatus, Param, Patch, Post} from '@nestjs/common';
 import {fillObject} from 'common/helpers';
 import CreateTrainingDto from 'src/dto/create-training.dto';
+import UpdateTrainingDto from 'src/dto/update-training.dto';
 import {TrainingRdo} from 'src/rdo/training.rdo';
 import {TrainingsService} from './trainings.service';
 
@@ -32,6 +33,16 @@ export class TrainingsController {
     @Param('id') id: string
   ) {
     const training = await this.trainingService.showTraining(id);
+    return fillObject(TrainingRdo, training);
+  }
+
+  @Patch(':id')
+  @HttpCode(HttpStatus.OK)
+  public async updateTraining(
+    @Param('id') id: string,
+    @Body() dto: UpdateTrainingDto
+  ) {
+    const training = await this.trainingService.updateTraining(id, dto);
     return fillObject(TrainingRdo, training);
   }
 }
