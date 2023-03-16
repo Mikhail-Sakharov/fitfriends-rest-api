@@ -141,6 +141,7 @@ export class UsersController {
     const myId = req.user.sub;
     const myNewFriendId = id;
     await this.usersService.addFriend(myId, myNewFriendId);
+    // добавить RabbitClient и отправить уведомление пользователю
   }
 
   @ApiResponse({
