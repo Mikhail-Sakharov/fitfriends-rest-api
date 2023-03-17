@@ -45,4 +45,6 @@ export class TrainingsController {
     const training = await this.trainingService.updateTraining(id, dto);
     return fillObject(TrainingRdo, training);
   }
+
+  // ВЫГРУЗКА ВИДЕО
 }

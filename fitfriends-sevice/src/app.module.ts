@@ -3,6 +3,7 @@ import {ConfigModule} from '@nestjs/config';
 import {MongooseModule} from '@nestjs/mongoose';
 import {ENV_FILE_PATH} from './app.constant';
 import databaseConfig, {getMongoDbConfig} from './config/database.config';
+import envSchema from './env.schema';
 import {TrainingsModule} from './trainings/trainings.module';
 
 @Module({
@@ -11,7 +12,8 @@ import {TrainingsModule} from './trainings/trainings.module';
       cache: true,
       isGlobal: true,
       envFilePath: ENV_FILE_PATH,
-      load: [databaseConfig]
+      load: [databaseConfig],
+      validationSchema: envSchema
     }),
     MongooseModule.forRootAsync(
       getMongoDbConfig()
