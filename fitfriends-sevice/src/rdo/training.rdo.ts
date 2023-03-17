@@ -1,10 +1,11 @@
-import {Expose} from 'class-transformer';
+import {Expose, Transform} from 'class-transformer';
 import {Duration} from 'src/types/duration.enum';
 import {TrainingGenderType} from 'src/types/training-gender.enum';
 import {TrainingLevel} from 'src/types/training-level.enum';
 import {TrainingType} from 'src/types/training-type.enum';
 
 export class TrainingRdo {
+  @Transform(({obj}) => obj._id.toString())
   @Expose({name: '_id'})
   public id: string;
 
