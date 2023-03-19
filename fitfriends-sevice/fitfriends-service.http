@@ -1,17 +1,18 @@
 ### Создание тренировки
 POST http://localhost:5679/trainings HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDExOWY4YTRkZjQ2MDE3NjI0NzlkMGMiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiJBc2RmZ2giLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY3OTIzOTc1NiwiZXhwIjoxNjc5MjQwNjU2fQ.BQO_xPi-xtKio8MplH1SjGjnLhjs8H2iX0LyBY60wyU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDE3NGI5NmFlNzQ2ZGI3MmJmODM4YTYiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY3OTI0ODI3OCwiZXhwIjoxNjc5MjQ5MTc4fQ.5aC_aS39Bv1K-ZZbdww_by1TVbnibJXcybFmw8afffE
 
 {
   "title": "energy",
   "bgImageUrl": "img/content/thumbnails/training-02.jpg",
   "level": "любитель",
   "type": "стрейчинг",
-  "duration": "30-50 мин",
-  "caloriesCount": 1500,
+  "duration": "100 мин — 120 мин",
+  "caloriesCount": 5000,
   "description": "Упражнения укрепляют мышечный корсет, делают суставы более гибкими, улучшают осанку и координацию.",
   "gender": "для всех",
+  "price": 6500,
   "videoUrl": "videos/0q3874yr-4q3rq3-q34r-erq74.mp4",
   "coachId": "6411af71fba5eba2ef3f7bc0"
 }
@@ -31,8 +32,8 @@ Content-Type: application/json
 }
 
 ### Запрос всех тренировок (тренер может запросить только свои тренировки)
-GET http://localhost:5679/trainings HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDExOWY4YTRkZjQ2MDE3NjI0NzlkMGMiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiJBc2RmZ2giLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY3OTI0MDU5MywiZXhwIjoxNjc5MjQxNDkzfQ.ZHoAoMJBI-3z3mfwJlmy52GepV7CruKSyyTwIXfEAro
+GET http://localhost:5679/trainings?minPrice=0&maxPrice=4500&minCaloriesCount=0&maxCaloriesCount=2300&duration=30 мин — 50 мин HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDE3NGI5NmFlNzQ2ZGI3MmJmODM4YTYiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY3OTI0ODI3OCwiZXhwIjoxNjc5MjQ5MTc4fQ.5aC_aS39Bv1K-ZZbdww_by1TVbnibJXcybFmw8afffE
 
 ### Запрос детальной информации
 GET http://localhost:5679/trainings/641451c413b70ea381cf27f4 HTTP/1.1

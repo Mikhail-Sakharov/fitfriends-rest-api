@@ -23,3 +23,4 @@ export const RATING_DEFAULT_VALUE = 0;
 
 export const PRICE_DEFAULT_VALUE = 0;
 
+export const RESPONSE_ENTITIES_MAX_COUNT = 50;

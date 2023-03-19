@@ -1,6 +1,7 @@
 import {ForbiddenException, Injectable} from '@nestjs/common';
 import CreateTrainingDto from 'src/dto/create-training.dto';
 import UpdateTrainingDto from 'src/dto/update-training.dto';
+import {GetTrainings} from 'src/query/get-trainings.query';
 import {TrainingEntity} from './training.entity';
 import {TrainingRepository} from './trainings.repository';
 
@@ -15,8 +16,8 @@ export class TrainingsService {
     return await this.trainingRepository.create(trainingEntity);
   }
 
-  public async findTrainings(coachId: string) {
-    const trainings = await this.trainingRepository.find(coachId);
+  public async findTrainings(coachId: string, query: GetTrainings) {
+    const trainings = await this.trainingRepository.find(coachId, query);
     return trainings;
   }
 

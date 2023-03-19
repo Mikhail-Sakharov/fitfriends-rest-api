@@ -1,9 +1,10 @@
-import {Body, Controller, Get, HttpCode, HttpStatus, Param, Patch, Post, RawBodyRequest, Req, UseGuards} from '@nestjs/common';
+import {Body, Controller, Get, HttpCode, HttpStatus, Param, Patch, Post, Query, RawBodyRequest, Req, UseGuards} from '@nestjs/common';
 import {ApiResponse, ApiTags} from '@nestjs/swagger';
 import {fillObject} from 'common/helpers';
 import CreateTrainingDto from 'src/dto/create-training.dto';
 import UpdateTrainingDto from 'src/dto/update-training.dto';
 import {AccessTokenGuard} from 'src/guards/access-token.guard';
+import {GetTrainings} from 'src/query/get-trainings.query';
 import {TrainingRdo} from 'src/rdo/training.rdo';
 import {Payload} from 'src/types/payload.interface';
 import {TrainingsService} from './trainings.service';
@@ -35,24 +36,25 @@ export class TrainingsController {
 
   @ApiResponse({
     type: TrainingRdo,
-    status: HttpStatus.CREATED,
-    description: 'The list of trainings was received'
+    status: HttpStatus.OK,
+    description: 'The list of coach trainings was received'
   })
-  // СПИСОК ТРЕНИРОВОК
+  // СПИСОК ТРЕНИРОВОК ОПРЕДЕЛЁННОГО ТРЕНЕРА
   @UseGuards(AccessTokenGuard)
   @Get('')
   @HttpCode(HttpStatus.OK)
-  public async getTrainings(
-    @Req() req: RawBodyRequest<{user: Payload}>
+  public async getCoachTrainings(
+    @Req() req: RawBodyRequest<{user: Payload}>,
+    @Query() query: GetTrainings
   ) {
     const coachId = req.user.sub;
-    const trainings = await this.trainingService.findTrainings(coachId);
+    const trainings = await this.trainingService.findTrainings(coachId, query);
     return fillObject(TrainingRdo, trainings);
   }
 
   @ApiResponse({
     type: TrainingRdo,
-    status: HttpStatus.CREATED,
+    status: HttpStatus.OK,
     description: 'The training was received'
   })
   // ДЕТАЛЬНАЯ ИНФОРМАЦИЯ
@@ -68,7 +70,7 @@ export class TrainingsController {
 
   @ApiResponse({
     type: TrainingRdo,
-    status: HttpStatus.CREATED,
+    status: HttpStatus.OK,
     description: 'The training was updated'
   })
   // РЕДАКТИРОВАНИЕ ТРЕНИРОВКИ
