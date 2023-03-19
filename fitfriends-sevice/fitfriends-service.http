@@ -1,6 +1,7 @@
 ### Создание тренировки
 POST http://localhost:5679/trainings HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDExOWY4YTRkZjQ2MDE3NjI0NzlkMGMiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiJBc2RmZ2giLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY3OTIzOTc1NiwiZXhwIjoxNjc5MjQwNjU2fQ.BQO_xPi-xtKio8MplH1SjGjnLhjs8H2iX0LyBY60wyU
 
 {
   "title": "energy",
@@ -29,8 +30,9 @@ Content-Type: application/json
   "videoUrl": "videos/0q3874yr-4q3rq3-q34r-QWERTY.mp4"
 }
 
-### Запрос всех тренировок
+### Запрос всех тренировок (тренер может запросить только свои тренировки)
 GET http://localhost:5679/trainings HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDExOWY4YTRkZjQ2MDE3NjI0NzlkMGMiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiJBc2RmZ2giLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY3OTI0MDU5MywiZXhwIjoxNjc5MjQxNDkzfQ.ZHoAoMJBI-3z3mfwJlmy52GepV7CruKSyyTwIXfEAro
 
 ### Запрос детальной информации
 GET http://localhost:5679/trainings/641451c413b70ea381cf27f4 HTTP/1.1

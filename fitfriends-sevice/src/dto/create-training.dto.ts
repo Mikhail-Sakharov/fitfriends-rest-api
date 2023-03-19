@@ -1,6 +1,26 @@
 import {ApiProperty} from '@nestjs/swagger';
-import {MinLength, MaxLength, IsEnum, IsString, Matches, IsOptional, IsBoolean, IsMongoId, IsNumber, Min, IsInt, Max} from 'class-validator';
-import {TrainingTitleLength, TrainingCaloriesCount, TrainingDescriptionLength, BG_IMAGE_URL_REG_EXP, VIDEO_URL_REG_EXP, PRICE_DEFAULT_VALUE, RATING_DEFAULT_VALUE} from 'src/app.constant';
+import {
+  MinLength,
+  MaxLength,
+  IsEnum,
+  IsString,
+  Matches,
+  IsOptional,
+  IsBoolean,
+  IsNumber,
+  Min,
+  IsInt,
+  Max,
+} from 'class-validator';
+import {
+  TrainingTitleLength,
+  TrainingCaloriesCount,
+  TrainingDescriptionLength,
+  BG_IMAGE_URL_REG_EXP,
+  VIDEO_URL_REG_EXP,
+  PRICE_DEFAULT_VALUE,
+  RATING_DEFAULT_VALUE,
+} from 'src/app.constant';
 import {Duration} from 'src/types/duration.enum';
 import {TrainingGenderType} from 'src/types/training-gender.enum';
 import {TrainingLevel} from 'src/types/training-level.enum';
@@ -48,6 +68,7 @@ export default class CreateTrainingDto {
     description: 'Training price',
     example: 1500
   })
+  @IsOptional()
   @IsNumber()
   @IsInt()
   @Min(PRICE_DEFAULT_VALUE)
@@ -94,16 +115,10 @@ export default class CreateTrainingDto {
   public rating?: number;
 
   @ApiProperty({
-    description: 'The coach MongoDB ID',
-    example: '6411af71fba5eba2ef3f7bc0'
-  })
-  @IsMongoId()
-  public coachId!: string;
-
-  @ApiProperty({
     description: 'Indicates if the training is special offer',
     example: true
   })
+  @IsOptional()
   @IsBoolean()
   public isSpecialOffer!: boolean;
 }

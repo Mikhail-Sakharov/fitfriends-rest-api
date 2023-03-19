@@ -1,4 +1,4 @@
-import {Injectable} from '@nestjs/common';
+import {ForbiddenException, Injectable} from '@nestjs/common';
 import CreateTrainingDto from 'src/dto/create-training.dto';
 import UpdateTrainingDto from 'src/dto/update-training.dto';
 import {TrainingEntity} from './training.entity';
@@ -10,13 +10,13 @@ export class TrainingsService {
     private readonly trainingRepository: TrainingRepository
   ) {}
 
-  public async create(dto: CreateTrainingDto) {
-    const trainingEntity = new TrainingEntity(dto);
+  public async create(coachId: string, dto: CreateTrainingDto) {
+    const trainingEntity = new TrainingEntity({...dto, coachId});
     return await this.trainingRepository.create(trainingEntity);
   }
 
-  public async findTrainings() {
-    const trainings = await this.trainingRepository.find();
+  public async findTrainings(coachId: string) {
+    const trainings = await this.trainingRepository.find(coachId);
     return trainings;
   }
 
@@ -25,8 +25,12 @@ export class TrainingsService {
     return training;
   }
 
-  public async updateTraining(id: string, dto: UpdateTrainingDto) {
+  public async updateTraining(coachId: string, id: string, dto: UpdateTrainingDto) {
     const training = await this.trainingRepository.findById(id);
+
+    if (coachId !== training.coachId) {
+      throw new ForbiddenException('Access denied');
+    }
 
     const updatedTrainingEntity = new TrainingEntity({...training, ...dto});
     const updatedTraining = await this.trainingRepository.update(id, updatedTrainingEntity);

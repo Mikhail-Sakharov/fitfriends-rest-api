@@ -17,8 +17,8 @@ export class TrainingRepository implements CRUDRepository<TrainingEntity, string
     return newTraining.save();
   }
 
-  public async find(): Promise<Training[]> {
-    return this.trainingModel.find();
+  public async find(coachId: string): Promise<Training[]> {
+    return this.trainingModel.find({coachId});
   }
 
   public async findById(id: string): Promise<Training | null> {
