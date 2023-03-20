@@ -109,7 +109,7 @@ export class UsersController {
     @Req() req: RawBodyRequest<{user: Payload}>
   ) {
     const uploadDirectory = this.configService.get('multer.uploadDirectory').match(UPLOAD_DIRECTORY_REG_EXP);
-    const user = this.usersService.setAvatarPath(req.user.sub, `${uploadDirectory}/${file.filename}`)
+    const user = this.usersService.setAvatarPath(req.user.sub, `${uploadDirectory}/${file.filename}`);
     return fillObject(UserRdo, user);
   }
 

@@ -24,3 +24,5 @@ export const RATING_DEFAULT_VALUE = 0;
 export const PRICE_DEFAULT_VALUE = 0;
 
 export const RESPONSE_ENTITIES_MAX_COUNT = 50;
+
+export const UPLOAD_DIRECTORY_REG_EXP = /\w+/;

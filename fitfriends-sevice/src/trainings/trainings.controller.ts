@@ -1,6 +1,10 @@
-import {Body, Controller, Get, HttpCode, HttpStatus, Param, Patch, Post, Query, RawBodyRequest, Req, UseGuards} from '@nestjs/common';
+import {Body, Controller, Get, HttpCode, HttpStatus, Param, ParseFilePipeBuilder, Patch, Post, Query, RawBodyRequest, Req, UploadedFile, UseGuards, UseInterceptors} from '@nestjs/common';
+import {ConfigService} from '@nestjs/config';
+import {FileInterceptor} from '@nestjs/platform-express';
 import {ApiResponse, ApiTags} from '@nestjs/swagger';
 import {fillObject} from 'common/helpers';
+import {UPLOAD_DIRECTORY_REG_EXP, VIDEO_URL_REG_EXP} from 'src/app.constant';
+import {getFileInterceptorOptions} from 'src/config/multer.config';
 import CreateTrainingDto from 'src/dto/create-training.dto';
 import UpdateTrainingDto from 'src/dto/update-training.dto';
 import {AccessTokenGuard} from 'src/guards/access-token.guard';
@@ -13,7 +17,8 @@ import {TrainingsService} from './trainings.service';
 @Controller('trainings')
 export class TrainingsController {
   constructor(
-    private readonly trainingService: TrainingsService
+    private readonly trainingsService: TrainingsService,
+    private readonly configService: ConfigService
   ) {}
 
   @ApiResponse({
@@ -30,7 +35,7 @@ export class TrainingsController {
     @Req() req: RawBodyRequest<{user: Payload}>
   ) {
     const coachId = req.user.sub;
-    const training = await this.trainingService.create(coachId, dto);
+    const training = await this.trainingsService.create(coachId, dto);
     return fillObject(TrainingRdo, training);
   }
 
@@ -48,7 +53,7 @@ export class TrainingsController {
     @Query() query: GetTrainings
   ) {
     const coachId = req.user.sub;
-    const trainings = await this.trainingService.findTrainings(coachId, query);
+    const trainings = await this.trainingsService.findTrainings(coachId, query);
     return fillObject(TrainingRdo, trainings);
   }
 
@@ -64,7 +69,7 @@ export class TrainingsController {
   public async showTraining(
     @Param('id') id: string
   ) {
-    const training = await this.trainingService.showTraining(id);
+    const training = await this.trainingsService.showTraining(id);
     return fillObject(TrainingRdo, training);
   }
 
@@ -83,9 +88,37 @@ export class TrainingsController {
     @Req() req: RawBodyRequest<{user: Payload}>
   ) {
     const coachId = req.user.sub;
-    const training = await this.trainingService.updateTraining(coachId, id, dto);
+    const training = await this.trainingsService.updateTraining(coachId, id, dto);
     return fillObject(TrainingRdo, training);
   }
 
+  @ApiResponse({
+    type: TrainingRdo,
+    status: HttpStatus.OK,
+    description: 'The training video file uploading route'
+  })
   // ВЫГРУЗКА ВИДЕО
+  @UseGuards(AccessTokenGuard)
+  @Post('video/:id')
+  @UseInterceptors(
+    FileInterceptor('video', getFileInterceptorOptions())
+  )
+  public async uploadVideoFile(
+    @UploadedFile(
+      new ParseFilePipeBuilder()
+        .addFileTypeValidator({
+          fileType: VIDEO_URL_REG_EXP,
+        })
+        .build({
+          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY
+        })
+    ) file: Express.Multer.File,
+    @Req() req: RawBodyRequest<{user: Payload}>,
+    @Param('id') id: string
+  ) {
+    const coachId = req.user.sub;
+    const uploadDirectory = this.configService.get('multer.uploadDirectory').match(UPLOAD_DIRECTORY_REG_EXP);
+    const user = this.trainingsService.setVideoFilePath(coachId, id, `${uploadDirectory}/${file.filename}`);
+    return fillObject(TrainingRdo, user);
+  }
 }
