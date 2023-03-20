@@ -8,6 +8,7 @@ import {jwtOptions} from './config/jwt.config';
 import multerConfig from './config/multer.config';
 import envSchema from './env.schema';
 import {TrainingsModule} from './trainings/trainings.module';
+import { OrdersModule } from './orders/orders.module';
 
 @Module({
   imports: [
@@ -28,7 +29,8 @@ import {TrainingsModule} from './trainings/trainings.module';
     MongooseModule.forRootAsync(
       getMongoDbConfig()
     ),
-    TrainingsModule
+    TrainingsModule,
+    OrdersModule
   ],
   controllers: [],
   providers: []
