@@ -19,4 +19,18 @@ export class OrdersService {
     const orders = await this.ordersRepository.find();
     return orders;
   }
+
+  public async showOrder(id: string) {
+    const order = await this.ordersRepository.findById(id);
+    return order;
+  }
+
+  public async deactivateOrder(id: string) {
+    const order = await this.ordersRepository.findById(id);
+
+    const orderEntity = new OrderEntity({...order, isCompleted: true});
+    const deactivatedOrder = await this.ordersRepository.update(id, orderEntity);
+
+    return deactivatedOrder;
+  }
 }

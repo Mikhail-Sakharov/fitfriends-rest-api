@@ -69,3 +69,9 @@ Content-Type: application/json
 
 ### Запрос всех заказов
 GET http://localhost:5679/orders HTTP/1.1
+
+### Запрос детальной информации по заказу
+GET http://localhost:5679/orders/64189bb68f238f540075037a HTTP/1.1
+
+### Деактивация заказа
+GET http://localhost:5679/orders/deactivate/64189bb68f238f540075037a HTTP/1.1

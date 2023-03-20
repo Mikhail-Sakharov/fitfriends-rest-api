@@ -1,4 +1,4 @@
-import {Body, Controller, Get, HttpCode, HttpStatus, Post} from '@nestjs/common';
+import {Body, Controller, Get, HttpCode, HttpStatus, Param, Post} from '@nestjs/common';
 import CreateOrderDto from 'src/dto/create-order.dto';
 import {OrdersService} from './orders.service';
 
@@ -22,5 +22,23 @@ export class OrdersController {
   public async getOrders() {
     const orders = await this.ordersService.getOrders();
     return orders;
+  }
+
+  @Get(':id')
+  @HttpCode(HttpStatus.OK)
+  public async showOrder(
+    @Param('id') id: string
+  ) {
+    const order = await this.ordersService.showOrder(id);
+    return order;
+  }
+
+  @Get('deactivate/:id')
+  @HttpCode(HttpStatus.OK)
+  public async deactivateOrder(
+    @Param('id') id: string
+  ) {
+    const order = await this.ordersService.deactivateOrder(id);
+    return order;
   }
 }

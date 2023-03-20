@@ -1,7 +1,6 @@
 import {Document, Schema as MongooseSchema} from 'mongoose';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {Order, OrderType, PaymentMethod} from 'src/types/order.interface';
-// import {TrainingModel} from 'src/trainings/training.model';
 
 @Schema({
   collection: 'fitfriends-orders',
