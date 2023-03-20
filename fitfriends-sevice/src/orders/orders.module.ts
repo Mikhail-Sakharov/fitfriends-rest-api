@@ -2,6 +2,7 @@ import {Module} from '@nestjs/common';
 import {MongooseModule} from '@nestjs/mongoose';
 import {OrderModel, OrderSchema} from './order.model';
 import {OrdersController} from './orders.controller';
+import {OrdersRepository} from './orders.repository';
 import {OrdersService} from './orders.service';
 
 @Module({
@@ -11,6 +12,6 @@ import {OrdersService} from './orders.service';
     ])
   ],
   controllers: [OrdersController],
-  providers: [OrdersService]
+  providers: [OrdersService, OrdersRepository]
 })
 export class OrdersModule {}

@@ -1,12 +1,11 @@
 import {Entity} from 'src/types/entity.interface';
 import {Order, OrderType, PaymentMethod} from 'src/types/order.interface';
-import {Training} from 'src/types/training.interface';
 
 export class OrderEntity implements Order, Entity<Order> {
   public _id?: string;
   public createdAt?: string;
   public orderType: OrderType;
-  public trainingId: Training;
+  public trainingId: string;
   public price: number;
   public quantity: number;
   public totalOrderPrice: number;

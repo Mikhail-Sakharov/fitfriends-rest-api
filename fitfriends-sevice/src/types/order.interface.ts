@@ -1,5 +1,3 @@
-import {Training} from './training.interface';
-
 export enum OrderType {
   Subscription = 'абонемент',
   Training = 'тренировка'
@@ -15,7 +13,7 @@ export interface Order {
   _id?: string;
   createdAt?: string;
   orderType: OrderType;
-  trainingId: Training;
+  trainingId: string;
   price: number;
   quantity: number;
   totalOrderPrice: number;
