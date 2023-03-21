@@ -1,4 +1,4 @@
-import {Injectable} from '@nestjs/common';
+import {ForbiddenException, Injectable} from '@nestjs/common';
 import CreateOrderDto from 'src/dto/create-order.dto';
 import {OrderEntity} from './order.entity';
 import {OrdersRepository} from './orders.repository';
@@ -9,19 +9,24 @@ export class OrdersService {
     private readonly ordersRepository: OrdersRepository
   ) {}
 
-  public async createOrder(dto: CreateOrderDto) {
+  public async createOrder(dto: CreateOrderDto & {traineeId: string}) {
     const orderEntity = new OrderEntity(dto);
     const order = await this.ordersRepository.create(orderEntity);
     return order;
   }
 
-  public async getOrders() {
-    const orders = await this.ordersRepository.find();
+  public async getOrders(coachId: string) {
+    const orders = await this.ordersRepository.find(coachId);
     return orders;
   }
 
-  public async showOrder(id: string) {
+  public async showOrder(id: string, coachId: string) {
     const order = await this.ordersRepository.findById(id);
+
+    if(order.coachId !== coachId) {
+      throw new ForbiddenException('Access denied');
+    }
+
     return order;
   }
 

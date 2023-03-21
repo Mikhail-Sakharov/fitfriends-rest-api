@@ -1,8 +1,10 @@
-import {Body, Controller, Get, HttpCode, HttpStatus, Param, Post} from '@nestjs/common';
+import {Body, Controller, Get, HttpCode, HttpStatus, Param, Post, RawBodyRequest, Req, UseGuards} from '@nestjs/common';
 import {ApiResponse, ApiTags} from '@nestjs/swagger';
 import {fillObject} from 'common/helpers';
 import CreateOrderDto from 'src/dto/create-order.dto';
+import {AccessTokenGuard} from 'src/guards/access-token.guard';
 import {OrderRdo} from 'src/rdo/order.rdo';
+import {Payload} from 'src/types/payload.interface';
 import {OrdersService} from './orders.service';
 
 @ApiTags('orders')
@@ -18,12 +20,15 @@ export class OrdersController {
     description: 'The order was created'
   })
   // СОЗДАНИЕ ЗАКАЗА
+  @UseGuards(AccessTokenGuard)
   @Post('')
   @HttpCode(HttpStatus.CREATED)
   public async createOrder(
-    @Body() dto: CreateOrderDto
+    @Body() dto: CreateOrderDto,
+    @Req() req: RawBodyRequest<{user: Payload}>
   ) {
-    const order = await this.ordersService.createOrder(dto);
+    const traineeId = req.user.sub;
+    const order = await this.ordersService.createOrder({...dto, traineeId});
     return fillObject(OrderRdo, order);
   }
 
@@ -33,10 +38,14 @@ export class OrdersController {
     description: 'The list of orders was received'
   })
   // ПОЛУЧЕНИЕ СПИСКА ЗАКАЗОВ
+  @UseGuards(AccessTokenGuard)
   @Get('')
   @HttpCode(HttpStatus.OK)
-  public async getOrders() {
-    const orders = await this.ordersService.getOrders();
+  public async getOrders(
+    @Req() req: RawBodyRequest<{user: Payload}>
+  ) {
+    const coachId = req.user.sub;
+    const orders = await this.ordersService.getOrders(coachId);
     return fillObject(OrderRdo, orders);
   }
 
@@ -46,15 +55,18 @@ export class OrdersController {
     description: 'The detailed information about the order was received'
   })
   // ДЕТАЛЬНАЯ ИНФОРМАЦИЯ ПО ЗАКАЗУ
+  @UseGuards(AccessTokenGuard)
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   public async showOrder(
-    @Param('id') id: string
+    @Param('id') id: string,
+    @Req() req: RawBodyRequest<{user: Payload}>
   ) {
     // Добавить сбор статистики:
     // ----- price, totalOrderPrice (--> RDO)
     // ----- totalTrainingQuantity, totalTrainingAmountOfMoney (--> RDO)
-    const order = await this.ordersService.showOrder(id);
+    const coachId = req.user.sub;
+    const order = await this.ordersService.showOrder(id, coachId);
     return fillObject(OrderRdo, order);
   }
 
@@ -64,6 +76,7 @@ export class OrdersController {
     description: 'The order was deactivated'
   })
   // ДЕАКТИВАЦИЯ ЗАКАЗА
+  @UseGuards(AccessTokenGuard)
   @Get('deactivate/:id')
   @HttpCode(HttpStatus.OK)
   public async deactivateOrder(

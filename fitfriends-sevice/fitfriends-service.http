@@ -55,6 +55,7 @@ Content-Type: video/mp4
 ### Создание заказа
 POST http://localhost:5679/orders HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDE3NGI5NmFlNzQ2ZGI3MmJmODM4YTYiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItGC0YDQtdC90LXRgCIsImlhdCI6MTY3OTQwMzU5MCwiZXhwIjoxNjc5NDA0NDkwfQ.hhPsP9kR1Yf8_BZQsZ4NsRtjrIcYD0ycIIkcjNKVI0Y
 
 {
   "orderType": "тренировка",
@@ -63,12 +64,12 @@ Content-Type: application/json
   "quantity": 2,
   "totalOrderPrice": 4000,
   "paymentMethod": "visa",
-  "coachId": "64174b96ae746db72bf838a6",
-  "traineeId": "64174b96ae746db72bf838a4"
+  "coachId": "6419abb6b09a1081e95d02a0"
 }
 
 ### Запрос всех заказов
 GET http://localhost:5679/orders HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDE5YWJiNmIwOWExMDgxZTk1ZDAyYTAiLCJlbWFpbCI6ImpvaG5AcXdlLnF3ZSIsInVzZXJOYW1lIjoiSm9obiIsInVzZXJSb2xlIjoi0YLRgNC10L3QtdGAIiwiaWF0IjoxNjc5NDA0MTAyLCJleHAiOjE2Nzk0MDUwMDJ9.emaP2rRL-e6oNlL5q3D-Xn_BcVvmS6QrPnNfKI99Mgk
 
 ### Запрос детальной информации по заказу
 GET http://localhost:5679/orders/64189bb68f238f540075037a HTTP/1.1

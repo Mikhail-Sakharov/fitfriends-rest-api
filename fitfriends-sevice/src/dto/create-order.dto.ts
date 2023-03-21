@@ -51,11 +51,4 @@ export default class CreateOrderDto {
   })
   @IsMongoId()
   public coachId: string;
-
-  @ApiProperty({
-    description: 'The unique MongoDB ID of the user who has made the order',
-    example: '6410a7b666d4c557792f0383'
-  })
-  @IsMongoId()
-  public traineeId: string;
 }

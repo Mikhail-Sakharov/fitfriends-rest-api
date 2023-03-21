@@ -17,8 +17,8 @@ export class OrdersRepository implements CRUDRepository<OrderEntity, string, Ord
     return order.populate('trainingId');
   }
 
-  public async find(): Promise<Order[]> {
-    return await this.orderModel.find().populate('trainingId');
+  public async find(coachId: string): Promise<Order[]> {
+    return await this.orderModel.find({coachId}).populate('trainingId');
   }
 
   public async findById(id: string): Promise<Order | null> {
