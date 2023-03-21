@@ -101,18 +101,4 @@ export class UserRdo {
   })
   @Expose()
   public myFriends: User[];
-
-  @ApiProperty({
-    description: 'The list of purchases ids',
-    example: '[6410a7b666d4c557792f0383, 6410a7b666d4c557792f0385]'
-  })
-  @Expose()
-  public myPurchases: string[];
-
-  @ApiProperty({
-    description: 'The list of gyms ids',
-    example: '[6410a7b666d4c557792f0383, 6410a7b666d4c557792f0385]'
-  })
-  @Expose()
-  public myGyms: string[];
 }

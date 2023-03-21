@@ -22,8 +22,6 @@ export class UserEntity implements User, Entity<User> {
   public trainingTypes: TrainingType[];
   public questionnaire: Questionnaire;
   public myFriends?: string[];
-  public myPurchases?: string[];
-  public myGyms?: string[];
   public refreshToken?: string | null;
 
   constructor(user: User) {
@@ -57,8 +55,6 @@ export class UserEntity implements User, Entity<User> {
     this.trainingTypes = user.trainingTypes;
     this.questionnaire = user.questionnaire;
     this.myFriends = user.myFriends;
-    this.myPurchases = user.myPurchases;
-    this.myGyms = user.myGyms;
     this.refreshToken = user.refreshToken;
   }
 }

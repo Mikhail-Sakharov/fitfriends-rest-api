@@ -35,7 +35,5 @@ export interface User {
   trainingTypes: TrainingType[];
   questionnaire: Questionnaire;
   myFriends?: string[];
-  myPurchases?: string[]; // массив айдишников сущности
-  myGyms?: string[]; // массив айдишников сущности
   refreshToken?: string | null;
 }

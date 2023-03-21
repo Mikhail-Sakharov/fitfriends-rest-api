@@ -94,16 +94,6 @@ export class UserModel extends Document implements User {
   myFriends: string[];
 
   @Prop({
-    default: []
-  })
-  myPurchases: string[];
-
-  @Prop({
-    default: []
-  })
-  myGyms: string[];
-
-  @Prop({
     default: null
   })
   refreshToken: string | null;
