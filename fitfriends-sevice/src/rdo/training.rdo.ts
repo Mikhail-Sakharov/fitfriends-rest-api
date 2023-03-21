@@ -19,7 +19,7 @@ export class TrainingRdo {
     example: '2023-03-14T16:58:30.805Z'
   })
   @Expose()
-  public createdAt: string[];
+  public createdAt: string;
 
   @ApiProperty({
     description: 'Training title',

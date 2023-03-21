@@ -33,7 +33,7 @@ Content-Type: application/json
 
 ### Запрос всех тренировок (тренер может запросить только свои тренировки)
 GET http://localhost:5679/trainings?minPrice=0&maxPrice=4500&minCaloriesCount=0&maxCaloriesCount=2300&duration=30 мин — 50 мин HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDE3NGI5NmFlNzQ2ZGI3MmJmODM4YTYiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY3OTI0ODI3OCwiZXhwIjoxNjc5MjQ5MTc4fQ.5aC_aS39Bv1K-ZZbdww_by1TVbnibJXcybFmw8afffE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDE3NGI5NmFlNzQ2ZGI3MmJmODM4YTYiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItGC0YDQtdC90LXRgCIsImlhdCI6MTY3OTM5OTU5MSwiZXhwIjoxNjc5NDAwNDkxfQ.ti_k7UOdcsO5xOOlEqM8w2G2OXzjvkcCq83ElMuy6Rw
 
 ### Запрос детальной информации
 GET http://localhost:5679/trainings/641451c413b70ea381cf27f4 HTTP/1.1
