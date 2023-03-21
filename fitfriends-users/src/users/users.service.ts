@@ -1,8 +1,10 @@
 import * as fs from 'fs';
-import {BadRequestException, Injectable, NotFoundException} from '@nestjs/common';
+import {BadRequestException, ForbiddenException, Injectable, NotFoundException} from '@nestjs/common';
 import UpdateUserDto from 'src/dto/update-user.dto';
 import {UserEntity} from './user.entity';
 import {UsersRepository} from './users.repository';
+import {UserRole} from 'src/types/user-role.enum';
+import {CoachQuestionnaire} from 'src/types/user.interface';
 
 @Injectable()
 export class UsersService {
@@ -100,5 +102,28 @@ export class UsersService {
       });
     }
     return this.updateUser(userId, {avatarUrl});
+  }
+
+  public async setCertificateFilePath(userId: string, certificateUrl: string) {
+    const user = await this.usersRepository.findById(userId);
+
+    if (user.userRole !== UserRole.Coach) {
+      throw new ForbiddenException('Access denied');
+    }
+
+    const questionnaire = user.questionnaire as CoachQuestionnaire;
+    const certificates = questionnaire.certificates;
+
+    if (fs.existsSync(certificates[0])) {
+      fs.unlink(certificates[0], (err) => {
+        if (err) {
+         console.error(err);
+         return err;
+        }
+      });
+    }
+
+    const updatedQuestionnaire = {...questionnaire, certificates: [certificateUrl]};
+    return this.updateUser(userId, {questionnaire: updatedQuestionnaire});
   }
 }

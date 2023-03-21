@@ -27,7 +27,6 @@ import {SubwayStation} from 'src/types/subway-station.enum';
 import {TrainingLevel} from 'src/types/training-level.enum';
 import {TrainingType} from 'src/types/training-type.enum';
 import {UserRole} from 'src/types/user-role.enum';
-import {User} from 'src/types/user.interface';
 
 class CoachQuestionnaire {
   @IsOptional()
@@ -168,7 +167,6 @@ export default class UpdateUserDto {
   public questionnaire?: Questionnaire;
 
   public myFriends?: string[];
-  public myPurchases?: string[];
-  public myGyms?: string[];
+  
   public refreshToken?: string | null;
 }

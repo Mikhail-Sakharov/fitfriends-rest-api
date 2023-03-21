@@ -25,7 +25,7 @@ import {Payload} from 'src/types/payload.interface';
 import {UsersService} from './users.service';
 import {ConfigService} from '@nestjs/config';
 import {getFileInterceptorOptions} from 'src/config/multer.config';
-import {AVATAR_MAX_SIZE, AVATAR_URL_REG_EXP, UPLOAD_DIRECTORY_REG_EXP} from 'src/app.constant';
+import {AVATAR_MAX_SIZE, AVATAR_URL_REG_EXP, CERTIFICATE_URL_REG_EXP, UPLOAD_DIRECTORY_REG_EXP} from 'src/app.constant';
 
 @ApiTags('users')
 @Controller('users')
@@ -148,7 +148,7 @@ export class UsersController {
     status: HttpStatus.OK,
     description: 'The user removed from friends'
   })
-  // УДАЛИТЬ ИЗ ДРУЗЕЙ
+  // УДАЛИТЬ ИЗ ДРУЗЕЙ / УДАЛИТЬСЯ ИЗ ДРУЗЕЙ
   @UseGuards(AccessTokenGuard)
   @Get('friends/remove/:id')
   @HttpCode(HttpStatus.OK)
@@ -161,9 +161,26 @@ export class UsersController {
     await this.usersService.removeFriend(myId, removedFriendId);
   }
 
-  // ДОБАВИТЬ ПОКУПКУ
-
-  // ДОБАВИТЬ ЗАЛ
-
   // ВЫГРУЗКА ФАЙЛА СЕРТИФИКАТА ТРЕНЕРА
+  @UseGuards(AccessTokenGuard)
+  @Post('certificate')
+  @UseInterceptors(
+    FileInterceptor('certificate', getFileInterceptorOptions())
+  )
+  public async uploadCertificate(
+    @UploadedFile(
+      new ParseFilePipeBuilder()
+        .addFileTypeValidator({
+          fileType: CERTIFICATE_URL_REG_EXP,
+        })
+        .build({
+          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY
+        })
+    ) file: Express.Multer.File,
+    @Req() req: RawBodyRequest<{user: Payload}>
+  ) {
+    const uploadDirectory = this.configService.get('multer.uploadDirectory').match(UPLOAD_DIRECTORY_REG_EXP);
+    const user = this.usersService.setCertificateFilePath(req.user.sub, `${uploadDirectory}/${file.filename}`);
+    return fillObject(UserRdo, user);
+  }
 }

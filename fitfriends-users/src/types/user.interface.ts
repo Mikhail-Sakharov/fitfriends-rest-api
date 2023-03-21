@@ -5,13 +5,13 @@ import {TrainingLevel} from './training-level.enum';
 import {TrainingType} from './training-type.enum';
 import {UserRole} from './user-role.enum';
 
-type CoachQuestionnaire = {
+export type CoachQuestionnaire = {
   certificates: string[];
   description: string;
   isReadyToTrain: boolean;
 };
 
-type UserQuestionnaire = {
+export type UserQuestionnaire = {
   trainingDuration: Duration;
   dailyCaloriesCount: number;
   totalCaloriesCount: number;
