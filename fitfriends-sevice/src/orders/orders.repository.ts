@@ -13,8 +13,8 @@ export class OrdersRepository implements CRUDRepository<OrderEntity, string, Ord
   ) {}
 
   public async create(item: OrderEntity): Promise<Order> {
-    const newOrder = new this.orderModel(item);
-    return await newOrder.save();
+    const order = await this.orderModel.create(item.toObject());
+    return order.populate('trainingId');
   }
 
   public async find(): Promise<Order[]> {

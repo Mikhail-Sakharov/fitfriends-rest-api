@@ -59,9 +59,9 @@ Content-Type: application/json
 {
   "orderType": "тренировка",
   "trainingId": "64174be02541b3f1599b4cc2",
-  "price": "2000",
-  "quantity": "2",
-  "totalOrderPrice": "4000",
+  "price": 2000,
+  "quantity": 2,
+  "totalOrderPrice": 4000,
   "paymentMethod": "visa",
   "coachId": "64174b96ae746db72bf838a6",
   "traineeId": "64174b96ae746db72bf838a4"
