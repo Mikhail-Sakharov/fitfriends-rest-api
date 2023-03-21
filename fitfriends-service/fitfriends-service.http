@@ -1,7 +1,7 @@
 ### Создание тренировки
 POST http://localhost:5679/trainings HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDE3NGI5NmFlNzQ2ZGI3MmJmODM4YTYiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY3OTI0ODI3OCwiZXhwIjoxNjc5MjQ5MTc4fQ.5aC_aS39Bv1K-ZZbdww_by1TVbnibJXcybFmw8afffE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDFhMDY1ZGE4Yjk4NWVlOTgzMjI5MGYiLCJlbWFpbCI6ImpvaG5AcXdlLnF3ZSIsInVzZXJOYW1lIjoiSm9obiIsInVzZXJSb2xlIjoi0YLRgNC10L3QtdGAIiwiaWF0IjoxNjc5NDI3MTY1LCJleHAiOjE2Nzk0MjgwNjV9.amUx4TfqE44rKR-Ns1sc63yhcST5nKRvlZrYsM-KXPo
 
 {
   "title": "energy",
@@ -55,21 +55,21 @@ Content-Type: video/mp4
 ### Создание заказа
 POST http://localhost:5679/orders HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDE3NGI5NmFlNzQ2ZGI3MmJmODM4YTYiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItGC0YDQtdC90LXRgCIsImlhdCI6MTY3OTQwMzU5MCwiZXhwIjoxNjc5NDA0NDkwfQ.hhPsP9kR1Yf8_BZQsZ4NsRtjrIcYD0ycIIkcjNKVI0Y
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDFhMDY2ZGE4Yjk4NWVlOTgzMjI5MTYiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY3OTQyNzMxMCwiZXhwIjoxNjc5NDI4MjEwfQ.h8xA3Kx4a3a8iExeFHKCV823GrWcMdQiGBrCLFniFug
 
 {
   "orderType": "тренировка",
-  "trainingId": "64174be02541b3f1599b4cc2",
-  "price": 2000,
-  "quantity": 2,
-  "totalOrderPrice": 4000,
+  "trainingId": "641a06c712c1949fdfbbc8a2",
+  "price": 6500,
+  "quantity": 1,
+  "totalOrderPrice": 6500,
   "paymentMethod": "visa",
-  "coachId": "6419abb6b09a1081e95d02a0"
+  "coachId": "641a065da8b985ee9832290f"
 }
 
 ### Запрос всех заказов
 GET http://localhost:5679/orders HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDE5YWJiNmIwOWExMDgxZTk1ZDAyYTAiLCJlbWFpbCI6ImpvaG5AcXdlLnF3ZSIsInVzZXJOYW1lIjoiSm9obiIsInVzZXJSb2xlIjoi0YLRgNC10L3QtdGAIiwiaWF0IjoxNjc5NDA0MTAyLCJleHAiOjE2Nzk0MDUwMDJ9.emaP2rRL-e6oNlL5q3D-Xn_BcVvmS6QrPnNfKI99Mgk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDFhMDY1ZGE4Yjk4NWVlOTgzMjI5MGYiLCJlbWFpbCI6ImpvaG5AcXdlLnF3ZSIsInVzZXJOYW1lIjoiSm9obiIsInVzZXJSb2xlIjoi0YLRgNC10L3QtdGAIiwiaWF0IjoxNjc5NDMxMDAxLCJleHAiOjE2Nzk0MzE5MDF9.k45Dm219c6uXk8JVKZtTnIw0HtwkQPX3KTt9PmoVdGQ
 
 ### Запрос детальной информации по заказу
 GET http://localhost:5679/orders/64189bb68f238f540075037a HTTP/1.1

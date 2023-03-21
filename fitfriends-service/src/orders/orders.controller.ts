@@ -46,7 +46,9 @@ export class OrdersController {
   ) {
     const coachId = req.user.sub;
     const orders = await this.ordersService.getOrders(coachId);
-    return fillObject(OrderRdo, orders);
+    const transformedOrders = (fillObject(OrderRdo, orders) as unknown) as OrderRdo[];
+    const ordersWithStatistics = await this.ordersService.getOrdersWithStatistics(transformedOrders);
+    return ordersWithStatistics;
   }
 
   @ApiResponse({
@@ -62,9 +64,6 @@ export class OrdersController {
     @Param('id') id: string,
     @Req() req: RawBodyRequest<{user: Payload}>
   ) {
-    // Добавить сбор статистики:
-    // ----- price, totalOrderPrice (--> RDO)
-    // ----- totalTrainingQuantity, totalTrainingAmountOfMoney (--> RDO)
     const coachId = req.user.sub;
     const order = await this.ordersService.showOrder(id, coachId);
     return fillObject(OrderRdo, order);

@@ -32,7 +32,7 @@ export class OrderRdo {
   })
   @Expose({name: 'trainingId'})
   @Type(() => TrainingRdo)
-  public training: string;
+  public training: TrainingRdo;
 
   @ApiProperty({
     description: 'The price of the selected training',
