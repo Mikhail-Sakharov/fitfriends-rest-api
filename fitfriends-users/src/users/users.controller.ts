@@ -116,6 +116,34 @@ export class UsersController {
   @ApiResponse({
     type: UserRdo,
     status: HttpStatus.OK,
+    description: 'The certificate file uploading route'
+  })
+  // ВЫГРУЗКА ФАЙЛА СЕРТИФИКАТА ТРЕНЕРА
+  @UseGuards(AccessTokenGuard)
+  @Post('certificate')
+  @UseInterceptors(
+    FileInterceptor('certificate', getFileInterceptorOptions())
+  )
+  public async uploadCertificate(
+    @UploadedFile(
+      new ParseFilePipeBuilder()
+        .addFileTypeValidator({
+          fileType: CERTIFICATE_URL_REG_EXP,
+        })
+        .build({
+          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY
+        })
+    ) file: Express.Multer.File,
+    @Req() req: RawBodyRequest<{user: Payload}>
+  ) {
+    const uploadDirectory = this.configService.get('multer.uploadDirectory').match(UPLOAD_DIRECTORY_REG_EXP);
+    const user = this.usersService.setCertificateFilePath(req.user.sub, `${uploadDirectory}/${file.filename}`);
+    return fillObject(UserRdo, user);
+  }
+
+  @ApiResponse({
+    type: UserRdo,
+    status: HttpStatus.OK,
     description: 'The detailed info is received'
   })
   // ДЕТАЛЬНАЯ ИНФ О ПОЛЬЗОВАТЕЛЕ
@@ -159,28 +187,5 @@ export class UsersController {
     const myId = req.user.sub;
     const removedFriendId = id;
     await this.usersService.removeFriend(myId, removedFriendId);
-  }
-
-  // ВЫГРУЗКА ФАЙЛА СЕРТИФИКАТА ТРЕНЕРА
-  @UseGuards(AccessTokenGuard)
-  @Post('certificate')
-  @UseInterceptors(
-    FileInterceptor('certificate', getFileInterceptorOptions())
-  )
-  public async uploadCertificate(
-    @UploadedFile(
-      new ParseFilePipeBuilder()
-        .addFileTypeValidator({
-          fileType: CERTIFICATE_URL_REG_EXP,
-        })
-        .build({
-          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY
-        })
-    ) file: Express.Multer.File,
-    @Req() req: RawBodyRequest<{user: Payload}>
-  ) {
-    const uploadDirectory = this.configService.get('multer.uploadDirectory').match(UPLOAD_DIRECTORY_REG_EXP);
-    const user = this.usersService.setCertificateFilePath(req.user.sub, `${uploadDirectory}/${file.filename}`);
-    return fillObject(UserRdo, user);
   }
 }
