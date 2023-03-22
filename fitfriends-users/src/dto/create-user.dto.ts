@@ -10,16 +10,21 @@ import {
   IsOptional,
   IsString,
   Matches,
+  Max,
   MaxLength,
+  Min,
   MinLength,
   ValidateNested
 } from 'class-validator';
 import {
   AVATAR_URL_REG_EXP,
   BIRTHDAY_REG_EXP,
+  CoachDescriptionLength,
   MAX_TRAINING_TYPES_LENGTH,
+  UserDailyCaloriesCount,
   UserNameLength,
-  UserPasswordLength
+  UserPasswordLength,
+  UserTotalCaloriesCount
 } from 'src/app.constant';
 import {Duration} from 'src/types/duration.enum';
 import {Gender} from 'src/types/gender.enum';
@@ -33,6 +38,8 @@ class CoachQuestionnaire {
   public certificates!: string[];
 
   @IsString()
+  @MinLength(CoachDescriptionLength.MIN)
+  @MaxLength(CoachDescriptionLength.MAX)
   public description!: string;
 
   @IsBoolean()
@@ -44,9 +51,13 @@ class UserQuestionnaire {
   public trainingDuration!: Duration;
 
   @IsInt()
+  @Min(UserDailyCaloriesCount.MIN)
+  @Max(UserDailyCaloriesCount.MAX)
   public dailyCaloriesCount!: number;
 
   @IsInt()
+  @Min(UserTotalCaloriesCount.MIN)
+  @Max(UserTotalCaloriesCount.MAX)
   public totalCaloriesCount!: number;
 
   @IsBoolean()
