@@ -1,0 +1,11 @@
+### Создание дневника тренировок
+POST http://localhost:5680/trainings-diary HTTP/1.1
+Content-Type: application/json
+
+{
+  "trainingId": "23874yr0374ry083hoiuerfhoeqgrfoqeywgfo4730873",
+  "trainingTitle": "Excellent training",
+  "userId": "ttiqwtiuqytweirytqwie-qwerqw-qwerqwer-qwerqwe",
+  "caloriesCount": 5500,
+  "duration": 10
+}
