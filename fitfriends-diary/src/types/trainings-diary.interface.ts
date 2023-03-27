@@ -1,4 +1,4 @@
-export interface TrainingDiary {
+export interface TrainingsDiary {
   _id?: string;
   createdAt?: string;
   trainingId: string;
