@@ -1,0 +1,24 @@
+services:
+  mongodb-fitfriends-diary:
+    image: mongo
+    restart: always
+    container_name: mongodb-fitfriends-diary
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: test
+      MONGO_INITDB_DATABASE: fitfriends-diary
+    ports:
+      - 27020:27017
+    volumes:
+      - ./db:/data/db
+
+  mongodb-express-fitfriends-diary:
+    image: mongo-express
+    restart: always
+    container_name: mongo-express-fitfriends-diary
+    ports:
+      - 8087:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: test
+      ME_CONFIG_MONGODB_URL: mongodb://admin:test@mongodb-fitfriends-diary:27017/
