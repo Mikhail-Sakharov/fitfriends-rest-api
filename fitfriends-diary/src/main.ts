@@ -1,5 +1,6 @@
 import {Logger, ValidationPipe} from '@nestjs/common';
 import {NestFactory} from '@nestjs/core';
+import {SwaggerModule, DocumentBuilder} from '@nestjs/swagger';
 import {AppModule} from './app.module';
 
 async function bootstrap() {
@@ -10,6 +11,15 @@ async function bootstrap() {
       transform: true
     })
   );
+
+  const config = new DocumentBuilder()
+    .setTitle('The «Fitfriends-Diary» service')
+    .setDescription('Fitfriends-Diary API')
+    .setVersion('1.0')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('spec', app, document);
 
   const port = process.env.PORT || 3002;
   await app.listen(port);
