@@ -1,11 +1,11 @@
 ### Создание дневника тренировок
 POST http://localhost:5680/trainings-diary HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIzMDYxMzIyNzM4YWM1NzJiZTEzYzgiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY4MDAxNjkxNiwiZXhwIjoxNjgwMDE3ODE2fQ.WlbGqHC2x8r3Vk_D1kIYT5qGWZNnHLT-fsousDf0MKU
 
 {
   "trainingId": "6411af71fba5eba2ef3f7bc0",
   "trainingTitle": "Energy",
-  "userId": "6411af71fba5eba2ef3f7bc0",
   "caloriesCount": 5000,
   "duration": "30-50 мин"
 }

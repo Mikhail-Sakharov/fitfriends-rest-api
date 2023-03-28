@@ -1,7 +1,9 @@
-import {Body, Controller, Get, HttpCode, HttpStatus, Post} from '@nestjs/common';
+import {Body, Controller, Get, HttpCode, HttpStatus, Post, RawBodyRequest, Req, UseGuards} from '@nestjs/common';
 import {fillObject} from 'common/helpers';
 import {CreateTrainingsDiaryDto} from 'src/dto/create-trainings-diary.dto';
+import {AccessTokenGuard} from 'src/guards/access-token.guard';
 import {TrainingsDiaryRdo} from 'src/rdo/trainings-diary.rdo';
+import {Payload} from 'src/types/payload.interface';
 import {TrainingsDiaryService} from './trainings-diary.service';
 
 @Controller('trainings-diary')
@@ -10,12 +12,15 @@ export class TrainingsDiaryController {
     private readonly trainingsDiaryService: TrainingsDiaryService
   ) {}
 
+  @UseGuards(AccessTokenGuard)
   @Post('')
   @HttpCode(HttpStatus.CREATED)
   public async createTrainingsDiary(
-    @Body() dto: CreateTrainingsDiaryDto
+    @Body() dto: CreateTrainingsDiaryDto,
+    @Req() req: RawBodyRequest<{user: Payload}>
   ) {
-    const trainingsDiary = await this.trainingsDiaryService.createTrainingsDiary(dto);
+    const userId = req.user.sub;
+    const trainingsDiary = await this.trainingsDiaryService.createTrainingsDiary({...dto, userId});
     return fillObject(TrainingsDiaryRdo, trainingsDiary);
   }
 

@@ -11,9 +11,6 @@ export class CreateTrainingsDiaryDto {
   @MaxLength(TrainingTitleLength.MAX)
   public trainingTitle: string;
 
-  @IsMongoId()
-  public userId: string;
-
   @IsNumber()
   @Min(TrainingCaloriesCount.MIN)
   @Max(TrainingCaloriesCount.MAX)

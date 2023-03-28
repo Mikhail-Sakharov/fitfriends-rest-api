@@ -9,7 +9,7 @@ export class TrainingsDiaryService {
     private readonly trainingsDiaryRepository: TrainingsDiaryRepository
   ) {}
 
-  public async createTrainingsDiary(dto: CreateTrainingsDiaryDto) {
+  public async createTrainingsDiary(dto: CreateTrainingsDiaryDto & {userId: string}) {
     const trainingsDiaryEntity = new TrainingsDiaryEntity(dto);
     return await this.trainingsDiaryRepository.create(trainingsDiaryEntity);
   }
