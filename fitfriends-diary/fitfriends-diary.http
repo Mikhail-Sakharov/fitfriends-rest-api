@@ -9,3 +9,6 @@ Content-Type: application/json
   "caloriesCount": 5500,
   "duration": 10
 }
+
+### Список тренировок
+GET http://localhost:5680/trainings-diary HTTP/1.1

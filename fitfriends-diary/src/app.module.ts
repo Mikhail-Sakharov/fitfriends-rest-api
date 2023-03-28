@@ -5,6 +5,7 @@ import {ConfigModule} from '@nestjs/config';
 import {ENV_FILE_PATH} from './app.constant';
 import {MongooseModule} from '@nestjs/mongoose';
 import databaseConfig, {getMongoDbConfig} from './config/database.config';
+import envSchema from './env.schema';
 
 @Module({
   imports: [
@@ -12,7 +13,8 @@ import databaseConfig, {getMongoDbConfig} from './config/database.config';
       cache: true,
       isGlobal: true,
       envFilePath: ENV_FILE_PATH,
-      load: [databaseConfig]
+      load: [databaseConfig],
+      validationSchema: envSchema
     }),
     MongooseModule.forRootAsync(
       getMongoDbConfig()

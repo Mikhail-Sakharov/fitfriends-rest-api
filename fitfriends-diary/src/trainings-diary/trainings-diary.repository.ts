@@ -14,18 +14,22 @@ export class TrainingsDiaryRepository implements CRUDRepository<TrainingsDiaryEn
 
   public async create(item: TrainingsDiaryEntity): Promise<TrainingsDiary> {
     const newTrainingsDiary = new this.trainingsDiaryModel(item);
-    return newTrainingsDiary.save();
+    return await newTrainingsDiary.save();
+  }
+
+  public async find(): Promise<TrainingsDiary[]> {
+    return await this.trainingsDiaryModel.find();
   }
 
   public async findById(id: string): Promise<TrainingsDiary | null> {
-    return this.trainingsDiaryModel.findById(id);
+    return await this.trainingsDiaryModel.findById(id);
   }
 
   public async update(id: string, item: TrainingsDiaryEntity): Promise<TrainingsDiary> {
-    return this.trainingsDiaryModel.findByIdAndUpdate(id, item.toObject(), {new: true});
+    return await this.trainingsDiaryModel.findByIdAndUpdate(id, item.toObject(), {new: true});
   }
 
   public async destroy(id: string): Promise<void> {
-    return this.trainingsDiaryModel.findByIdAndDelete(id);
+    return await this.trainingsDiaryModel.findByIdAndDelete(id);
   }
 }

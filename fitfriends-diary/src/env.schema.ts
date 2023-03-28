@@ -1,8 +1,7 @@
 import * as Joi from 'joi';
 
 const DEFAULT_MONGO_DB_HOST = 'localhost';
-const DEFAULT_MONGO_DB_PORT = 27019;
-const DEFAULT_UPLOAD_DIRECORY = './files';
+const DEFAULT_MONGO_DB_PORT = 27020;
 
 export default Joi.object({
   PORT: Joi.number().port(),
@@ -11,7 +10,5 @@ export default Joi.object({
   MONGO_PORT: Joi.number().port().default(DEFAULT_MONGO_DB_PORT).required(),
   MONGO_USER: Joi.string().required(),
   MONGO_PASSWORD: Joi.string().required(),
-  MONGO_AUTH_BASE: Joi.string().required(),
-  ACCESS_TOKEN_SECRET: Joi.string().required(),
-  UPLOAD_DIRECORY: Joi.string().default(DEFAULT_UPLOAD_DIRECORY).required()
+  MONGO_AUTH_BASE: Joi.string().required()
 });

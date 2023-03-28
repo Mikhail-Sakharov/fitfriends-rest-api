@@ -13,4 +13,8 @@ export class TrainingsDiaryService {
     const trainingsDiaryEntity = new TrainingsDiaryEntity(dto);
     return await this.trainingsDiaryRepository.create(trainingsDiaryEntity);
   }
+
+  public async getTrainingsDiaries() {
+    return await this.trainingsDiaryRepository.find();
+  }
 }
