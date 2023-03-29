@@ -1,10 +1,11 @@
-import {Body, Controller, Get, HttpCode, HttpStatus, Post, RawBodyRequest, Req, UseGuards} from '@nestjs/common';
+import {Body, Controller, ForbiddenException, Get, HttpCode, HttpStatus, Post, RawBodyRequest, Req, UseGuards} from '@nestjs/common';
 import {ApiResponse, ApiTags} from '@nestjs/swagger';
 import {fillObject} from 'common/helpers';
 import {CreateTrainingsDiaryDto} from 'src/dto/create-trainings-diary.dto';
 import {AccessTokenGuard} from 'src/guards/access-token.guard';
 import {TrainingsDiaryRdo} from 'src/rdo/trainings-diary.rdo';
 import {Payload} from 'src/types/payload.interface';
+import {UserRole} from 'src/types/user-role.enum';
 import {TrainingsDiaryService} from './trainings-diary.service';
 
 @ApiTags('trainings-diary')
@@ -27,6 +28,10 @@ export class TrainingsDiaryController {
     @Body() dto: CreateTrainingsDiaryDto,
     @Req() req: RawBodyRequest<{user: Payload}>
   ) {
+    const role = req.user.userRole;
+    if (role === UserRole.Coach) {
+      throw new ForbiddenException('Not for Admins');
+    }
     const userId = req.user.sub;
     const trainingsDiary = await this.trainingsDiaryService.createTrainingsDiary({...dto, userId});
     return fillObject(TrainingsDiaryRdo, trainingsDiary);
@@ -46,6 +51,10 @@ export class TrainingsDiaryController {
   ) {
     // - отсортировать список дневников в порядке убывания по дате
     // - отфильтровать записи с датой не ранее ПН текущей недели
+    const role = req.user.userRole;
+    if (role === UserRole.Coach) {
+      throw new ForbiddenException('Not for Admins');
+    }
     const userId = req.user.sub;
     const trainingsDiaries = await this.trainingsDiaryService.getTrainingsDiaries(userId);
     return fillObject(TrainingsDiaryRdo, trainingsDiaries);
