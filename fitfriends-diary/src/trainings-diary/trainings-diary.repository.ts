@@ -17,8 +17,8 @@ export class TrainingsDiaryRepository implements CRUDRepository<TrainingsDiaryEn
     return await newTrainingsDiary.save();
   }
 
-  public async find(): Promise<TrainingsDiary[]> {
-    return await this.trainingsDiaryModel.find();
+  public async find(userId: string): Promise<TrainingsDiary[]> {
+    return await this.trainingsDiaryModel.find({userId});
   }
 
   public async findById(id: string): Promise<TrainingsDiary | null> {

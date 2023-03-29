@@ -38,10 +38,16 @@ export class TrainingsDiaryController {
     description: 'The training diary list was received'
   })
   // ЗАПРОС СПИСКА ТРЕНИРОВОК
+  @UseGuards(AccessTokenGuard)
   @Get('')
   @HttpCode(HttpStatus.OK)
-  public async getTrainingsDiaries() {
-    const trainingsDiaries = await this.trainingsDiaryService.getTrainingsDiaries();
+  public async getTrainingsDiaries(
+    @Req() req: RawBodyRequest<{user: Payload}>
+  ) {
+    // - отсортировать список дневников в порядке убывания по дате
+    // - отфильтровать записи с датой не ранее ПН текущей недели
+    const userId = req.user.sub;
+    const trainingsDiaries = await this.trainingsDiaryService.getTrainingsDiaries(userId);
     return fillObject(TrainingsDiaryRdo, trainingsDiaries);
   }
 }

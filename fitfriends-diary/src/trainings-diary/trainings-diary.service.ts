@@ -14,7 +14,7 @@ export class TrainingsDiaryService {
     return await this.trainingsDiaryRepository.create(trainingsDiaryEntity);
   }
 
-  public async getTrainingsDiaries() {
-    return await this.trainingsDiaryRepository.find();
+  public async getTrainingsDiaries(userId: string) {
+    return await this.trainingsDiaryRepository.find(userId);
   }
 }
