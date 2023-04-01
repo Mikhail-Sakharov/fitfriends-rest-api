@@ -1,3 +1,4 @@
+//====================================ТРЕНИРОВКИ========================================
 ### Создание тренировки
 POST http://localhost:5679/trainings HTTP/1.1
 Content-Type: application/json
@@ -49,6 +50,21 @@ Content-Type: video/mp4
 
 < /home/mikhail/tmp/Video_html_Academy/Video_HTML_Academy_1.mp4
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+//====================================ЗАЛЫ========================================
+
+### Создание зала
+POST http://localhost:5679/gyms HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "Название зала",
+  "location": "Петроградская",
+  "features": ["бассейн", "бесплатная парковка", "детская комната"],
+  "images": ["img/image_01.png", "img/image_02.png"],
+  "description": "Описание зала",
+  "price": 2500
+}
 
 //====================================ЗАКАЗЫ========================================
 
