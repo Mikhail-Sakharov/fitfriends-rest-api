@@ -9,6 +9,7 @@ import multerConfig from './config/multer.config';
 import envSchema from './env.schema';
 import {TrainingsModule} from './trainings/trainings.module';
 import { OrdersModule } from './orders/orders.module';
+import { GymsModule } from './gyms/gyms.module';
 
 @Module({
   imports: [
@@ -30,7 +31,8 @@ import { OrdersModule } from './orders/orders.module';
       getMongoDbConfig()
     ),
     TrainingsModule,
-    OrdersModule
+    OrdersModule,
+    GymsModule
   ],
   controllers: [],
   providers: []
