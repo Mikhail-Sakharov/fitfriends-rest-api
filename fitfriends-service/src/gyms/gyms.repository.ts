@@ -15,6 +15,10 @@ export class GymsRepository implements CRUDRepository<GymsEntity, string, Gym> {
     return await newGym.save();
   }
 
+  public async seed(items: GymsEntity[]): Promise<Gym[]> {    
+    return await this.gymsModel.create(items);
+  }
+
   public async find(): Promise<Gym[]> {
     return await this.gymsModel.find();
   }

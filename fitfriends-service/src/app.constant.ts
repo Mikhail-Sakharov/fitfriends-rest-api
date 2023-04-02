@@ -44,3 +44,5 @@ export const UPLOAD_DIRECTORY_REG_EXP = /\w+/;
 export const GYM_FEATURES_MIN_COUNT = 1;
 
 export const GYM_IMAGES_MAX_COUNT = 5;
+
+export const SEEDING_GYMS_MAX_COUNT = 5;
