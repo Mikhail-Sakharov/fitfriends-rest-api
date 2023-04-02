@@ -1,11 +1,30 @@
+import {ArrayMaxSize, ArrayMinSize, IsEnum, IsNumber, IsString, Max, MaxLength, Min, MinLength} from 'class-validator';
+import {GymDescriptionLength, GymPrice, GymTitleLength, GYM_FEATURES_MIN_COUNT, GYM_IMAGES_MAX_COUNT} from 'src/app.constant';
 import {GymFeatures} from 'src/types/gym-features.enum';
 import {SubwayStation} from 'src/types/subway-station.enum';
 
 export class CreateGymDto {
-  public title: string; // 1 - 15 символов
+  @IsString()
+  @MinLength(GymTitleLength.MIN)
+  @MaxLength(GymTitleLength.MAX)
+  public title: string;
+
+  @IsEnum(SubwayStation)
   public location: SubwayStation;
-  public features: GymFeatures[]; // 1 или несколько
-  public images: string[]; // не более 5 фото не более 5Мб каждая jpg/png
-  public description: string; // не более 140
-  public price: number; // 100 - 5000
+
+  @IsEnum(GymFeatures, {each: true})
+  @ArrayMinSize(GYM_FEATURES_MIN_COUNT)
+  public features: GymFeatures[];
+
+  @ArrayMaxSize(GYM_IMAGES_MAX_COUNT)
+  public images: string[];
+
+  @IsString()
+  @MaxLength(GymDescriptionLength.MAX)
+  public description: string;
+
+  @IsNumber()
+  @Min(GymPrice.MIN)
+  @Max(GymPrice.MAX)
+  public price: number;
 }
