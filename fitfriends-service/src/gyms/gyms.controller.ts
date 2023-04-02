@@ -1,5 +1,7 @@
-import {Body, Controller, HttpCode, HttpStatus, Post} from '@nestjs/common';
+import {Body, Controller, Get, HttpCode, HttpStatus, Post} from '@nestjs/common';
+import {fillObject} from 'common/helpers';
 import {CreateGymDto} from 'src/dto/create-gym.dto';
+import {GymRdo} from 'src/rdo/gym.rdo';
 import {GymsService} from './gyms.service';
 
 @Controller('gyms')
@@ -15,5 +17,12 @@ export class GymsController {
   ) {
     const newGym = await this.gymsService.createGym(dto);
     return newGym;
+  }
+
+  @Get('')
+  @HttpCode(HttpStatus.OK)
+  public async getGyms() {
+    const gyms = await this.gymsService.getGyms();
+    return fillObject(GymRdo, gyms);
   }
 }

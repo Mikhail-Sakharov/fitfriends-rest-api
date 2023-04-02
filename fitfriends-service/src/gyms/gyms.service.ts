@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import {CreateGymDto} from 'src/dto/create-gym.dto';
 import {GymsEntity} from './gyms.entity';
 import {GymsRepository} from './gyms.repository';
@@ -12,5 +12,10 @@ export class GymsService {
   public async createGym(dto: CreateGymDto) {
     const gymEntity = new GymsEntity(dto);
     return await this.gymsRepository.create(gymEntity);
+  }
+
+  public async getGyms() {
+    const gyms = await this.gymsRepository.find();
+    return gyms;
   }
 }

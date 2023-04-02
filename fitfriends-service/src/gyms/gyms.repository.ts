@@ -15,8 +15,8 @@ export class GymsRepository implements CRUDRepository<GymsEntity, string, Gym> {
     return await newGym.save();
   }
 
-  public async find(userId: string): Promise<Gym[]> {
-    return await this.gymsModel.find({userId});
+  public async find(): Promise<Gym[]> {
+    return await this.gymsModel.find();
   }
 
   public async findById(id: string): Promise<Gym | null> {
