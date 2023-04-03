@@ -10,6 +10,7 @@ import envSchema from './env.schema';
 import {TrainingsModule} from './trainings/trainings.module';
 import { OrdersModule } from './orders/orders.module';
 import { GymsModule } from './gyms/gyms.module';
+import { ReviewsModule } from './reviews/reviews.module';
 
 @Module({
   imports: [
@@ -32,7 +33,8 @@ import { GymsModule } from './gyms/gyms.module';
     ),
     TrainingsModule,
     OrdersModule,
-    GymsModule
+    GymsModule,
+    ReviewsModule
   ],
   controllers: [],
   providers: []

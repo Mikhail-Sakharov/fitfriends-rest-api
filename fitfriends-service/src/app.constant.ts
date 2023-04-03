@@ -29,6 +29,16 @@ export const GymPrice = {
   MAX: 5000
 };
 
+export const ReviewTextLength = {
+  MIN: 100,
+  MAX: 1024
+};
+
+export const ReviewRatingCount = {
+  MIN: 1,
+  MAX: 5
+};
+
 export const VIDEO_URL_REG_EXP = /^.+(?:.mov)|.+(?:.avi)|.+(?:.mp4)$/;
 
 export const BG_IMAGE_URL_REG_EXP = /^.+(?:.jpg)|.+(?:.png)$/;
