@@ -67,4 +67,9 @@ fitfriends-service - сервис по работе с тренировками,
 
 Для заполнения БД начальными данными (категория "Залы") используется команда:
 
-npm run command-nest seed
+npm run command-nest seed -f <file_path>
+
+<file_path> - путь к файлу с данными с расширением .json
+
+Пример:
+npm run command-nest seed -f src/gyms/gyms.json

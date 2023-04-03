@@ -66,8 +66,20 @@ Content-Type: application/json
   "price": 2500
 }
 
-### Список залов
+### Список всех залов
 GET http://localhost:5679/gyms HTTP/1.1
+
+### Добавить зал в избранное
+GET http://localhost:5679/gyms/favorites/add/642b0219b7653404d781dd04 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIzMDYxMzIyNzM4YWM1NzJiZTEzYzgiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY4MDU0NjYzOSwiZXhwIjoxNjgwNTQ3NTM5fQ.j0pr3UUYtNw1mSn037SV50ZwpoHhLc84eaeDA-7evDA
+
+### Список избранных залов
+GET http://localhost:5679/gyms/favorites HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIzMDYxMzIyNzM4YWM1NzJiZTEzYzgiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY4MDU0NjYzOSwiZXhwIjoxNjgwNTQ3NTM5fQ.j0pr3UUYtNw1mSn037SV50ZwpoHhLc84eaeDA-7evDA
+
+### Удалить зал из избранных
+GET http://localhost:5679/gyms/favorites/remove/642b0219b7653404d781dd04 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIzMDYxMzIyNzM4YWM1NzJiZTEzYzgiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY4MDU0NjYzOSwiZXhwIjoxNjgwNTQ3NTM5fQ.j0pr3UUYtNw1mSn037SV50ZwpoHhLc84eaeDA-7evDA
 
 //====================================ЗАКАЗЫ========================================
 

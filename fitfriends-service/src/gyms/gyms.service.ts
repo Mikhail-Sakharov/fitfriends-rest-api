@@ -1,14 +1,17 @@
-import {ConflictException, Injectable} from '@nestjs/common';
+import {ConflictException, ForbiddenException, Injectable, NotFoundException} from '@nestjs/common';
 import {SEEDING_GYMS_MAX_COUNT} from 'src/app.constant';
 import {CreateGymDto} from 'src/dto/create-gym.dto';
 import {Gym} from 'src/types/gym.interface';
+import {FavoriteGymsEntity} from './favorite-gyms.entity';
+import {FavoriteGymsRepository} from './favorite-gyms.repository';
 import {GymsEntity} from './gyms.entity';
 import {GymsRepository} from './gyms.repository';
 
 @Injectable()
 export class GymsService {
   constructor(
-    private readonly gymsRepository: GymsRepository
+    private readonly gymsRepository: GymsRepository,
+    private readonly favoriteGymsRepository: FavoriteGymsRepository
   ) {}
 
   public async createGym(dto: CreateGymDto) {
@@ -19,6 +22,34 @@ export class GymsService {
   public async getGyms() {
     const gyms = await this.gymsRepository.find();
     return gyms;
+  }
+
+  public async addGymToFavorites(gymId: string, userId: string) {
+    const favoriteGyms = await this.getFavoriteGyms(userId);
+    const isAlreadyInFavorites = favoriteGyms.some((gym) => ((gym.gymId as unknown) as Gym)._id.toString() === gymId);
+    if (isAlreadyInFavorites) {
+      throw new ForbiddenException('This gym is already in the favorites');
+    }
+    const favoriteGymsEntity = new FavoriteGymsEntity({gymId, userId});
+    return await this.favoriteGymsRepository.create(favoriteGymsEntity);
+  }
+
+  public async removeGymFromFavorites(gymId: string, userId: string) {
+    const favoriteGyms = await this.getFavoriteGyms(userId);
+    const favoriteGym = favoriteGyms.find((gym) => ((gym.gymId as unknown) as Gym)._id.toString() === gymId);
+    if (!favoriteGym) {
+      throw new NotFoundException('Gym is not found in the favorites');
+    }
+    const favoriteGymUserId = favoriteGym.userId
+    if (favoriteGymUserId !== userId) {
+      throw new ForbiddenException('Access denied');
+    }
+    const favoriteGymEntityId = favoriteGym._id;
+    await this.favoriteGymsRepository.destroy(favoriteGymEntityId);
+  }
+
+  public async getFavoriteGyms(userId: string) {
+    return await this.favoriteGymsRepository.find(userId);
   }
 
   public async seed(gyms: Gym[]) {
