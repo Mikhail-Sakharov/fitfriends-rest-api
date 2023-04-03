@@ -7,22 +7,27 @@ import {ReviewsModel} from './reviews.model';
 
 export class ReviewsRepository implements CRUDRepository<ReviewsEntity, string, Review> {
   constructor(
-    @InjectModel(ReviewsModel.name) private readonly trainingModel: Model<ReviewsModel>
+    @InjectModel(ReviewsModel.name) private readonly reviewModel: Model<ReviewsModel>
   ) {}
 
-  findById(id: string): Promise<Review> {
-    throw new Error('Method not implemented.');
+  public async create(item: ReviewsEntity): Promise<Review> {
+    const newReviews = await this.reviewModel.create(item.toObject());
+    return newReviews;
   }
 
-  create(item: ReviewsEntity): Promise<Review> {
-    throw new Error('Method not implemented.');
+  public async find(trainingId: string): Promise<Review[]> {
+    return await this.reviewModel.find({trainingId});
   }
 
-  update(id: string, item: ReviewsEntity): Promise<Review> {
-    throw new Error('Method not implemented.');
+  public async findById(id: string): Promise<Review | null> {
+    return await this.reviewModel.findById(id);
   }
 
-  destroy(id: string): Promise<void> {
-    throw new Error('Method not implemented.');
+  public async update(id: string, item: ReviewsEntity): Promise<Review> {
+    return await this.reviewModel.findByIdAndUpdate(id, item.toObject(), {new: true});
+  }
+
+  public async destroy(id: string): Promise<void> {
+    return await this.reviewModel.findByIdAndDelete(id);
   }
 }
