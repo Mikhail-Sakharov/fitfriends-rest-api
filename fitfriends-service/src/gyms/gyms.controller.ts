@@ -1,24 +1,22 @@
-import {Body, Controller, Get, HttpCode, HttpStatus, Post} from '@nestjs/common';
+import {Controller, Get, HttpCode, HttpStatus} from '@nestjs/common';
+import {ApiResponse, ApiTags} from '@nestjs/swagger';
 import {fillObject} from 'common/helpers';
-import {CreateGymDto} from 'src/dto/create-gym.dto';
 import {GymRdo} from 'src/rdo/gym.rdo';
 import {GymsService} from './gyms.service';
 
+@ApiTags('gyms')
 @Controller('gyms')
 export class GymsController {
   constructor(
     private readonly gymsService: GymsService
   ) {}
 
-  @Post()
-  @HttpCode(HttpStatus.CREATED)
-  public async createGym(
-    @Body() dto: CreateGymDto
-  ) {
-    const newGym = await this.gymsService.createGym(dto);
-    return newGym;
-  }
-
+  @ApiResponse({
+    type: GymRdo,
+    status: HttpStatus.OK,
+    description: 'The gyms were received'
+  })
+  // СПИСОК ЗАЛОВ
   @Get('')
   @HttpCode(HttpStatus.OK)
   public async getGyms() {
