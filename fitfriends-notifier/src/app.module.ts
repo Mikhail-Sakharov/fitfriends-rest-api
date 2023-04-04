@@ -3,6 +3,7 @@ import {ConfigModule} from '@nestjs/config';
 import {ENV_FILE_PATH} from './app.constant';
 import {MongooseModule} from '@nestjs/mongoose';
 import databaseConfig, {getMongoDbConfig} from './config/database.config';
+import { NotificationsModule } from './notifications/notifications.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import databaseConfig, {getMongoDbConfig} from './config/database.config';
     MongooseModule.forRootAsync(
       getMongoDbConfig()
     ),
+    NotificationsModule,
   ],
   controllers: [],
   providers: []
