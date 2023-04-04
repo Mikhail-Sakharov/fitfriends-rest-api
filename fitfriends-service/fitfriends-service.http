@@ -2,7 +2,7 @@
 ### Создание тренировки
 POST http://localhost:5679/trainings HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDFhMDY1ZGE4Yjk4NWVlOTgzMjI5MGYiLCJlbWFpbCI6ImpvaG5AcXdlLnF3ZSIsInVzZXJOYW1lIjoiSm9obiIsInVzZXJSb2xlIjoi0YLRgNC10L3QtdGAIiwiaWF0IjoxNjc5NDI3MTY1LCJleHAiOjE2Nzk0MjgwNjV9.amUx4TfqE44rKR-Ns1sc63yhcST5nKRvlZrYsM-KXPo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDJiMGUyM2ExNDZhNTdmOGExZjMzMTMiLCJlbWFpbCI6ImpvaG5AcXdlLnF3ZSIsInVzZXJOYW1lIjoiSm9obiIsInVzZXJSb2xlIjoi0YLRgNC10L3QtdGAIiwiaWF0IjoxNjgwNjI1ODAxLCJleHAiOjE2ODA2MjY3MDF9.hb7uoLawOhoCmS76uYy7mCdenB4KO43M62nd-tNNALY
 
 {
   "title": "energy",
@@ -113,10 +113,10 @@ GET http://localhost:5679/orders/deactivate/64189bb68f238f540075037a HTTP/1.1
 ### Добавление отзыва
 POST http://localhost:5679/reviews HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIzMDYxMzIyNzM4YWM1NzJiZTEzYzgiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY4MDYyMjcxMywiZXhwIjoxNjgwNjIzNjEzfQ.QMc0O4Ig5MjyDivMLLhlZKSLR48075RYDAV9VE4nQ1g
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIzMDYxMzIyNzM4YWM1NzJiZTEzYzgiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY4MDYyNTkwMCwiZXhwIjoxNjgwNjI2ODAwfQ.plwH4M4lU_H041jYaoP0ZQN-Fx1M-pVtnWSxvCNtHUE
 
 {
-  "trainingId": "64189bb68f238f540075037b",
+  "trainingId": "642c509e2c28468d2d06301d",
   "text": "Текст отзыва qwuytowieyroituwyeoriuytwoeiurytowiueyrotiuweyroiutyweoriuytoweiurytoweiurytsdfgsdfgsdfgsdfgdsfgsdfgsdfgsdfgsdfgsdfgsdfgsdfgsdgfdsgf",
   "rating": 5
 }

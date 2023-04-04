@@ -15,6 +15,7 @@ import {TrainingsService} from './trainings.service';
     ])
   ],
   controllers: [TrainingsController],
-  providers: [TrainingsService, TrainingRepository, AccessTokenStrategy]
+  providers: [TrainingsService, TrainingRepository, AccessTokenStrategy],
+  exports: [TrainingsService]
 })
 export class TrainingsModule {}

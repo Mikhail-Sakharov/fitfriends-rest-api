@@ -39,6 +39,14 @@ export class TrainingsService {
     return updatedTraining;
   }
 
+  public async incrementRating(trainingId: string, currentReviewRating: number, currentReviewsCount: number) {
+    const training = await this.trainingsRepository.findById(trainingId);
+    const currentTrainingRating = training.rating;
+    const rating = (currentTrainingRating * currentReviewsCount + currentReviewRating)/(currentReviewsCount + 1);
+    const updatedTrainingEntity = new TrainingEntity({...training, rating});
+    await this.trainingsRepository.update(trainingId, updatedTrainingEntity);
+  }
+
   public async setVideoFilePath(coachId: string, trainingId: string, videoUrl: string) {
     const training = await this.trainingsRepository.findById(trainingId);
 
