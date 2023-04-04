@@ -4,13 +4,22 @@ import {AccessTokenGuard} from 'src/guards/access-token.guard';
 import {Payload} from 'src/types/payload.interface';
 import {UserRole} from 'src/types/user-role.enum';
 import {ReviewsService} from './reviews.service';
+import {ApiResponse, ApiTags} from '@nestjs/swagger';
+import {ReviewRdo} from 'src/rdo/review.rdo';
+import {fillObject} from 'common/helpers';
 
+@ApiTags('reviews')
 @Controller('reviews')
 export class ReviewsController {
   constructor(
     private readonly reviewsService: ReviewsService
   ) {}
 
+  @ApiResponse({
+    type: ReviewRdo,
+    status: HttpStatus.CREATED,
+    description: 'The review was created'
+  })
   // ДОБАВЛЕНИЕ ОТЗЫВА
   @UseGuards(AccessTokenGuard)
   @Post('')
@@ -26,10 +35,14 @@ export class ReviewsController {
     // пересчитать рейтинг тренировки
     const userId = req.user.sub;
     const review = await this.reviewsService.createReview({...dto, userId});
-    // добавить RDO
-    return review;
+    return fillObject(ReviewRdo, review);
   }
 
+  @ApiResponse({
+    type: ReviewRdo,
+    status: HttpStatus.OK,
+    description: 'The list of reviews was received'
+  })
   // ЗАПРОС ОТЗЫВОВ О ТРЕНИРОВКЕ
   @UseGuards(AccessTokenGuard)
   @Get(':trainingId')
@@ -38,7 +51,6 @@ export class ReviewsController {
     @Param('trainingId') trainingId: string
   ) {
     const reviews = await this.reviewsService.getReviews(trainingId);
-    // добавить RDO
-    return reviews;
+    return fillObject(ReviewRdo, reviews);
   }
 }
