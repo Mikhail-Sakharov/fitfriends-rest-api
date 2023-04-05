@@ -3,5 +3,6 @@ export interface Notification {
   createdAt?: string;
   addresseeId: string;
   senderId: string;
+  senderName: string;
   text: string;
 }

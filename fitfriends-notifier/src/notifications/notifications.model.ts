@@ -20,6 +20,11 @@ export class NotificationsModel extends Document implements Notification {
   @Prop({
     required: true
   })
+  public senderName: string;
+
+  @Prop({
+    required: true
+  })
   public text: string;
 }
 
