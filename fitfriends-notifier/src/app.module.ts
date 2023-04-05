@@ -3,7 +3,8 @@ import {ConfigModule} from '@nestjs/config';
 import {ENV_FILE_PATH} from './app.constant';
 import {MongooseModule} from '@nestjs/mongoose';
 import databaseConfig, {getMongoDbConfig} from './config/database.config';
-import { NotificationsModule } from './notifications/notifications.module';
+import {NotificationsModule} from './notifications/notifications.module';
+import envSchema from './env.schema';
 
 @Module({
   imports: [
@@ -11,7 +12,8 @@ import { NotificationsModule } from './notifications/notifications.module';
       cache: true,
       isGlobal: true,
       envFilePath: ENV_FILE_PATH,
-      load: [databaseConfig]
+      load: [databaseConfig],
+      validationSchema: envSchema
     }),
     MongooseModule.forRootAsync(
       getMongoDbConfig()
