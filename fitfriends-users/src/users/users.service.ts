@@ -1,14 +1,21 @@
 import * as fs from 'fs';
-import {BadRequestException, ForbiddenException, Injectable, NotFoundException} from '@nestjs/common';
+import {BadRequestException, ForbiddenException, Inject, Injectable, NotFoundException} from '@nestjs/common';
 import UpdateUserDto from 'src/dto/update-user.dto';
 import {UserEntity} from './user.entity';
 import {UsersRepository} from './users.repository';
 import {UserRole} from 'src/types/user-role.enum';
 import {CoachQuestionnaire} from 'src/types/user.interface';
+import {RABBITMQ_SERVICE} from 'src/app.constant';
+import {ClientProxy} from '@nestjs/microservices';
+import {CommandEvent} from 'src/types/command-event.enum';
+import {NotificationText} from 'src/types/notification-text.enum';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly usersRepository: UsersRepository) {}
+  constructor(
+    private readonly usersRepository: UsersRepository,
+    @Inject(RABBITMQ_SERVICE) private readonly rabbitClient: ClientProxy
+  ) {}
 
   public async getFriends(id: string) {
     return await this.usersRepository.findFriends(id);
@@ -38,6 +45,16 @@ export class UsersService {
 
     await this.updateUser(myId, {myFriends: myUpdatedFriends});
     await this.updateUser(myNewFriendId, {myFriends: userUpdatedFriends});
+
+    this.rabbitClient.emit(
+      {cmd: CommandEvent.AddFriend},
+      {
+        addresseeId: myNewFriendId,
+        senderId: myId,
+        senderName: myData.userName,
+        text: `${myData.userName} ${NotificationText.AddFriend}`
+      }
+    );
   }
 
   public async removeFriend(myId: string, removedFriendId: string) {

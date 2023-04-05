@@ -5,6 +5,7 @@ import {MongooseModule} from '@nestjs/mongoose';
 import databaseConfig, {getMongoDbConfig} from './config/database.config';
 import {NotificationsModule} from './notifications/notifications.module';
 import envSchema from './env.schema';
+import {rabbitMqOptions} from './config/rabbitmq.config';
 
 @Module({
   imports: [
@@ -12,7 +13,7 @@ import envSchema from './env.schema';
       cache: true,
       isGlobal: true,
       envFilePath: ENV_FILE_PATH,
-      load: [databaseConfig],
+      load: [databaseConfig, rabbitMqOptions],
       validationSchema: envSchema
     }),
     MongooseModule.forRootAsync(

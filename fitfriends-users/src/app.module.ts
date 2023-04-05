@@ -9,6 +9,7 @@ import {jwtOptions} from './config/jwt.config';
 import multerConfig from './config/multer.config';
 import envSchema from './env.schema';
 import {UsersModule} from './users/users.module';
+import {rabbitMqOptions} from './config/rabbitmq.config';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import {UsersModule} from './users/users.module';
       cache: true,
       isGlobal: true,
       envFilePath: ENV_FILE_PATH,
-      load: [databaseConfig, jwtOptions, multerConfig],
+      load: [databaseConfig, jwtOptions, multerConfig, rabbitMqOptions],
       validationSchema: envSchema
     }),
     MulterModule.registerAsync({

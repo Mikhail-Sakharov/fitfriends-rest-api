@@ -1,5 +1,7 @@
 export const ENV_FILE_PATH = 'environments/.env';
 
+export const RABBITMQ_SERVICE = Symbol('RABBITMQ_SERVICE');
+
 export const UserNameLength = {
   MIN: 1,
   MAX: 15
