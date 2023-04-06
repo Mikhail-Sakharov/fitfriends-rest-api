@@ -15,5 +15,6 @@ export default Joi.object({
   RABBIT_HOST: Joi.string().default(DEFAULT_RABBIT_HOST).required(),
   RABBIT_USER: Joi.string().required(),
   RABBIT_PASSWORD: Joi.string().required(),
-  RABBIT_USERS_SERVICE_QUEUE: Joi.string().required()
+  RABBIT_USERS_SERVICE_QUEUE: Joi.string().required(),
+  ACCESS_TOKEN_SECRET: Joi.string().required()
 });

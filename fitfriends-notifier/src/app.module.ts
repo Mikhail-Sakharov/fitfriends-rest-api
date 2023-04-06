@@ -6,6 +6,7 @@ import databaseConfig, {getMongoDbConfig} from './config/database.config';
 import {NotificationsModule} from './notifications/notifications.module';
 import envSchema from './env.schema';
 import {rabbitMqOptions} from './config/rabbitmq.config';
+import {jwtOptions} from './config/jwt.config';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import {rabbitMqOptions} from './config/rabbitmq.config';
       cache: true,
       isGlobal: true,
       envFilePath: ENV_FILE_PATH,
-      load: [databaseConfig, rabbitMqOptions],
+      load: [databaseConfig, rabbitMqOptions, jwtOptions],
       validationSchema: envSchema
     }),
     MongooseModule.forRootAsync(

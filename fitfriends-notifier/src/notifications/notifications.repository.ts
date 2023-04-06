@@ -15,8 +15,8 @@ export class NotificationsRepository implements CRUDRepository<NotificationsEnti
     return await newNotification.save();
   }
 
-  public async find(): Promise<Notification[]> {
-    return await this.notificationsModel.find();
+  public async find(addresseeId: string): Promise<Notification[]> {
+    return await this.notificationsModel.find({addresseeId});
   }
 
   public async findById(id: string): Promise<Notification | null> {
