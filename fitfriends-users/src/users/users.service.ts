@@ -8,7 +8,6 @@ import {CoachQuestionnaire} from 'src/types/user.interface';
 import {RABBITMQ_SERVICE} from 'src/app.constant';
 import {ClientProxy} from '@nestjs/microservices';
 import {CommandEvent} from 'src/types/command-event.enum';
-import {NotificationText} from 'src/types/notification-text.enum';
 
 @Injectable()
 export class UsersService {
@@ -51,8 +50,7 @@ export class UsersService {
       {
         addresseeId: myNewFriendId,
         senderId: myId,
-        senderName: myData.userName,
-        text: `${myData.userName} ${NotificationText.AddFriend}`
+        senderName: myData.userName
       }
     );
   }

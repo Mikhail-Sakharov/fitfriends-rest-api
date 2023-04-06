@@ -1,3 +1,6 @@
 export enum CommandEvent {
-  AddFriend = 'addFriend'
+  AddFriend = 'addFriend',
+  TrainingRequest = 'trainingRequest',
+  TrainingRequestAcception = 'trainingRequestAcception',
+  TrainingRequestRejection = 'trainingRequestRejection'
 }

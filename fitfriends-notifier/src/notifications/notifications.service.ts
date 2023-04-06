@@ -9,7 +9,7 @@ export class NotificationsService {
     private readonly notificationsRepository: NotificationsRepository
   ) {}
 
-  public async createAddFriendNotification(addFriendData: AddFriendDto) {
+  public async createAddFriendNotification(addFriendData: AddFriendDto & {text: string}) {
     const notificationEntity = new NotificationsEntity(addFriendData);
     await this.notificationsRepository.create(notificationEntity);
   }
