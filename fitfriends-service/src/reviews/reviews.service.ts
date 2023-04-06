@@ -11,7 +11,7 @@ export class ReviewsService {
     private readonly trainingsService: TrainingsService
   ) {}
 
-  public async createReview(reviewData: CreateReviewDto & {userId: string}) {
+  public async createReview(reviewData: CreateReviewDto & {userId: string, userName: string}) {
     const reviewEntity = new ReviewsEntity(reviewData);
 
     const trainingId = reviewData.trainingId;

@@ -33,7 +33,8 @@ export class ReviewsController {
       throw new ForbiddenException('Only for regular Users');
     }
     const userId = req.user.sub;
-    const review = await this.reviewsService.createReview({...dto, userId});
+    const userName = req.user.userName;
+    const review = await this.reviewsService.createReview({...dto, userId, userName});
     return fillObject(ReviewRdo, review);
   }
 

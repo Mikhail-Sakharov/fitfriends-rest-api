@@ -10,6 +10,9 @@ export class CreateReviewDto {
   @MaxLength(ReviewTextLength.MAX)
   public text: string;
 
+  @IsString()
+  public userAvatarPath: string;
+
   @IsNumber()
   @Min(ReviewRatingCount.MIN)
   @Max(ReviewRatingCount.MAX)

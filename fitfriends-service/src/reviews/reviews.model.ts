@@ -20,6 +20,16 @@ export class ReviewsModel extends Document implements Review {
   @Prop({
     required: true
   })
+  userName: string;
+
+  @Prop({
+    required: true
+  })
+  userAvatarPath: string;
+
+  @Prop({
+    required: true
+  })
   text: string;
 
   @Prop({
