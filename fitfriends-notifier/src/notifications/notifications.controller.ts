@@ -2,39 +2,48 @@ import {Controller, Get, HttpCode, HttpStatus} from '@nestjs/common';
 import {EventPattern} from '@nestjs/microservices';
 import {CommandEvent} from 'src/types/command-event.enum';
 import {NotificationsService} from './notifications.service';
-import {AddFriendDto} from 'src/dto/add-friend.dto';
 import {EventNotificationTextMap} from 'src/types/event-notification-text.map';
+import {NotificationDto} from 'src/dto/notification.dto';
 
 @Controller('notifications')
 export class NotificationsController {
   constructor(
     private readonly notificationsService: NotificationsService
   ) {}
-  // Создание оповещения через приём события от других сервисов
+
   @EventPattern({cmd: CommandEvent.AddFriend})
-  public async createAddFriendNotification(addFriendData: AddFriendDto) {
-    await this.notificationsService.createAddFriendNotification({
-      ...addFriendData,
-      text: `${addFriendData.senderName} ${EventNotificationTextMap[CommandEvent.AddFriend]}`
+  public async createAddFriendNotification(notificationData: NotificationDto) {
+    await this.notificationsService.createNotification({
+      ...notificationData,
+      text: `${notificationData.senderName} ${EventNotificationTextMap[CommandEvent.AddFriend]}`
+    });
+  }
+
+  @EventPattern({cmd: CommandEvent.TrainingRequest})
+  public async createTrainingRequestNotification(notificationData: NotificationDto) {
+    await this.notificationsService.createNotification({
+      ...notificationData,
+      text: `${notificationData.senderName} ${EventNotificationTextMap[CommandEvent.TrainingRequest]}`
+    });
+  }
+
+  @EventPattern({cmd: CommandEvent.TrainingRequestAcception})
+  public async createTrainingRequestAcceptionNotification(notificationData: NotificationDto) {
+    await this.notificationsService.createNotification({
+      ...notificationData,
+      text: `${notificationData.senderName} ${EventNotificationTextMap[CommandEvent.TrainingRequestAcception]}`
+    });
+  }
+
+  @EventPattern({cmd: CommandEvent.TrainingRequestRejection})
+  public async createTrainingRequestRejectionNotification(notificationData: NotificationDto) {
+    await this.notificationsService.createNotification({
+      ...notificationData,
+      text: `${notificationData.senderName} ${EventNotificationTextMap[CommandEvent.TrainingRequestRejection]}`
     });
   }
 
   // Обработка события удаления из друзей
-
-  /* @EventPattern({cmd: CommandEvent.AddFriend})
-  public async createTrainingRequestNotification(addFriendData: AddFriendDto) {
-    await this.notificationsService.createTrainingRequestNotification(addFriendData);
-  } */
-
-  /* @EventPattern({cmd: CommandEvent.AddFriend})
-  public async createTrainingRequestAcceptionNotification(addFriendData: AddFriendDto) {
-    await this.notificationsService.createTrainingRequestAcceptionNotification(addFriendData);
-  } */
-
-  /* @EventPattern({cmd: CommandEvent.AddFriend})
-  public async createTrainingRequestRejectionNotification(addFriendData: AddFriendDto) {
-    await this.notificationsService.createTrainingRequestRejectionNotification(addFriendData);
-  } */
 
   // Список оповещений (может получить только получатель)
   @Get('')

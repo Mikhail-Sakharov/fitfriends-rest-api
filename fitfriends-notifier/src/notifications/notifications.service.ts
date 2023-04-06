@@ -1,7 +1,7 @@
 import {Injectable} from '@nestjs/common';
 import {NotificationsRepository} from './notifications.repository';
-import {AddFriendDto} from 'src/dto/add-friend.dto';
 import {NotificationsEntity} from './notifications.entity';
+import {NotificationDto} from 'src/dto/notification.dto';
 
 @Injectable()
 export class NotificationsService {
@@ -9,8 +9,8 @@ export class NotificationsService {
     private readonly notificationsRepository: NotificationsRepository
   ) {}
 
-  public async createAddFriendNotification(addFriendData: AddFriendDto & {text: string}) {
-    const notificationEntity = new NotificationsEntity(addFriendData);
+  public async createNotification(notificationData: NotificationDto & {text: string}) {
+    const notificationEntity = new NotificationsEntity(notificationData);
     await this.notificationsRepository.create(notificationEntity);
   }
 
