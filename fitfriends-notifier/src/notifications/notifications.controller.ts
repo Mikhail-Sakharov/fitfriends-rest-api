@@ -8,7 +8,9 @@ import {AccessTokenGuard} from 'src/guards/access-token.guard';
 import {Payload} from 'src/types/payload.interface';
 import {fillObject} from 'common/helpers';
 import {NotificationRdo} from 'src/rdo/notification.rdo';
+import {ApiResponse, ApiTags} from '@nestjs/swagger';
 
+@ApiTags('notifications')
 @Controller('notifications')
 export class NotificationsController {
   constructor(
@@ -60,6 +62,11 @@ export class NotificationsController {
     });
   }
 
+  @ApiResponse({
+    type: NotificationRdo,
+    status: HttpStatus.OK,
+    description: 'The list of notifications was received'
+  })
   // СПИСОК ОПОВЕЩЕНИЙ
   @UseGuards(AccessTokenGuard)
   @Get('')
@@ -72,6 +79,10 @@ export class NotificationsController {
     return fillObject(NotificationRdo, notifications);
   }
 
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'The notification was deleted'
+  })
   // УДАЛЕНИЕ ОПОВЕЩЕНИЯ
   @UseGuards(AccessTokenGuard)
   @Delete(':id')
