@@ -6,6 +6,8 @@ import {EventNotificationTextMap} from 'src/types/event-notification-text.map';
 import {NotificationDto} from 'src/dto/notification.dto';
 import {AccessTokenGuard} from 'src/guards/access-token.guard';
 import {Payload} from 'src/types/payload.interface';
+import {fillObject} from 'common/helpers';
+import {NotificationRdo} from 'src/rdo/notification.rdo';
 
 @Controller('notifications')
 export class NotificationsController {
@@ -67,7 +69,7 @@ export class NotificationsController {
   ) {
     const userId = req.user.sub;
     const notifications = await this.notificationsService.getNotifications(userId);
-    return notifications;
+    return fillObject(NotificationRdo, notifications);
   }
 
   // УДАЛЕНИЕ ОПОВЕЩЕНИЯ
