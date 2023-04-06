@@ -29,8 +29,8 @@ export class TrainingsDiaryController {
     @Req() req: RawBodyRequest<{user: Payload}>
   ) {
     const role = req.user.userRole;
-    if (role === UserRole.Coach) {
-      throw new ForbiddenException('Not for Admins');
+    if (role !== UserRole.User) {
+      throw new ForbiddenException('Only for regular Users');
     }
     const userId = req.user.sub;
     const trainingsDiary = await this.trainingsDiaryService.createTrainingsDiary({...dto, userId});
@@ -52,8 +52,8 @@ export class TrainingsDiaryController {
     // - отсортировать список дневников в порядке убывания по дате
     // - отфильтровать записи с датой не ранее ПН текущей недели
     const role = req.user.userRole;
-    if (role === UserRole.Coach) {
-      throw new ForbiddenException('Not for Admins');
+    if (role !== UserRole.User) {
+      throw new ForbiddenException('Only for regular Users');
     }
     const userId = req.user.sub;
     const trainingsDiaries = await this.trainingsDiaryService.getTrainingsDiaries(userId);

@@ -32,7 +32,6 @@ export class ReviewsController {
     if (role !== UserRole.User) {
       throw new ForbiddenException('Only for regular Users');
     }
-    // пересчитать рейтинг тренировки
     const userId = req.user.sub;
     const review = await this.reviewsService.createReview({...dto, userId});
     return fillObject(ReviewRdo, review);

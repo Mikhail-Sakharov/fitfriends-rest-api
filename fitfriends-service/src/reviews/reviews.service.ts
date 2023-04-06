@@ -19,7 +19,7 @@ export class ReviewsService {
     const currentReviewsCount = (await this.getReviews(trainingId)).length;
 
     const review = await this.reviewsRepository.create(reviewEntity);
-    await this.trainingsService.incrementRating(trainingId, currentReviewRating, currentReviewsCount);
+    await this.trainingsService.calculateRating(trainingId, currentReviewRating, currentReviewsCount);
 
     return review;
   }

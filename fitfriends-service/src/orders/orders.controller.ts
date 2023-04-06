@@ -44,6 +44,9 @@ export class OrdersController {
   public async getOrders(
     @Req() req: RawBodyRequest<{user: Payload}>
   ) {
+    // Клиент может применить сортировку для списка заказов:
+    // - количество купленных тренировок (возрастание, убывание),
+    // - заработанная сумма (возрастание, убывание)
     const coachId = req.user.sub;
     const orders = await this.ordersService.getOrders(coachId);
     const transformedOrders = (fillObject(OrderRdo, orders) as unknown) as OrderRdo[];

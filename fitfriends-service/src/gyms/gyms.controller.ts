@@ -31,6 +31,7 @@ export class GymsController {
     description: 'The gyms were received'
   })
   // СПИСОК ВСЕХ ЗАЛОВ
+  @UseGuards(AccessTokenGuard)
   @Get('')
   @HttpCode(HttpStatus.OK)
   public async getGyms() {

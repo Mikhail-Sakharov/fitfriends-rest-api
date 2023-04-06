@@ -29,8 +29,8 @@ export class FoodDiaryController {
     @Req() req: RawBodyRequest<{user: Payload}>
   ) {
     const role = req.user.userRole;
-    if (role === UserRole.Coach) {
-      throw new ForbiddenException('Not for Admins');
+    if (role !== UserRole.User) {
+      throw new ForbiddenException('Only for regular Users');
     }
     const userId = req.user.sub;
     const foodDiary = await this.foodDiaryService.createFoodDiary({...dto, userId});
@@ -50,8 +50,8 @@ export class FoodDiaryController {
     @Req() req: RawBodyRequest<{user: Payload}>
   ) {
     const role = req.user.userRole;
-    if (role === UserRole.Coach) {
-      throw new ForbiddenException('Not for Admins');
+    if (role !== UserRole.User) {
+      throw new ForbiddenException('Only for regular Users');
     }
     const userId = req.user.sub;
     const foodDiaries = await this.foodDiaryService.getFoodDiaries(userId);
@@ -72,8 +72,8 @@ export class FoodDiaryController {
     @Req() req: RawBodyRequest<{user: Payload}>
   ) {
     const role = req.user.userRole;
-    if (role === UserRole.Coach) {
-      throw new ForbiddenException('Not for Admins');
+    if (role !== UserRole.User) {
+      throw new ForbiddenException('Only for regular Users');
     }
     const userId = req.user.sub;
     const foodDiary = await this.foodDiaryService.showFoodDiary(id, userId);
@@ -95,8 +95,8 @@ export class FoodDiaryController {
     @Req() req: RawBodyRequest<{user: Payload}>
   ) {
     const role = req.user.userRole;
-    if (role === UserRole.Coach) {
-      throw new ForbiddenException('Not for Admins');
+    if (role !== UserRole.User) {
+      throw new ForbiddenException('Only for regular Users');
     }
     const userId = req.user.sub;
     const updatedFoodDiary = await this.foodDiaryService.updateFoodDiary(id, userId, dto);
@@ -117,8 +117,8 @@ export class FoodDiaryController {
     @Req() req: RawBodyRequest<{user: Payload}>
   ) {
     const role = req.user.userRole;
-    if (role === UserRole.Coach) {
-      throw new ForbiddenException('Not for Admins');
+    if (role !== UserRole.User) {
+      throw new ForbiddenException('Only for regular Users');
     }
     const userId = req.user.sub;
     return await this.foodDiaryService.deleteFoodDiary(id, userId);

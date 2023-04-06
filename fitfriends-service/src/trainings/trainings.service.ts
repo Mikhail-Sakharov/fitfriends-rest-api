@@ -1,4 +1,4 @@
-import {ForbiddenException, Injectable} from '@nestjs/common';
+import {ForbiddenException, Injectable, NotFoundException} from '@nestjs/common';
 import * as fs from 'fs';
 import CreateTrainingDto from 'src/dto/create-training.dto';
 import UpdateTrainingDto from 'src/dto/update-training.dto';
@@ -39,8 +39,11 @@ export class TrainingsService {
     return updatedTraining;
   }
 
-  public async incrementRating(trainingId: string, currentReviewRating: number, currentReviewsCount: number) {
+  public async calculateRating(trainingId: string, currentReviewRating: number, currentReviewsCount: number) {
     const training = await this.trainingsRepository.findById(trainingId);
+    if (!training) {
+      throw new NotFoundException('No trainings found with such id');
+    }
     const currentTrainingRating = training.rating;
     const rating = (currentTrainingRating * currentReviewsCount + currentReviewRating)/(currentReviewsCount + 1);
     const updatedTrainingEntity = new TrainingEntity({...training, rating});

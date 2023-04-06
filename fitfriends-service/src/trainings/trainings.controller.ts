@@ -1,4 +1,4 @@
-import {Body, Controller, Get, HttpCode, HttpStatus, Param, ParseFilePipeBuilder, Patch, Post, Query, RawBodyRequest, Req, UploadedFile, UseGuards, UseInterceptors} from '@nestjs/common';
+import {Body, Controller, ForbiddenException, Get, HttpCode, HttpStatus, Param, ParseFilePipeBuilder, Patch, Post, Query, RawBodyRequest, Req, UploadedFile, UseGuards, UseInterceptors} from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
 import {FileInterceptor} from '@nestjs/platform-express';
 import {ApiResponse, ApiTags} from '@nestjs/swagger';
@@ -12,6 +12,7 @@ import {GetTrainings} from 'src/query/get-trainings.query';
 import {TrainingRdo} from 'src/rdo/training.rdo';
 import {Payload} from 'src/types/payload.interface';
 import {TrainingsService} from './trainings.service';
+import {UserRole} from 'src/types/user-role.enum';
 
 @ApiTags('trainings')
 @Controller('trainings')
@@ -34,6 +35,10 @@ export class TrainingsController {
     @Body() dto: CreateTrainingDto,
     @Req() req: RawBodyRequest<{user: Payload}>
   ) {
+    const role = req.user.userRole;
+    if (role !== UserRole.Coach) {
+      throw new ForbiddenException('Only for Coach');
+    }
     const coachId = req.user.sub;
     const training = await this.trainingsService.create(coachId, dto);
     return fillObject(TrainingRdo, training);
