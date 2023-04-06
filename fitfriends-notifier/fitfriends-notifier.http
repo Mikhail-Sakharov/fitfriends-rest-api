@@ -1,0 +1,2 @@
+### Список оповещений
+GET http://localhost:5681/notifications HTTP/1.1
