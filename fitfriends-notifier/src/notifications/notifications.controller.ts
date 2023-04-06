@@ -19,6 +19,14 @@ export class NotificationsController {
     });
   }
 
+  @EventPattern({cmd: CommandEvent.RemoveFriend})
+  public async createRemoveFriendNotification(notificationData: NotificationDto) {
+    await this.notificationsService.createNotification({
+      ...notificationData,
+      text: `${notificationData.senderName} ${EventNotificationTextMap[CommandEvent.RemoveFriend]}`
+    });
+  }
+
   @EventPattern({cmd: CommandEvent.TrainingRequest})
   public async createTrainingRequestNotification(notificationData: NotificationDto) {
     await this.notificationsService.createNotification({
@@ -42,8 +50,6 @@ export class NotificationsController {
       text: `${notificationData.senderName} ${EventNotificationTextMap[CommandEvent.TrainingRequestRejection]}`
     });
   }
-
-  // Обработка события удаления из друзей
 
   // Список оповещений (может получить только получатель)
   @Get('')

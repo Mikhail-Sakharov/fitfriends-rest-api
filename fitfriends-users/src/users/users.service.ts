@@ -76,6 +76,15 @@ export class UsersService {
 
     await this.updateUser(myId, {myFriends: myUpdatedFriends});
     await this.updateUser(removedFriendId, {myFriends: userUpdatedFriends});
+
+    this.rabbitClient.emit(
+      {cmd: CommandEvent.RemoveFriend},
+      {
+        addresseeId: removedFriendId,
+        senderId: myId,
+        senderName: myData.userName
+      }
+    );
   }
 
   public async getUsers() {
