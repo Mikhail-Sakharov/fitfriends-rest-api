@@ -6,7 +6,7 @@ export interface UserRequest {
   createdAt?: string;
   type: UserRequestType;
   initiatorId: string;
-  userId: string;
+  userId?: string;
   statusChangeDate?: string;
   status: Status;
 }

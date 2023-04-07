@@ -25,7 +25,7 @@ export class UserRequestsModel extends Document implements UserRequest {
   public userId: string;
 
   @Prop({
-    default: now()
+    default: now().toISOString()
   })
   public statusChangeDate?: string;
 
