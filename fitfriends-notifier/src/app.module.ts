@@ -7,6 +7,7 @@ import {NotificationsModule} from './notifications/notifications.module';
 import envSchema from './env.schema';
 import {rabbitMqOptions} from './config/rabbitmq.config';
 import {jwtOptions} from './config/jwt.config';
+import { UserRequestsModule } from './user-requests/user-requests.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import {jwtOptions} from './config/jwt.config';
       getMongoDbConfig()
     ),
     NotificationsModule,
+    UserRequestsModule,
   ],
   controllers: [],
   providers: []
