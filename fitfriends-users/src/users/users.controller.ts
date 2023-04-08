@@ -1,5 +1,6 @@
 import {
   Body,
+  ConflictException,
   Controller,
   Get,
   HttpCode,
@@ -168,8 +169,10 @@ export class UsersController {
   ) {
     const myId = req.user.sub;
     const myNewFriendId = id;
+    if (myId === myNewFriendId) {
+      throw new ConflictException('You can not add yourself into your friends list!');
+    }
     await this.usersService.addFriend(myId, myNewFriendId);
-    // добавить RabbitClient и отправить уведомление пользователю
   }
 
   @ApiResponse({

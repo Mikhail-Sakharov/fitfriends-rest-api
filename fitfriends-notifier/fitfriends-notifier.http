@@ -13,10 +13,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDJiMGUyM
 ### Создание заявки
 POST http://localhost:5681/user-requests HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIzMDYxMzIyNzM4YWM1NzJiZTEzYzgiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY4MDg4OTc5OSwiZXhwIjoxNjgwODkwNjk5fQ.DT_WtB3PBjf5fZP4gTW_smPID4M0e0k7N-J1xf-bqTU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIzMDYxMzIyNzM4YWM1NzJiZTEzYzgiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY4MDk1ODYyMSwiZXhwIjoxNjgwOTU5NTIxfQ.qBC7SoT55btapRch5ciBdkGVU3w4DKUCDTjBzs2Vq4w
 
 {
-  "type": "fa4fefaw",
-  "initiatorId": "3dadw3raw",
-  "status": "awefawf"
+  "type": "training",
+  "initiatorId": "6423061322738ac572be13c7",
+  "status": "на рассмотрении"
 }

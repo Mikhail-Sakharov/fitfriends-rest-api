@@ -8,5 +8,5 @@ export interface UserRequest {
   initiatorId: string;
   userId?: string;
   statusChangeDate?: string;
-  status: Status;
+  status?: Status;
 }

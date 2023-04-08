@@ -30,7 +30,7 @@ export class UserRequestsModel extends Document implements UserRequest {
   public statusChangeDate?: string;
 
   @Prop({
-    requred: true
+    default: Status.Pending
   })
   public status: Status;
 }

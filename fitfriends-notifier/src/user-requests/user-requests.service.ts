@@ -14,4 +14,9 @@ export class UserRequestsService {
     const userRequest = await this.userRequestsRepository.create(userRequestEntity);
     return userRequest;
   }
+
+  public async getUserRequests(userId: string) {
+    const userRequests = await this.userRequestsRepository.find(userId);
+    return userRequests;
+  }
 }
