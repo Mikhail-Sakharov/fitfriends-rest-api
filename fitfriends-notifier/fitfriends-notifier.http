@@ -17,6 +17,18 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIzMDYxM
 
 {
   "type": "training",
-  "initiatorId": "6423061322738ac572be13c7",
-  "status": "на рассмотрении"
+  "userId": "6423061322738ac572be13c7"
+}
+
+### Список заявок
+GET http://localhost:5681/user-requests HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIzMDYxMzIyNzM4YWM1NzJiZTEzYzgiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY4MDk1ODYyMSwiZXhwIjoxNjgwOTU5NTIxfQ.qBC7SoT55btapRch5ciBdkGVU3w4DKUCDTjBzs2Vq4w
+
+### Изменение статуса заявки
+PATCH http://localhost:5681/user-requests/6431613ae4a07abc8ef41749 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIzMDYxMzIyNzM4YWM1NzJiZTEzYzgiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY4MDk2MDA2MCwiZXhwIjoxNjgwOTYwOTYwfQ.Sw7UH9tK-6P94lIwvbbnBDASF2HJlrc4xP_OBggh8FU
+
+{
+  "status": "принят"
 }

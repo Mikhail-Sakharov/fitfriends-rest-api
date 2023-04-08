@@ -7,7 +7,7 @@ export class CreateUserRequestDto {
   public type: UserRequestType;
 
   @IsMongoId()
-  public initiatorId: string;
+  public userId: string;
 
   @IsOptional()
   @IsEnum(Status)
