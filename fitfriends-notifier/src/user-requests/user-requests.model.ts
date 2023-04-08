@@ -1,5 +1,5 @@
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
-import {Document, now} from 'mongoose';
+import {Document} from 'mongoose';
 import {Status} from 'src/types/status.enum';
 import {UserRequestType} from 'src/types/user-request-type.enum';
 import {UserRequest} from 'src/types/user-request.interface';
@@ -23,11 +23,6 @@ export class UserRequestsModel extends Document implements UserRequest {
     requred: true
   })
   public userId: string;
-
-  @Prop({
-    default: now().toISOString()
-  })
-  public statusChangeDate?: string;
 
   @Prop({
     default: Status.Pending

@@ -11,6 +11,9 @@ export class UserRequestRdo {
   public createdAt: string;
 
   @Expose()
+  public updatedAt: string;
+
+  @Expose()
   public type: UserRequestType;
 
   @Expose()

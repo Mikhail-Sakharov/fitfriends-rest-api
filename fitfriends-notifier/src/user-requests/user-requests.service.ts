@@ -1,4 +1,4 @@
-import {ForbiddenException, Injectable} from '@nestjs/common';
+import {BadRequestException, ForbiddenException, Injectable} from '@nestjs/common';
 import {UserRequestsRepository} from './user-requests.repository';
 import {CreateUserRequestDto} from 'src/dto/create-user-request.dto';
 import {UserRequestsEntity} from './user-requests.entity';
@@ -26,8 +26,19 @@ export class UserRequestsService {
     if (userId !== userRequest.userId) {
       throw new ForbiddenException('Access denied');
     }
+    if (userRequest.status === dto.status) {
+      throw new BadRequestException('The same status is set up');
+    }
     const userRequestEntity = new UserRequestsEntity({...userRequest, ...dto});
     const updatedUserRequest = await this.userRequestsRepository.update(id, userRequestEntity);
     return updatedUserRequest;
+  }
+
+  public async deleteUserRequest(id: string, userId: string) {
+    const deletedUserRequest = await this.userRequestsRepository.findById(id);
+    if (deletedUserRequest.userId !== userId) {
+      throw new ForbiddenException('Access denied');
+    }
+    await this.userRequestsRepository.destroy(id);
   }
 }

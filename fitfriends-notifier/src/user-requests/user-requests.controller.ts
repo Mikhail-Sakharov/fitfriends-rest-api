@@ -1,4 +1,19 @@
-import {Body, ConflictException, Controller, ForbiddenException, Get, HttpCode, HttpStatus, Param, Patch, Post, RawBodyRequest, Req, UseGuards} from '@nestjs/common';
+import {
+  Body,
+  ConflictException,
+  Controller,
+  Delete,
+  ForbiddenException,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+  RawBodyRequest,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import {UserRequestsService} from './user-requests.service';
 import {AccessTokenGuard} from 'src/guards/access-token.guard';
 import {Payload} from 'src/types/payload.interface';
@@ -60,5 +75,15 @@ export class UserRequestsController {
     return fillObject(UserRequestRdo, updatedUserRequest);
   }
 
-  // УДАЛЕНИЕ ЗАЯВКИ
+  // УДАЛЕНИЕ ЗАЯВКИ (?)
+  @UseGuards(AccessTokenGuard)
+  @Delete(':id')
+  @HttpCode(HttpStatus.OK)
+  public async deleteUserRequest(
+    @Param('id') id: string,
+    @Req() req: RawBodyRequest<{user: Payload}>
+  ) {
+    const userId = req.user.sub;
+    await this.userRequestsService.deleteUserRequest(id, userId);
+  }
 }
