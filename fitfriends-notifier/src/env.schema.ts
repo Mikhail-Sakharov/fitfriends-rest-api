@@ -1,8 +1,12 @@
 import * as Joi from 'joi';
 
 const DEFAULT_MONGO_DB_HOST = 'localhost';
-const DEFAULT_RABBIT_HOST = 'localhost:5672';
 const DEFAULT_MONGO_DB_PORT = 27021;
+
+const DEFAULT_SMTP_HOST = 'localhost';
+const DEFAULT_SMTP_PORT = 5025;
+
+const DEFAULT_RABBIT_HOST = 'localhost:5672';
 
 export default Joi.object({
   PORT: Joi.number().port(),
@@ -16,5 +20,10 @@ export default Joi.object({
   RABBIT_USER: Joi.string().required(),
   RABBIT_PASSWORD: Joi.string().required(),
   RABBIT_USERS_SERVICE_QUEUE: Joi.string().required(),
-  ACCESS_TOKEN_SECRET: Joi.string().required()
+  ACCESS_TOKEN_SECRET: Joi.string().required(),
+  MAIL_SMTP_HOST: Joi.string().default(DEFAULT_SMTP_HOST).required(),
+  MAIL_SMTP_PORT: Joi.number().port().default(DEFAULT_SMTP_PORT).required(),
+  MAIL_USER_NAME: Joi.string().required(),
+  MAIL_USER_PASSWORD: Joi.string().required(),
+  MAIL_FROM: Joi.string().required()
 });
