@@ -1,0 +1,9 @@
+services:
+  fakesmtp:
+    image: gessnerfl/fake-smtp-server
+    container_name: fakesmtp
+    restart: always
+    hostname: fakesmtp
+    ports:
+      - '5025:5025'
+      - '8083:5080'

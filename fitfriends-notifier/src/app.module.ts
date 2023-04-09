@@ -8,6 +8,7 @@ import envSchema from './env.schema';
 import {rabbitMqOptions} from './config/rabbitmq.config';
 import {jwtOptions} from './config/jwt.config';
 import { UserRequestsModule } from './user-requests/user-requests.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { UserRequestsModule } from './user-requests/user-requests.module';
     ),
     NotificationsModule,
     UserRequestsModule,
+    MailModule,
   ],
   controllers: [],
   providers: []
