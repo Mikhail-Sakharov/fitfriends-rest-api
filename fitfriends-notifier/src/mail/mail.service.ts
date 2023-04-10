@@ -41,10 +41,9 @@ export class MailService {
     })
   }
 
-  public async sendNewTrainingMail(newTrainingEmailData: NewTrainingEmailData): Promise<void> {
+  public async addNewTrainingMailSendTask(newTrainingEmailData: NewTrainingEmailData): Promise<void> {
     try {
-      // await this.mailQueue.pause();
-      // await this.mailQueue.resume();
+      await this.mailQueue.pause();
       await this.mailQueue.add(CREATE_NEW_TRAINING_JOB, newTrainingEmailData);
     } catch (error) {
       this.logger.error(`Error queueing email to user ${newTrainingEmailData.sendTo}`);

@@ -32,3 +32,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDJiMGUyM
 {
   "status": "принят"
 }
+
+//===================================УВЕДОМЛЕНИЯ===================================
+
+### Запуск рассылки
+GET http://localhost:5681/subscription HTTP/1.1
