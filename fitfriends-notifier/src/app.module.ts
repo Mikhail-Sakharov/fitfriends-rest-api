@@ -10,7 +10,9 @@ import {jwtOptions} from './config/jwt.config';
 import {UserRequestsModule} from './user-requests/user-requests.module';
 import {MailModule} from './mail/mail.module';
 import {mailOptions} from './config/mail.config';
-import { SubscriptionModule } from './subscription/subscription.module';
+import {SubscriptionModule} from './subscription/subscription.module';
+import {getBullConfig, redisOptions} from './config/redis.config';
+import {BullModule} from '@nestjs/bull';
 
 @Module({
   imports: [
@@ -18,11 +20,14 @@ import { SubscriptionModule } from './subscription/subscription.module';
       cache: true,
       isGlobal: true,
       envFilePath: ENV_FILE_PATH,
-      load: [databaseConfig, rabbitMqOptions, jwtOptions, mailOptions],
+      load: [databaseConfig, rabbitMqOptions, jwtOptions, mailOptions, redisOptions],
       validationSchema: envSchema
     }),
     MongooseModule.forRootAsync(
       getMongoDbConfig()
+    ),
+    BullModule.forRootAsync(
+      getBullConfig()
     ),
     NotificationsModule,
     UserRequestsModule,

@@ -6,6 +6,9 @@ const DEFAULT_MONGO_DB_PORT = 27021;
 const DEFAULT_SMTP_HOST = 'localhost';
 const DEFAULT_SMTP_PORT = 5025;
 
+const DEFAULT_REDIS_HOST = 'localhost';
+const DEFAULT_REDIS_PORT = 6379;
+
 const DEFAULT_RABBIT_HOST = 'localhost:5672';
 
 export default Joi.object({
@@ -25,5 +28,7 @@ export default Joi.object({
   MAIL_SMTP_PORT: Joi.number().port().default(DEFAULT_SMTP_PORT).required(),
   MAIL_USER_NAME: Joi.string().required(),
   MAIL_USER_PASSWORD: Joi.string().required(),
-  MAIL_FROM: Joi.string().required()
+  MAIL_FROM: Joi.string().required(),
+  REDIS_HOST: Joi.string().hostname().default(DEFAULT_REDIS_HOST).required(),
+  REDIS_PORT: Joi.number().port().default(DEFAULT_REDIS_PORT).required()
 });
