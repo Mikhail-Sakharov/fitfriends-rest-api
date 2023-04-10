@@ -10,6 +10,7 @@ import {jwtOptions} from './config/jwt.config';
 import {UserRequestsModule} from './user-requests/user-requests.module';
 import {MailModule} from './mail/mail.module';
 import {mailOptions} from './config/mail.config';
+import { SubscriptionModule } from './subscription/subscription.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import {mailOptions} from './config/mail.config';
     NotificationsModule,
     UserRequestsModule,
     MailModule,
+    SubscriptionModule,
   ],
   controllers: [],
   providers: []
