@@ -16,13 +16,21 @@ export class TrainingsService {
     @Inject(RABBITMQ_SERVICE) private readonly rabbitClient: ClientProxy
   ) {}
 
-  public async create(coachId: string, dto: CreateTrainingDto) {
+  public async create(coachId: string, coachName: string, dto: CreateTrainingDto) {
     const trainingEntity = new TrainingEntity({...dto, coachId});
 
     this.rabbitClient.emit(
       {cmd: CommandEvent.CreateNewTraining},
       {
-        data: dto.title
+        coachName: coachName,
+        trainingType: dto.type,
+        trainingTitle: dto.title,
+        trainingDescription: dto.description,
+        trainingGender: dto.gender,
+        trainingLevel: dto.level,
+        trainingDuration: dto.duration,
+        trainingCaloriesCount: dto.caloriesCount,
+        trainingPrice: dto.price
       }
     );
 

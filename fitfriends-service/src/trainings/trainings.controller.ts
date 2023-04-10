@@ -40,7 +40,8 @@ export class TrainingsController {
       throw new ForbiddenException('Only for Coach');
     }
     const coachId = req.user.sub;
-    const training = await this.trainingsService.create(coachId, dto);
+    const coachName = req.user.userName;
+    const training = await this.trainingsService.create(coachId, coachName, dto);
     return fillObject(TrainingRdo, training);
   }
 
