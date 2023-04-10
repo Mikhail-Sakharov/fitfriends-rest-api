@@ -1,19 +1,31 @@
-import {ForbiddenException, Injectable, NotFoundException} from '@nestjs/common';
+import {ForbiddenException, Inject, Injectable, NotFoundException} from '@nestjs/common';
 import * as fs from 'fs';
 import CreateTrainingDto from 'src/dto/create-training.dto';
 import UpdateTrainingDto from 'src/dto/update-training.dto';
 import {GetTrainings} from 'src/query/get-trainings.query';
 import {TrainingEntity} from './training.entity';
 import {TrainingRepository} from './trainings.repository';
+import {RABBITMQ_SERVICE} from 'src/app.constant';
+import {ClientProxy} from '@nestjs/microservices';
+import {CommandEvent} from 'src/types/command-event.enum';
 
 @Injectable()
 export class TrainingsService {
   constructor(
-    private readonly trainingsRepository: TrainingRepository
+    private readonly trainingsRepository: TrainingRepository,
+    @Inject(RABBITMQ_SERVICE) private readonly rabbitClient: ClientProxy
   ) {}
 
   public async create(coachId: string, dto: CreateTrainingDto) {
     const trainingEntity = new TrainingEntity({...dto, coachId});
+
+    this.rabbitClient.emit(
+      {cmd: CommandEvent.CreateNewTraining},
+      {
+        data: dto.title
+      }
+    );
+
     return await this.trainingsRepository.create(trainingEntity);
   }
 

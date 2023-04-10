@@ -8,9 +8,10 @@ import {jwtOptions} from './config/jwt.config';
 import multerConfig from './config/multer.config';
 import envSchema from './env.schema';
 import {TrainingsModule} from './trainings/trainings.module';
-import { OrdersModule } from './orders/orders.module';
-import { GymsModule } from './gyms/gyms.module';
-import { ReviewsModule } from './reviews/reviews.module';
+import {OrdersModule} from './orders/orders.module';
+import {GymsModule} from './gyms/gyms.module';
+import {ReviewsModule} from './reviews/reviews.module';
+import {rabbitMqOptions} from './config/rabbitmq.config';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { ReviewsModule } from './reviews/reviews.module';
       cache: true,
       isGlobal: true,
       envFilePath: ENV_FILE_PATH,
-      load: [databaseConfig, jwtOptions, multerConfig],
+      load: [databaseConfig, jwtOptions, multerConfig, rabbitMqOptions],
       validationSchema: envSchema
     }),
     MulterModule.registerAsync({

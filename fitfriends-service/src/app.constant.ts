@@ -1,5 +1,7 @@
 export const ENV_FILE_PATH = 'environments/.env';
 
+export const RABBITMQ_SERVICE = Symbol('RABBITMQ_SERVICE');
+
 export const TrainingTitleLength = {
   MIN: 1,
   MAX: 15

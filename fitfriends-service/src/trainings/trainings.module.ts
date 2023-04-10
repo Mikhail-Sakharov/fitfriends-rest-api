@@ -6,12 +6,23 @@ import {TrainingModel, TrainingSchema} from './training.model';
 import {TrainingsController} from './trainings.controller';
 import {TrainingRepository} from './trainings.repository';
 import {TrainingsService} from './trainings.service';
+import {ClientsModule} from '@nestjs/microservices';
+import {RABBITMQ_SERVICE} from 'src/app.constant';
+import {getRabbitMqConfig} from 'src/config/rabbitmq.config';
+import {ConfigService} from '@nestjs/config';
 
 @Module({
   imports: [
     JwtModule.register({}),
     MongooseModule.forFeature([
       {name: TrainingModel.name, schema: TrainingSchema}
+    ]),
+    ClientsModule.registerAsync([
+      {
+        name: RABBITMQ_SERVICE,
+        useFactory: getRabbitMqConfig,
+        inject: [ConfigService]
+      }
     ])
   ],
   controllers: [TrainingsController],
