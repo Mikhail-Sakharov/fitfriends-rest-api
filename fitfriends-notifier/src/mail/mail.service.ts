@@ -21,7 +21,7 @@ export class MailService {
     await this.mailerService.sendMail({
       to: addSubscriberEmailData.sendTo,
       subject: ADD_SUBSCRIBER_EMAIL_SUBJECT,
-      template: './add-subscriber',
+      template: '../../../templates/add-subscriber',
       context: {
         user: `${addSubscriberEmailData.subscriberName}`,
         coach: `${addSubscriberEmailData.coachName}`
@@ -33,7 +33,7 @@ export class MailService {
     await this.mailerService.sendMail({
       to: removeSubscriberEmailData.sendTo,
       subject: REMOVE_SUBSCRIBER_EMAIL_SUBJECT,
-      template: './remove-subscriber',
+      template: '../../../templates/remove-subscriber',
       context: {
         user: `${removeSubscriberEmailData.subscriberName}`,
         coach: `${removeSubscriberEmailData.coachName}`

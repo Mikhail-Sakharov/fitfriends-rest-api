@@ -36,6 +36,11 @@ export class SubscriptionService {
         subscribers: updatedSubscribers
       });
       await this.subscriptionRepository.update(subscription._id, subscriptionEntity);
+      await this.mailService.sendRemoveSubscriberMail({
+        sendTo: newSubscriber.subscriberEmail,
+        subscriberName: newSubscriber.subscriberName,
+        coachName: subscription.coachName
+      });
     } else {
       const updatedSubscribers = [...subscribers, newSubscriber];
       const subscriptionEntity = new SubscriptionEntity({
@@ -43,6 +48,11 @@ export class SubscriptionService {
         subscribers: updatedSubscribers
       });
       await this.subscriptionRepository.update(subscription._id, subscriptionEntity);
+      await this.mailService.sendAddSubscriberMail({
+        sendTo: newSubscriber.subscriberEmail,
+        subscriberName: newSubscriber.subscriberName,
+        coachName: subscription.coachName
+      });
     }
   }
 
