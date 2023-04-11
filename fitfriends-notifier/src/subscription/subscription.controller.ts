@@ -5,6 +5,7 @@ import {NewTrainingEmailData} from 'src/types/new-training-email-data.interface'
 import {SubscriptionService} from './subscription.service';
 import {AccessTokenGuard} from 'src/guards/access-token.guard';
 import {Payload} from 'src/types/payload.interface';
+import {Coach} from 'src/types/coach.interface';
 
 @Controller('subscription')
 export class SubscriptionController {
@@ -23,6 +24,12 @@ export class SubscriptionController {
   @EventPattern({cmd: CommandEvent.CreateNewTraining})
   public async addNewTrainingMailSendTask(trainingData: Omit<NewTrainingEmailData, 'sendTo' | 'subscriberName'>) {
     await this.subscriptionService.addNewTrainingMailSendTask(trainingData);
+  }
+
+  // ДОБАВЛЕНИЕ ТРЕНЕРА ДЛЯ ПОДПИСКИ НА НЕГО
+  @EventPattern({cmd: CommandEvent.CreateCoach})
+  public async createCoach(coach: Coach) {
+    await this.subscriptionService.createCoach(coach);
   }
 
   // ПОДПИСКА/ОТПИСКА НА НОВЫЕ ТРЕНИРОВКИ

@@ -7,6 +7,7 @@ import {NewTrainingEmailData} from 'src/types/new-training-email-data.interface'
 import {SubscriptionRepository} from './subscription.repository';
 import {Subscriber} from 'src/types/subscriber.interface';
 import {SubscriptionEntity} from './subscription.entity';
+import {Coach} from 'src/types/coach.interface';
 
 @Injectable()
 export class SubscriptionService {
@@ -15,6 +16,11 @@ export class SubscriptionService {
     private readonly mailService: MailService,
     @InjectQueue(MAIL_QUEUE) private readonly mailQueue: Queue
   ) {}
+
+  public async createCoach(coach: Coach) {
+    const subscriptionEntity = new SubscriptionEntity(coach);
+    await this.subscriptionRepository.create(subscriptionEntity);
+  }
 
   public async toggleSubscriberStatus(coachId: string, newSubscriber: Subscriber) {
     const subscription = await this.subscriptionRepository.findByCoachId(coachId);

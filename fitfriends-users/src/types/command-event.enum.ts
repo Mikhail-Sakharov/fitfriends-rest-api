@@ -1,4 +1,5 @@
 export enum CommandEvent {
   AddFriend = 'addFriend',
-  RemoveFriend = 'removeFriend'
+  RemoveFriend = 'removeFriend',
+  CreateCoach = 'createCoach'
 }

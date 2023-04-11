@@ -1,5 +1,6 @@
 import {
   ForbiddenException,
+  Inject,
   Injectable,
   NotFoundException,
   UnauthorizedException
@@ -13,12 +14,17 @@ import {UserEntity} from 'src/users/user.entity';
 import {UsersRepository} from 'src/users/users.repository';
 import {UsersService} from 'src/users/users.service';
 import CreateUserDto from '../dto/create-user.dto';
+import {UserRole} from 'src/types/user-role.enum';
+import {CommandEvent} from 'src/types/command-event.enum';
+import {RABBITMQ_SERVICE} from 'src/app.constant';
+import {ClientProxy} from '@nestjs/microservices';
 
 const SALT_ROUNDS = 10;
 
 @Injectable()
 export class AuthService {
   constructor(
+    @Inject(RABBITMQ_SERVICE) private readonly rabbitClient: ClientProxy,
     private readonly usersRepository: UsersRepository,
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
@@ -46,6 +52,23 @@ export class AuthService {
       email,
       password
     });
+
+    if (loggedUser.user.userRole === UserRole.Coach) {
+      this.rabbitClient.emit(
+        {cmd: CommandEvent.CreateCoach},
+        {
+          coachId: loggedUser.user._id,
+          coachName: loggedUser.user.userName,
+          coachEmail: loggedUser.user.email,
+          avatarUrl: loggedUser.user.avatarUrl,
+          gender: loggedUser.user.gender,
+          birthday: loggedUser.user.birthday,
+          location: loggedUser.user.location,
+          trainingLevel: loggedUser.user.trainingLevel,
+          trainingTypes: loggedUser.user.trainingTypes
+        }
+      );
+    }
 
     return loggedUser;
   }

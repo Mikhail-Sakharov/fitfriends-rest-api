@@ -75,7 +75,7 @@ export class UserRequestsController {
     return fillObject(UserRequestRdo, updatedUserRequest);
   }
 
-  // УДАЛЕНИЕ ЗАЯВКИ (?)
+  // УДАЛЕНИЕ ЗАЯВКИ
   @UseGuards(AccessTokenGuard)
   @Delete(':id')
   @HttpCode(HttpStatus.OK)

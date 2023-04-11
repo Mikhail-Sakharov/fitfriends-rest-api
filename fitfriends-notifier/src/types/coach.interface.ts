@@ -1,12 +1,9 @@
 import {Gender} from './gender.enum';
-import {Subscriber} from './subscriber.interface';
 import {SubwayStation} from './subway-station.enum';
 import {TrainingLevel} from './training-level.enum';
 import {TrainingType} from './training-type.enum';
 
-export interface Subscription {
-  _id?: string;
-  createdAt?: string;
+export interface Coach {
   coachId: string;
   coachName: string;
   coachEmail: string;
@@ -16,5 +13,4 @@ export interface Subscription {
   location: SubwayStation;
   trainingLevel: TrainingLevel;
   trainingTypes: TrainingType[];
-  subscribers?: Subscriber[];
 }
