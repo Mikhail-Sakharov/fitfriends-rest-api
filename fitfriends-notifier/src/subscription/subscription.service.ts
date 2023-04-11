@@ -61,10 +61,17 @@ export class SubscriptionService {
   }
 
   public async addNewTrainingMailSendTask(newTrainingEmailData: Omit<NewTrainingEmailData, 'sendTo' | 'subscriberName'>) {
-    await this.mailService.addNewTrainingMailSendTask({
-      ...newTrainingEmailData, 
-      sendTo: 'mikhail@mikhail.com',
-      subscriberName: 'Mikhail'
-    });
+    const coachId = newTrainingEmailData.coachId;
+    const subscription = await this.subscriptionRepository.findByCoachId(coachId);
+    const subscribers = subscription.subscribers;
+    if (subscribers.length > 0) {
+      subscribers.forEach((subscriber) => {
+        this.mailService.addNewTrainingMailSendTask({
+          ...newTrainingEmailData, 
+          sendTo: subscriber.subscriberEmail,
+          subscriberName: subscriber.subscriberName
+        });
+      });
+    }
   }
 }

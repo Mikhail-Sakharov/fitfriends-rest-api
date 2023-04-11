@@ -20,7 +20,6 @@ export class MailProcessor {
     this.logger.log(`Sending new training creation event email to '${job.data.sendTo}'`);
 
     try {
-      console.log(job.data);
       this.mailerService.sendMail({
         to: job.data.sendTo,
         subject: NEW_TRAINING_EMAIL_SUBJECT,

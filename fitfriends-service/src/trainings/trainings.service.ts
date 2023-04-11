@@ -22,7 +22,8 @@ export class TrainingsService {
     this.rabbitClient.emit(
       {cmd: CommandEvent.CreateNewTraining},
       {
-        coachName: coachName,
+        coachId,
+        coachName,
         trainingType: dto.type,
         trainingTitle: dto.title,
         trainingDescription: dto.description,

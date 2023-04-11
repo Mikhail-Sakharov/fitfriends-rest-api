@@ -57,7 +57,7 @@ export class AuthService {
       this.rabbitClient.emit(
         {cmd: CommandEvent.CreateCoach},
         {
-          coachId: loggedUser.user._id,
+          coachId: loggedUser.user._id.toString(),
           coachName: loggedUser.user.userName,
           coachEmail: loggedUser.user.email,
           avatarUrl: loggedUser.user.avatarUrl,
