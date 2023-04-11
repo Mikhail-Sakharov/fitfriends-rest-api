@@ -6,10 +6,13 @@ import {BullModule} from '@nestjs/bull';
 import {MAIL_QUEUE} from 'src/app.constant';
 import {MongooseModule} from '@nestjs/mongoose';
 import {SubscriptionModel, SubscriptionSchema} from './subscription.model';
+import {JwtModule} from '@nestjs/jwt';
+import {SubscriptionRepository} from './subscription.repository';
 
 @Module({
   imports: [
     MailModule,
+    JwtModule.register({}),
     BullModule.registerQueue({
       name: MAIL_QUEUE
     }),
@@ -18,6 +21,6 @@ import {SubscriptionModel, SubscriptionSchema} from './subscription.model';
     ])
   ],
   controllers: [SubscriptionController],
-  providers: [SubscriptionService]
+  providers: [SubscriptionService, SubscriptionRepository]
 })
 export class SubscriptionModule {}

@@ -19,7 +19,7 @@ export class SubscriptionModel extends Document implements Subscription {
   public coachName: string;
 
   @Prop({
-    required: true
+    default: []
   })
   public subscribers: Subscriber[];
 }
