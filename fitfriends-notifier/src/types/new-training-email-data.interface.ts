@@ -1,6 +1,6 @@
 export interface NewTrainingEmailData {
   sendTo: string;
-  suscriberName: string;
+  subscriberName: string;
   coachName: string;
   trainingType: string;
   trainingTitle: string;

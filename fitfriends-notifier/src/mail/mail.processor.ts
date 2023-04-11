@@ -26,7 +26,7 @@ export class MailProcessor {
         subject: NEW_TRAINING_EMAIL_SUBJECT,
         template: '../../../templates/new-training', // решить проблему с путями к шаблонам
         context: {
-          user: `${job.data.suscriberName}`,
+          user: `${job.data.subscriberName}`,
           coach: `${job.data.coachName}`,
           type: `${job.data.trainingType}`,
           title: `${job.data.trainingTitle}`,

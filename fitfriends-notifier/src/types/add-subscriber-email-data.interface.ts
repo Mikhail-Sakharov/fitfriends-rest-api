@@ -1,5 +1,5 @@
 export interface AddSubscriberEmailData {
   sendTo: string;
-  suscriberName: string;
+  subscriberName: string;
   coachName: string;
 }

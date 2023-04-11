@@ -16,7 +16,11 @@ export class SubscriptionService {
     await this.mailQueue.resume();
   }
 
-  public async addNewTrainingMailSendTask(newTrainingEmailData: NewTrainingEmailData) {
-    await this.mailService.addNewTrainingMailSendTask(newTrainingEmailData);
+  public async addNewTrainingMailSendTask(newTrainingEmailData: Omit<NewTrainingEmailData, 'sendTo' | 'subscriberName'>) {
+    await this.mailService.addNewTrainingMailSendTask({
+      ...newTrainingEmailData, 
+      sendTo: 'mikhail@mikhail.com',
+      subscriberName: 'Mikhail'
+    });
   }
 }

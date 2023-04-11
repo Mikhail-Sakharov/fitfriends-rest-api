@@ -2,7 +2,7 @@ import {Injectable, Logger} from '@nestjs/common';
 import {MailerService} from '@nestjs-modules/mailer';
 import {ADD_SUBSCRIBER_EMAIL_SUBJECT, REMOVE_SUBSCRIBER_EMAIL_SUBJECT} from './mail.constant';
 import {AddSubscriberEmailData} from 'src/types/add-subscriber-email-data.interface';
-import {RemoveSubscriberEmailData} from 'src/types/remove-suscriber-email-data.interface';
+import {RemoveSubscriberEmailData} from 'src/types/remove-subscriber-email-data.interface';
 import {NewTrainingEmailData} from 'src/types/new-training-email-data.interface';
 import {InjectQueue} from '@nestjs/bull';
 import {CREATE_NEW_TRAINING_JOB, MAIL_QUEUE} from 'src/app.constant';
@@ -23,7 +23,7 @@ export class MailService {
       subject: ADD_SUBSCRIBER_EMAIL_SUBJECT,
       template: './add-subscriber',
       context: {
-        user: `${addSubscriberEmailData.suscriberName}`,
+        user: `${addSubscriberEmailData.subscriberName}`,
         coach: `${addSubscriberEmailData.coachName}`
       }
     })
@@ -35,7 +35,7 @@ export class MailService {
       subject: REMOVE_SUBSCRIBER_EMAIL_SUBJECT,
       template: './remove-subscriber',
       context: {
-        user: `${removeSubscriberEmailData.suscriberName}`,
+        user: `${removeSubscriberEmailData.subscriberName}`,
         coach: `${removeSubscriberEmailData.coachName}`
       }
     })

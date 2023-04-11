@@ -21,11 +21,7 @@ export class SubscriptionController {
 
   // ДОБАВЛЕНИЕ ЗАДАЧИ ОТПРАВКИ УВЕДОМЛЕНИЯ В ОЧЕРЕДЬ
   @EventPattern({cmd: CommandEvent.CreateNewTraining})
-  public async addNewTrainingMailSendTask(trainingData: Omit<NewTrainingEmailData, 'sendTo' | 'suscriberName'>) {
-    await this.subscriptionService.addNewTrainingMailSendTask({
-      ...trainingData,
-      sendTo: 'mikhail@mikhail.com',
-      suscriberName: 'Mikhail'
-    });
+  public async addNewTrainingMailSendTask(trainingData: Omit<NewTrainingEmailData, 'sendTo' | 'subscriberName'>) {
+    await this.subscriptionService.addNewTrainingMailSendTask(trainingData);
   }
 }
