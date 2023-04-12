@@ -55,6 +55,7 @@ Content-Type: video/mp4
 
 ### Список всех залов
 GET http://localhost:5679/gyms HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDM1OTEzMDgzNTg3NWRiMWExYWVhZTUiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY4MTMyMzQ4NSwiZXhwIjoxNjgxMzI0Mzg1fQ.YvgJTijNySrLWDSS7Be_jr4NvHlcFceWXh6MxjfiYBc
 
 ### Добавить зал в избранное
 GET http://localhost:5679/gyms/favorites/add/642b0219b7653404d781dd04 HTTP/1.1
@@ -85,6 +86,20 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDM1OTEzM
   "coachId": "64359129835875db1a1aeade"
 }
 
+### Создание заказа на абонемент в зал
+POST http://localhost:5679/orders/gyms HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDM1OTEzMDgzNTg3NWRiMWExYWVhZTUiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY4MTMyMzQ4NSwiZXhwIjoxNjgxMzI0Mzg1fQ.YvgJTijNySrLWDSS7Be_jr4NvHlcFceWXh6MxjfiYBc
+
+{
+  
+  "gymId": "6436ac8f5c2d254b7afb7df8",
+  "price": 2500,
+  "quantity": 1,
+  "totalOrderPrice": 2500,
+  "paymentMethod": "visa"
+}
+
 ### Запрос всех заказов на тренировку
 GET http://localhost:5679/orders/trainings HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDM1OTEyOTgzNTg3NWRiMWExYWVhZGUiLCJlbWFpbCI6ImpvaG5AcXdlLnF3ZSIsInVzZXJOYW1lIjoiSm9obiIsInVzZXJSb2xlIjoi0YLRgNC10L3QtdGAIiwiaWF0IjoxNjgxMzE0OTE0LCJleHAiOjE2ODEzMTU4MTR9.EyO4-dLLI9brRSjouQkljoISIr9ySIKzBc0Y9X18jwg
@@ -112,3 +127,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIzMDYxM
 ### Запрос отзывов о тренировке
 GET http://localhost:5679/reviews/642e7dcd0b188e633aa3eab2 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIzMDYxMzIyNzM4YWM1NzJiZTEzYzgiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY4MDc4MTE0NiwiZXhwIjoxNjgwNzgyMDQ2fQ.35IVpS4P9uwYcrhPuovR0YXXnMauhtw7NrGb7LEA8vY
+
+//====================================ПОКУПКИ/БАЛАНС========================================
+
+### Покупки пользователя
+GET http://localhost:5679/purchases HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDM1OTEzMDgzNTg3NWRiMWExYWVhZTUiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY4MTMyMzQ4NSwiZXhwIjoxNjgxMzI0Mzg1fQ.YvgJTijNySrLWDSS7Be_jr4NvHlcFceWXh6MxjfiYBc
+
+### Баланс пользователя
+GET http://localhost:5679/purchases/balance HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDM1OTEzMDgzNTg3NWRiMWExYWVhZTUiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY4MTMyMzQ4NSwiZXhwIjoxNjgxMzI0Mzg1fQ.YvgJTijNySrLWDSS7Be_jr4NvHlcFceWXh6MxjfiYBc

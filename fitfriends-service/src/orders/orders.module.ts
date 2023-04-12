@@ -18,6 +18,7 @@ import {GymMembershipModel, GymMembershipSchema} from './gym-membership.model';
     ])
   ],
   controllers: [OrdersController],
-  providers: [OrdersService, OrdersRepository, GymMembershipRepository, AccessTokenStrategy]
+  providers: [OrdersService, OrdersRepository, GymMembershipRepository, AccessTokenStrategy],
+  exports: [OrdersService]
 })
 export class OrdersModule {}

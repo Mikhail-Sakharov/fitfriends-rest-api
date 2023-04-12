@@ -52,6 +52,16 @@ export class OrdersService {
     return orders;
   }
 
+  public async getTrainingPurchases(traineeId: string) {
+    const purchases = await this.ordersRepository.getTrainingPurchases(traineeId);    
+    return purchases;
+  }
+
+  public async getGymPurchases(traineeId: string) {
+    const purchases = await this.gymMembershipRepository.find(traineeId);    
+    return purchases;
+  }
+
   public async showOrder(id: string, coachId: string) {
     const order = await this.ordersRepository.findById(id);
 
