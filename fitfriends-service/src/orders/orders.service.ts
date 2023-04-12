@@ -3,11 +3,15 @@ import CreateOrderDto from 'src/dto/create-order.dto';
 import {OrderRdo} from 'src/rdo/order.rdo';
 import {OrderEntity} from './order.entity';
 import {OrdersRepository} from './orders.repository';
+import {GymMembershipEntity} from './gym-membership.entity';
+import {CreateGymOrderDto} from 'src/dto/create-gym-order.dto';
+import {GymMembershipRepository} from './gym-membership.repository';
 
 @Injectable()
 export class OrdersService {
   constructor(
-    private readonly ordersRepository: OrdersRepository
+    private readonly ordersRepository: OrdersRepository,
+    private readonly gymMembershipRepository: GymMembershipRepository
   ) {}
 
   public async getOrdersWithStatistics(orders: OrderRdo[]) {
@@ -34,6 +38,12 @@ export class OrdersService {
   public async createOrder(dto: CreateOrderDto & {traineeId: string}) {
     const orderEntity = new OrderEntity(dto);
     const order = await this.ordersRepository.create(orderEntity);
+    return order;
+  }
+
+  public async createGymOrder(dto: CreateGymOrderDto & {traineeId: string}) {
+    const gymMembershipEntity = new GymMembershipEntity(dto);
+    const order = await this.gymMembershipRepository.create(gymMembershipEntity);
     return order;
   }
 

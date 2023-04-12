@@ -1,5 +1,5 @@
 export enum OrderType {
-  Subscription = 'абонемент',
+  Gym = 'абонемент',
   Training = 'тренировка'
 }
 

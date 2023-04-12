@@ -2,7 +2,7 @@
 ### Создание тренировки
 POST http://localhost:5679/trainings HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDM1OTEyOTgzNTg3NWRiMWExYWVhZGUiLCJlbWFpbCI6ImpvaG5AcXdlLnF3ZSIsInVzZXJOYW1lIjoiSm9obiIsInVzZXJSb2xlIjoi0YLRgNC10L3QtdGAIiwiaWF0IjoxNjgxMjMzMjAxLCJleHAiOjE2ODEyMzQxMDF9.gMNKg0JbmRYi_HhuUS7ezftXV-pW-0qFSBob-BT5OIw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDM1OTEyOTgzNTg3NWRiMWExYWVhZGUiLCJlbWFpbCI6ImpvaG5AcXdlLnF3ZSIsInVzZXJOYW1lIjoiSm9obiIsInVzZXJSb2xlIjoi0YLRgNC10L3QtdGAIiwiaWF0IjoxNjgxMzA0NzcwLCJleHAiOjE2ODEzMDU2NzB9.s36dOCJD5quNz_Kgv2-SA_jMrIbxGT5uNOazTp9uj6c
 
 {
   "title": "energy",
@@ -53,19 +53,6 @@ Content-Type: video/mp4
 
 //====================================ЗАЛЫ========================================
 
-### Создание зала
-POST http://localhost:5679/gyms HTTP/1.1
-Content-Type: application/json
-
-{
-  "title": "Название зала",
-  "location": "Петроградская",
-  "features": ["бассейн", "бесплатная парковка", "детская комната"],
-  "images": ["img/image_01.png", "img/image_02.png"],
-  "description": "Описание зала",
-  "price": 2500
-}
-
 ### Список всех залов
 GET http://localhost:5679/gyms HTTP/1.1
 
@@ -83,30 +70,30 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIzMDYxM
 
 //====================================ЗАКАЗЫ========================================
 
-### Создание заказа
-POST http://localhost:5679/orders HTTP/1.1
+### Создание заказа на тренировку
+POST http://localhost:5679/orders/trainings HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDFhMDY2ZGE4Yjk4NWVlOTgzMjI5MTYiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY3OTQyNzMxMCwiZXhwIjoxNjc5NDI4MjEwfQ.h8xA3Kx4a3a8iExeFHKCV823GrWcMdQiGBrCLFniFug
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDM1OTEzMDgzNTg3NWRiMWExYWVhZTUiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY4MTMwNzIyMCwiZXhwIjoxNjgxMzA4MTIwfQ.sxqhRZvTBC8k8EDapCA0O0abwh0a-USFhq5YwMp2Kw4
 
 {
-  "orderType": "тренировка",
-  "trainingId": "641a06c712c1949fdfbbc8a2",
+  "orderType": "абонемент",
+  "trainingId": "6436ac8f5c2d254b7afb7df8",
   "price": 6500,
   "quantity": 1,
   "totalOrderPrice": 6500,
   "paymentMethod": "visa",
-  "coachId": "641a065da8b985ee9832290f"
+  "coachId": "64359129835875db1a1aeade"
 }
 
-### Запрос всех заказов
-GET http://localhost:5679/orders HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDFhMDY1ZGE4Yjk4NWVlOTgzMjI5MGYiLCJlbWFpbCI6ImpvaG5AcXdlLnF3ZSIsInVzZXJOYW1lIjoiSm9obiIsInVzZXJSb2xlIjoi0YLRgNC10L3QtdGAIiwiaWF0IjoxNjc5NDMxMDAxLCJleHAiOjE2Nzk0MzE5MDF9.k45Dm219c6uXk8JVKZtTnIw0HtwkQPX3KTt9PmoVdGQ
+### Запрос всех заказов на тренировку
+GET http://localhost:5679/orders/trainings HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDM1OTEyOTgzNTg3NWRiMWExYWVhZGUiLCJlbWFpbCI6ImpvaG5AcXdlLnF3ZSIsInVzZXJOYW1lIjoiSm9obiIsInVzZXJSb2xlIjoi0YLRgNC10L3QtdGAIiwiaWF0IjoxNjgxMzE0OTE0LCJleHAiOjE2ODEzMTU4MTR9.EyO4-dLLI9brRSjouQkljoISIr9ySIKzBc0Y9X18jwg
 
 ### Запрос детальной информации по заказу
-GET http://localhost:5679/orders/64189bb68f238f540075037a HTTP/1.1
+GET http://localhost:5679/orders/trainings/64189bb68f238f540075037a HTTP/1.1
 
 ### Деактивация заказа
-GET http://localhost:5679/orders/deactivate/64189bb68f238f540075037a HTTP/1.1
+GET http://localhost:5679/orders/deactivate/trainings/64189bb68f238f540075037a HTTP/1.1
 
 //====================================ОТЗЫВЫ========================================
 

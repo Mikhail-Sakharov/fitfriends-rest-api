@@ -1,4 +1,4 @@
-import {Body, Controller, Get, HttpCode, HttpStatus, Param, Post, RawBodyRequest, Req, UseGuards} from '@nestjs/common';
+import {Body, Controller, ForbiddenException, Get, HttpCode, HttpStatus, Param, Post, RawBodyRequest, Req, UseGuards} from '@nestjs/common';
 import {ApiResponse, ApiTags} from '@nestjs/swagger';
 import {fillObject} from 'common/helpers';
 import CreateOrderDto from 'src/dto/create-order.dto';
@@ -6,6 +6,9 @@ import {AccessTokenGuard} from 'src/guards/access-token.guard';
 import {OrderRdo} from 'src/rdo/order.rdo';
 import {Payload} from 'src/types/payload.interface';
 import {OrdersService} from './orders.service';
+import {UserRole} from 'src/types/user-role.enum';
+import {CreateGymOrderDto} from 'src/dto/create-gym-order.dto';
+import {GymOrderRdo} from 'src/rdo/gym-order.rdo';
 
 @ApiTags('orders')
 @Controller('orders')
@@ -17,16 +20,20 @@ export class OrdersController {
   @ApiResponse({
     type: OrderRdo,
     status: HttpStatus.CREATED,
-    description: 'The order was created'
+    description: 'The training order was created'
   })
-  // СОЗДАНИЕ ЗАКАЗА
+  // СОЗДАНИЕ ЗАКАЗА НА ТРЕНИРОВКУ
   @UseGuards(AccessTokenGuard)
-  @Post('')
+  @Post('trainings')
   @HttpCode(HttpStatus.CREATED)
   public async createOrder(
     @Body() dto: CreateOrderDto,
     @Req() req: RawBodyRequest<{user: Payload}>
   ) {
+    const role = req.user.userRole;
+    if (role !== UserRole.User) {
+      throw new ForbiddenException('Only for Users');
+    }
     const traineeId = req.user.sub;
     const order = await this.ordersService.createOrder({...dto, traineeId});
     return fillObject(OrderRdo, order);
@@ -34,16 +41,42 @@ export class OrdersController {
 
   @ApiResponse({
     type: OrderRdo,
+    status: HttpStatus.CREATED,
+    description: 'The gym membership order was created'
+  })
+  // СОЗДАНИЕ ЗАКАЗА НА АБОНЕМЕНТ В ЗАЛ
+  @UseGuards(AccessTokenGuard)
+  @Post('gyms')
+  @HttpCode(HttpStatus.CREATED)
+  public async createGymOrder(
+    @Body() dto: CreateGymOrderDto,
+    @Req() req: RawBodyRequest<{user: Payload}>
+  ) {
+    const role = req.user.userRole;
+    if (role !== UserRole.User) {
+      throw new ForbiddenException('Only for Users');
+    }
+    const traineeId = req.user.sub;
+    const order = await this.ordersService.createGymOrder({...dto, traineeId});
+    return fillObject(GymOrderRdo, order);
+  }
+
+  @ApiResponse({
+    type: OrderRdo,
     status: HttpStatus.OK,
     description: 'The list of orders was received'
   })
-  // ПОЛУЧЕНИЕ СПИСКА ЗАКАЗОВ
+  // ПОЛУЧЕНИЕ СПИСКА ЗАКАЗОВ НА ТРЕНИРОВКУ
   @UseGuards(AccessTokenGuard)
-  @Get('')
+  @Get('trainings')
   @HttpCode(HttpStatus.OK)
   public async getOrders(
     @Req() req: RawBodyRequest<{user: Payload}>
   ) {
+    const role = req.user.userRole;
+    if (role !== UserRole.Coach) {
+      throw new ForbiddenException('Only for Coach');
+    }
     // Клиент может применить сортировку для списка заказов:
     // - количество купленных тренировок (возрастание, убывание),
     // - заработанная сумма (возрастание, убывание)
@@ -61,7 +94,7 @@ export class OrdersController {
   })
   // ДЕТАЛЬНАЯ ИНФОРМАЦИЯ ПО ЗАКАЗУ
   @UseGuards(AccessTokenGuard)
-  @Get(':id')
+  @Get('trainings/:id')
   @HttpCode(HttpStatus.OK)
   public async showOrder(
     @Param('id') id: string,
@@ -79,7 +112,7 @@ export class OrdersController {
   })
   // ДЕАКТИВАЦИЯ ЗАКАЗА
   @UseGuards(AccessTokenGuard)
-  @Get('deactivate/:id')
+  @Get('deactivate/trainings/:id')
   @HttpCode(HttpStatus.OK)
   public async deactivateOrder(
     @Param('id') id: string

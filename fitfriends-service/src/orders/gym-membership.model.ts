@@ -1,24 +1,25 @@
-import {Document, Schema as MongooseSchema} from 'mongoose';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
-import {Order, OrderType, PaymentMethod} from 'src/types/order.interface';
-import {TrainingModel} from 'src/trainings/training.model';
+import {Document, Schema as MongooseSchema} from 'mongoose';
+import {GymsModel} from 'src/gyms/gyms.model';
+import {GymMembership} from 'src/types/gym-membership.interface';
+import {OrderType, PaymentMethod} from 'src/types/order.interface';
 
 @Schema({
-  collection: 'fitfriends-orders',
+  collection: 'gym-membership',
   timestamps: true
 })
-export class OrderModel extends Document implements Order {
+export class GymMembershipModel extends Document implements GymMembership {
   @Prop({
-    required: true
+    default: OrderType.Gym
   })
   public orderType: OrderType;
 
   @Prop({
     type: MongooseSchema.Types.ObjectId,
-    ref: TrainingModel.name,
+    ref: GymsModel.name,
     required: true
   })
-  public trainingId: string;
+  public gymId: string;
 
   @Prop({
     required: true
@@ -43,11 +44,6 @@ export class OrderModel extends Document implements Order {
   @Prop({
     required: true
   })
-  public coachId: string;
-
-  @Prop({
-    required: true
-  })
   public traineeId: string;
 
   @Prop({
@@ -56,4 +52,4 @@ export class OrderModel extends Document implements Order {
   public isCompleted?: boolean;
 }
 
-export const OrderSchema = SchemaFactory.createForClass(OrderModel);
+export const GymMembershipSchema = SchemaFactory.createForClass(GymMembershipModel);
