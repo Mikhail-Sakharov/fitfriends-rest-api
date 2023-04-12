@@ -12,6 +12,7 @@ import {OrdersModule} from './orders/orders.module';
 import {GymsModule} from './gyms/gyms.module';
 import {ReviewsModule} from './reviews/reviews.module';
 import {rabbitMqOptions} from './config/rabbitmq.config';
+import { UserPurchasesModule } from './user-purchases/user-purchases.module';
 
 @Module({
   imports: [
@@ -35,7 +36,8 @@ import {rabbitMqOptions} from './config/rabbitmq.config';
     TrainingsModule,
     OrdersModule,
     GymsModule,
-    ReviewsModule
+    ReviewsModule,
+    UserPurchasesModule
   ],
   controllers: [],
   providers: []
