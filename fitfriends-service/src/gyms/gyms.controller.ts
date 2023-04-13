@@ -5,6 +5,7 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  Query,
   RawBodyRequest,
   Req,
   UseGuards,
@@ -17,6 +18,7 @@ import {GymRdo} from 'src/rdo/gym.rdo';
 import {Payload} from 'src/types/payload.interface';
 import {UserRole} from 'src/types/user-role.enum';
 import {GymsService} from './gyms.service';
+import {GetGymsQuery} from 'src/query/get-gyms.query';
 
 @ApiTags('gyms')
 @Controller('gyms')
@@ -34,8 +36,10 @@ export class GymsController {
   @UseGuards(AccessTokenGuard)
   @Get('')
   @HttpCode(HttpStatus.OK)
-  public async getGyms() {
-    const gyms = await this.gymsService.getGyms();
+  public async getGyms(
+    @Query() query: GetGymsQuery
+  ) {
+    const gyms = await this.gymsService.getCatalog(query);
     return fillObject(GymRdo, gyms);
   }
 

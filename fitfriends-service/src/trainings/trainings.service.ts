@@ -2,13 +2,13 @@ import {ForbiddenException, Inject, Injectable, NotFoundException} from '@nestjs
 import * as fs from 'fs';
 import CreateTrainingDto from 'src/dto/create-training.dto';
 import UpdateTrainingDto from 'src/dto/update-training.dto';
-import {GetTrainings} from 'src/query/get-trainings.query';
+import {GetTrainingsQuery} from 'src/query/get-trainings.query';
 import {TrainingEntity} from './training.entity';
 import {TrainingRepository} from './trainings.repository';
 import {RABBITMQ_SERVICE} from 'src/app.constant';
 import {ClientProxy} from '@nestjs/microservices';
 import {CommandEvent} from 'src/types/command-event.enum';
-import {GetTrainingsCatalog} from 'src/query/get-trainings-catalog.query';
+import {GetTrainingsCatalogQuery} from 'src/query/get-trainings-catalog.query';
 
 @Injectable()
 export class TrainingsService {
@@ -39,12 +39,12 @@ export class TrainingsService {
     return await this.trainingsRepository.create(trainingEntity);
   }
 
-  public async getTrainingsCatalog(query: GetTrainingsCatalog) {
+  public async getTrainingsCatalog(query: GetTrainingsCatalogQuery) {
     const trainings = await this.trainingsRepository.find(query);
     return trainings;
   }
 
-  public async findTrainings(coachId: string, query: GetTrainings) {
+  public async findTrainings(coachId: string, query: GetTrainingsQuery) {
     const trainings = await this.trainingsRepository.findManyByCoachId(coachId, query);
     return trainings;
   }

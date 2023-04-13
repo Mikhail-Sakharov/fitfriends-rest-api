@@ -4,6 +4,9 @@ import {CRUDRepository} from 'src/types/crud-repository.interface';
 import {Gym} from 'src/types/gym.interface';
 import {GymsEntity} from './gyms.entity';
 import {GymsModel} from './gyms.model';
+import {GetGymsQuery} from 'src/query/get-gyms.query';
+import {RESPONSE_ENTITIES_MAX_COUNT, TrainingPrice} from 'src/app.constant';
+import {SortOrderMap} from 'src/types/sort.types';
 
 export class GymsRepository implements CRUDRepository<GymsEntity, string, Gym> {
   constructor(
@@ -21,6 +24,30 @@ export class GymsRepository implements CRUDRepository<GymsEntity, string, Gym> {
 
   public async find(): Promise<Gym[]> {
     return await this.gymsModel.find();
+  }
+
+  public async getCatalog(query: GetGymsQuery): Promise<Gym[]> {
+    const {
+      minPrice,
+      maxPrice,
+      location,
+      features,
+      isVerified,
+      sortType,
+      sortOrder,
+      page,
+      limit
+    } = query;
+
+    return await this.gymsModel
+      .find()
+      .where(isVerified ? {isVerified: true} : {})
+      .where('price').gte(minPrice ? minPrice : TrainingPrice.MIN).lte(maxPrice ? maxPrice : TrainingPrice.MAX)
+      .where({location: {$in: location}})
+      .where({features: {$in: features}})
+      .sort({[sortType]: SortOrderMap[sortOrder]})
+      .skip(page > 0 ? (page - 1) * limit : 0)
+      .limit(limit ?? RESPONSE_ENTITIES_MAX_COUNT);
   }
 
   public async findById(id: string): Promise<Gym | null> {

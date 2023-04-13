@@ -1,13 +1,13 @@
 import {Injectable} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
-import {GetTrainings} from 'src/query/get-trainings.query';
+import {GetTrainingsQuery} from 'src/query/get-trainings.query';
 import {CRUDRepository} from 'src/types/crud-repository.interface';
 import {SortOrderMap} from 'src/types/sort.types';
 import {Training} from 'src/types/training.interface';
 import {TrainingEntity} from './training.entity';
 import {TrainingModel} from './training.model';
-import {GetTrainingsCatalog} from 'src/query/get-trainings-catalog.query';
+import {GetTrainingsCatalogQuery} from 'src/query/get-trainings-catalog.query';
 import {RESPONSE_ENTITIES_MAX_COUNT, TrainingCaloriesCount, TrainingPrice} from 'src/app.constant';
 
 @Injectable()
@@ -21,7 +21,7 @@ export class TrainingRepository implements CRUDRepository<TrainingEntity, string
     return newTraining.save();
   }
 
-  public async find(query: GetTrainingsCatalog) {
+  public async find(query: GetTrainingsCatalogQuery) {
     const {
       minPrice,
       maxPrice,
@@ -44,7 +44,7 @@ export class TrainingRepository implements CRUDRepository<TrainingEntity, string
       .limit(limit ?? RESPONSE_ENTITIES_MAX_COUNT);
   }
 
-  public async findManyByCoachId(coachId: string, query: GetTrainings): Promise<Training[]> {
+  public async findManyByCoachId(coachId: string, query: GetTrainingsQuery): Promise<Training[]> {
     const {
       minPrice,
       maxPrice,

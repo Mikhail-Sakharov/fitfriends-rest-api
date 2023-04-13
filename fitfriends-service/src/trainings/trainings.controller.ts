@@ -8,12 +8,12 @@ import {getFileInterceptorOptions} from 'src/config/multer.config';
 import CreateTrainingDto from 'src/dto/create-training.dto';
 import UpdateTrainingDto from 'src/dto/update-training.dto';
 import {AccessTokenGuard} from 'src/guards/access-token.guard';
-import {GetTrainings} from 'src/query/get-trainings.query';
+import {GetTrainingsQuery} from 'src/query/get-trainings.query';
 import {TrainingRdo} from 'src/rdo/training.rdo';
 import {Payload} from 'src/types/payload.interface';
 import {TrainingsService} from './trainings.service';
 import {UserRole} from 'src/types/user-role.enum';
-import {GetTrainingsCatalog} from 'src/query/get-trainings-catalog.query';
+import {GetTrainingsCatalogQuery} from 'src/query/get-trainings-catalog.query';
 
 @ApiTags('trainings')
 @Controller('trainings')
@@ -56,7 +56,7 @@ export class TrainingsController {
   @Get('catalog')
   @HttpCode(HttpStatus.OK)
   public async getTrainingsCatalog(
-    @Query() query: GetTrainingsCatalog
+    @Query() query: GetTrainingsCatalogQuery
   ) {
     const catalog = await this.trainingsService.getTrainingsCatalog(query);
     return fillObject(TrainingRdo, catalog);
@@ -73,7 +73,7 @@ export class TrainingsController {
   @HttpCode(HttpStatus.OK)
   public async getCoachTrainings(
     @Req() req: RawBodyRequest<{user: Payload}>,
-    @Query() query: GetTrainings
+    @Query() query: GetTrainingsQuery
   ) {
     const coachId = req.user.sub;
     const trainings = await this.trainingsService.findTrainings(coachId, query);

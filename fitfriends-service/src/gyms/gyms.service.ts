@@ -6,6 +6,7 @@ import {FavoriteGymsEntity} from './favorite-gyms.entity';
 import {FavoriteGymsRepository} from './favorite-gyms.repository';
 import {GymsEntity} from './gyms.entity';
 import {GymsRepository} from './gyms.repository';
+import {GetGymsQuery} from 'src/query/get-gyms.query';
 
 @Injectable()
 export class GymsService {
@@ -21,6 +22,11 @@ export class GymsService {
 
   public async getGyms() {
     const gyms = await this.gymsRepository.find();
+    return gyms;
+  }
+
+  public async getCatalog(query: GetGymsQuery) {
+    const gyms = await this.gymsRepository.getCatalog(query);
     return gyms;
   }
 

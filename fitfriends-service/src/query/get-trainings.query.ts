@@ -2,7 +2,7 @@ import {IsEnum, IsNumberString, IsOptional} from 'class-validator';
 import {Duration} from 'src/types/duration.enum';
 import {ClientSortOrder, SortType} from 'src/types/sort.types';
 
-export class GetTrainings {
+export class GetTrainingsQuery {
   @IsOptional()
   @IsNumberString()
   public minPrice?: number;

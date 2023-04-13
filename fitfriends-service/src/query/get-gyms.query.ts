@@ -1,7 +1,9 @@
-import {IsEnum, IsNumberString, IsOptional} from 'class-validator';
+import {IsBoolean, IsEnum, IsNumberString, IsOptional} from 'class-validator';
+import {GymFeatures} from 'src/types/gym-features.enum';
 import {ClientSortOrder, SortType} from 'src/types/sort.types';
+import {SubwayStation} from 'src/types/subway-station.enum';
 
-export class GetTrainingsCatalogQuery {
+export class GetGymsQuery {
   @IsOptional()
   @IsNumberString()
   public minPrice?: number;
@@ -11,16 +13,16 @@ export class GetTrainingsCatalogQuery {
   public maxPrice?: number;
 
   @IsOptional()
-  @IsNumberString()
-  public minCaloriesCount?: number;
+  @IsEnum(SubwayStation)
+  public location?: SubwayStation[];
 
   @IsOptional()
-  @IsNumberString()
-  public maxCaloriesCount?: number;
+  @IsEnum(GymFeatures)
+  public features?: GymFeatures[];
 
   @IsOptional()
-  @IsNumberString()
-  public rating?: number;
+  @IsBoolean()
+  public isVerified?: boolean;
 
   @IsOptional()
   @IsEnum(SortType)
