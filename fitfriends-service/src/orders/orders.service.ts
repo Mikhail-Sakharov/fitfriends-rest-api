@@ -80,4 +80,54 @@ export class OrdersService {
 
     return deactivatedOrder;
   }
+
+  public async incrementTrainingsCount(trainingId: string, traineeId: string) {
+    const trainingOrder = await this.ordersRepository.findById(trainingId);
+    if (trainingOrder.traineeId !== traineeId) {
+      throw new ForbiddenException('Access denied');
+    }
+    const quantity = trainingOrder.quantity + 1;
+    const orderEntity = new OrderEntity({...trainingOrder, quantity});
+    await this.ordersRepository.update(trainingId, orderEntity);
+  }
+
+  public async incrementGymsCount(gymId: string, traineeId: string) {
+    const gymMembership = await this.gymMembershipRepository.findById(gymId);
+    if (gymMembership.traineeId !== traineeId) {
+      throw new ForbiddenException('Access denied');
+    }
+    const quantity = gymMembership.quantity + 1;
+    const gymMembershipEntity = new GymMembershipEntity({...gymMembership, quantity});
+    await this.gymMembershipRepository.update(gymId, gymMembershipEntity);
+  }
+
+  public async decrementTrainingsCount(trainingId: string, traineeId: string) {
+    const trainingOrder = await this.ordersRepository.findById(trainingId);
+    if (trainingOrder.traineeId !== traineeId) {
+      throw new ForbiddenException('Access denied');
+    }
+    if (trainingOrder.quantity > 0) {
+      const quantity = trainingOrder.quantity - 1;
+      const orderEntity = new OrderEntity({...trainingOrder, quantity});
+      await this.ordersRepository.update(trainingId, orderEntity);
+    } else {
+      const orderEntity = new OrderEntity({...trainingOrder, isCompleted: true});
+      await this.ordersRepository.update(trainingId, orderEntity);
+    }
+  }
+
+  public async decrementGymsCount(gymId: string, traineeId: string) {
+    const gymMembership = await this.gymMembershipRepository.findById(gymId);
+    if (gymMembership.traineeId !== traineeId) {
+      throw new ForbiddenException('Access denied');
+    }
+    if (gymMembership.quantity > 0) {
+      const quantity = gymMembership.quantity - 1;
+      const gymMembershipEntity = new GymMembershipEntity({...gymMembership, quantity});
+      await this.gymMembershipRepository.update(gymId, gymMembershipEntity);
+    } else {
+      const gymMembershipEntity = new GymMembershipEntity({...gymMembership, isCompleted: true});
+      await this.gymMembershipRepository.update(gymId, gymMembershipEntity);
+    }
+  }
 }

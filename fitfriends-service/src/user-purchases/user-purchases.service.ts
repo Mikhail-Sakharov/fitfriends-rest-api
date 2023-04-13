@@ -42,4 +42,20 @@ export class UserPurchasesService {
 
     return balance;
   }
+  
+  public async incrementTrainingsCount(trainingId: string, traineeId: string) {
+    await this.ordersService.incrementTrainingsCount(trainingId, traineeId);
+  }
+
+  public async incrementGymsCount(gymId: string, traineeId: string) {
+    await this.ordersService.incrementGymsCount(gymId, traineeId);
+  }
+
+  public async decrementTrainingsCount(trainingId: string, traineeId: string) {
+    await this.ordersService.decrementTrainingsCount(trainingId, traineeId);
+  }
+
+  public async decrementGymsCount(gymId: string, traineeId: string) {
+    await this.ordersService.decrementGymsCount(gymId, traineeId);
+  }
 }

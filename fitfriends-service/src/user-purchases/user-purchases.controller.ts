@@ -1,4 +1,4 @@
-import {Controller, ForbiddenException, Get, HttpCode, HttpStatus, RawBodyRequest, Req, UseGuards} from '@nestjs/common';
+import {Controller, ForbiddenException, Get, HttpCode, HttpStatus, Param, RawBodyRequest, Req, UseGuards} from '@nestjs/common';
 import {UserPurchasesService} from './user-purchases.service';
 import {AccessTokenGuard} from 'src/guards/access-token.guard';
 import {Payload} from 'src/types/payload.interface';
@@ -49,5 +49,69 @@ export class UserPurchasesController {
     const traineeId = req.user.sub;
     const balance = await this.userPurchasesService.getBalance(traineeId);
     return balance;
+  }
+
+  // ИНКРЕМЕНТ КОЛИЧЕСТВА В ЗАКАЗЕ НА ТРЕНИРОВКУ (для перерасчёта баланса)
+  @UseGuards(AccessTokenGuard)
+  @Get('trainings/increment:trainingId')
+  @HttpCode(HttpStatus.OK)
+  public async incrementTrainingsCount(
+    @Param('trainingId') trainingId: string,
+    @Req() req: RawBodyRequest<{user: Payload}>
+  ) {
+    const role = req.user.userRole;
+    if (role !== UserRole.User) {
+      throw new ForbiddenException('Only for Users');
+    }
+    const traineeId = req.user.sub;
+    await this.userPurchasesService.incrementTrainingsCount(trainingId, traineeId);
+  }
+
+  // ИНКРЕМЕНТ КОЛИЧЕСТВА В ЗАКАЗЕ НА АБОНЕМЕНТ В ЗАЛ (для перерасчёта баланса)
+  @UseGuards(AccessTokenGuard)
+  @Get('gyms/increment:gymId')
+  @HttpCode(HttpStatus.OK)
+  public async incrementGymsCount(
+    @Param('gymId') gymId: string,
+    @Req() req: RawBodyRequest<{user: Payload}>
+  ) {
+    const role = req.user.userRole;
+    if (role !== UserRole.User) {
+      throw new ForbiddenException('Only for Users');
+    }
+    const traineeId = req.user.sub;
+    await this.userPurchasesService.incrementGymsCount(gymId, traineeId);
+  }
+
+  // ДЕКРЕМЕНТ КОЛИЧЕСТВА В ЗАКАЗЕ НА ТРЕНИРОВКУ (для перерасчёта баланса)
+  @UseGuards(AccessTokenGuard)
+  @Get('trainings/decrement:trainingId')
+  @HttpCode(HttpStatus.OK)
+  public async decrementTrainingsCount(
+    @Param('trainingId') trainingId: string,
+    @Req() req: RawBodyRequest<{user: Payload}>
+  ) {
+    const role = req.user.userRole;
+    if (role !== UserRole.User) {
+      throw new ForbiddenException('Only for Users');
+    }
+    const traineeId = req.user.sub;
+    await this.userPurchasesService.decrementTrainingsCount(trainingId, traineeId);
+  }
+
+  // ДЕКРЕМЕНТ КОЛИЧЕСТВА В ЗАКАЗЕ НА АБОНЕМЕНТ В ЗАЛ (для перерасчёта баланса)
+  @UseGuards(AccessTokenGuard)
+  @Get('gyms/decrement:gymId')
+  @HttpCode(HttpStatus.OK)
+  public async decrementGymsCount(
+    @Param('gymId') gymId: string,
+    @Req() req: RawBodyRequest<{user: Payload}>
+  ) {
+    const role = req.user.userRole;
+    if (role !== UserRole.User) {
+      throw new ForbiddenException('Only for Users');
+    }
+    const traineeId = req.user.sub;
+    await this.userPurchasesService.decrementGymsCount(gymId, traineeId);
   }
 }
