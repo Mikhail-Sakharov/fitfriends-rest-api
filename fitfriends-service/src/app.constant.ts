@@ -2,6 +2,11 @@ export const ENV_FILE_PATH = 'environments/.env';
 
 export const RABBITMQ_SERVICE = Symbol('RABBITMQ_SERVICE');
 
+export const TrainingPrice = {
+  MIN: 0,
+  MAX: 1000000
+};
+
 export const TrainingTitleLength = {
   MIN: 1,
   MAX: 15

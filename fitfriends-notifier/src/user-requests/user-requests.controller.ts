@@ -22,13 +22,20 @@ import {CreateUserRequestDto} from 'src/dto/create-user-request.dto';
 import {UserRequestRdo} from 'src/rdo/user-request.rdo';
 import {UserRole} from 'src/types/user-role.enum';
 import {UpdateUserRequestDto} from 'src/dto/update-user-request.dto';
+import {ApiResponse, ApiTags} from '@nestjs/swagger';
 
+@ApiTags('user-requests')
 @Controller('user-requests')
 export class UserRequestsController {
   constructor(
     private readonly userRequestsService: UserRequestsService
   ) {}
 
+  @ApiResponse({
+    type: UserRequestRdo,
+    status: HttpStatus.CREATED,
+    description: 'The personal training request was created'
+  })
   // ДОБАВЛЕНИЕ ЗАЯВКИ НА ТРЕНИРОВКУ
   @UseGuards(AccessTokenGuard)
   @Post('')
@@ -49,6 +56,11 @@ export class UserRequestsController {
     return fillObject(UserRequestRdo, userRequest);
   }
 
+  @ApiResponse({
+    type: UserRequestRdo,
+    status: HttpStatus.CREATED,
+    description: 'The list of personal training requests was received'
+  })
   // СПИСОК ЗАЯВОК
   @UseGuards(AccessTokenGuard)
   @Get('')
@@ -61,6 +73,11 @@ export class UserRequestsController {
     return fillObject(UserRequestRdo, userRequests);
   }
 
+  @ApiResponse({
+    type: UserRequestRdo,
+    status: HttpStatus.CREATED,
+    description: 'The status of personal training request was changed'
+  })
   // ИЗМЕНЕНИЕ СТАТУСА ЗАЯВКИ
   @UseGuards(AccessTokenGuard)
   @Patch(':id')
@@ -75,6 +92,11 @@ export class UserRequestsController {
     return fillObject(UserRequestRdo, updatedUserRequest);
   }
 
+  @ApiResponse({
+    type: UserRequestRdo,
+    status: HttpStatus.CREATED,
+    description: 'The personal training request was deleted'
+  })
   // УДАЛЕНИЕ ЗАЯВКИ
   @UseGuards(AccessTokenGuard)
   @Delete(':id')

@@ -6,13 +6,19 @@ import {SubscriptionService} from './subscription.service';
 import {AccessTokenGuard} from 'src/guards/access-token.guard';
 import {Payload} from 'src/types/payload.interface';
 import {Coach} from 'src/types/coach.interface';
+import {ApiResponse, ApiTags} from '@nestjs/swagger';
 
+@ApiTags('subscription')
 @Controller('subscription')
 export class SubscriptionController {
   constructor(
     private readonly subscriptionService: SubscriptionService
   ) {}
 
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'The mailing was started'
+  })
   // ЗАПУСК РАССЫЛКИ
   @Get('')
   @HttpCode(HttpStatus.OK)
@@ -32,6 +38,10 @@ export class SubscriptionController {
     await this.subscriptionService.createCoach(coach);
   }
 
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'The user was subscribed/unsubscribed'
+  })
   // ПОДПИСКА/ОТПИСКА НА НОВЫЕ ТРЕНИРОВКИ
   @UseGuards(AccessTokenGuard)
   @Get(':coachId')

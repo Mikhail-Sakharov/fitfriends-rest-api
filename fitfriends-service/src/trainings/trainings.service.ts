@@ -8,6 +8,7 @@ import {TrainingRepository} from './trainings.repository';
 import {RABBITMQ_SERVICE} from 'src/app.constant';
 import {ClientProxy} from '@nestjs/microservices';
 import {CommandEvent} from 'src/types/command-event.enum';
+import {GetTrainingsCatalog} from 'src/query/get-trainings-catalog.query';
 
 @Injectable()
 export class TrainingsService {
@@ -38,8 +39,13 @@ export class TrainingsService {
     return await this.trainingsRepository.create(trainingEntity);
   }
 
+  public async getTrainingsCatalog(query: GetTrainingsCatalog) {
+    const trainings = await this.trainingsRepository.find(query);
+    return trainings;
+  }
+
   public async findTrainings(coachId: string, query: GetTrainings) {
-    const trainings = await this.trainingsRepository.find(coachId, query);
+    const trainings = await this.trainingsRepository.findManyByCoachId(coachId, query);
     return trainings;
   }
 

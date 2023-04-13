@@ -3,8 +3,9 @@ import {UserPurchasesService} from './user-purchases.service';
 import {AccessTokenGuard} from 'src/guards/access-token.guard';
 import {Payload} from 'src/types/payload.interface';
 import {UserRole} from 'src/types/user-role.enum';
-import {ApiResponse} from '@nestjs/swagger';
+import {ApiResponse, ApiTags} from '@nestjs/swagger';
 
+@ApiTags('purchases')
 @Controller('purchases')
 export class UserPurchasesController {
   constructor(
@@ -51,6 +52,10 @@ export class UserPurchasesController {
     return balance;
   }
 
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'The training order quantity was incremented'
+  })
   // ИНКРЕМЕНТ КОЛИЧЕСТВА В ЗАКАЗЕ НА ТРЕНИРОВКУ (для перерасчёта баланса)
   @UseGuards(AccessTokenGuard)
   @Get('trainings/increment:trainingId')
@@ -67,6 +72,10 @@ export class UserPurchasesController {
     await this.userPurchasesService.incrementTrainingsCount(trainingId, traineeId);
   }
 
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'The gym order quantity was incremented'
+  })
   // ИНКРЕМЕНТ КОЛИЧЕСТВА В ЗАКАЗЕ НА АБОНЕМЕНТ В ЗАЛ (для перерасчёта баланса)
   @UseGuards(AccessTokenGuard)
   @Get('gyms/increment:gymId')
@@ -83,6 +92,10 @@ export class UserPurchasesController {
     await this.userPurchasesService.incrementGymsCount(gymId, traineeId);
   }
 
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'The training order quantity was decremented'
+  })
   // ДЕКРЕМЕНТ КОЛИЧЕСТВА В ЗАКАЗЕ НА ТРЕНИРОВКУ (для перерасчёта баланса)
   @UseGuards(AccessTokenGuard)
   @Get('trainings/decrement:trainingId')
@@ -99,6 +112,10 @@ export class UserPurchasesController {
     await this.userPurchasesService.decrementTrainingsCount(trainingId, traineeId);
   }
 
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'The gym order quantity was decremented'
+  })
   // ДЕКРЕМЕНТ КОЛИЧЕСТВА В ЗАКАЗЕ НА АБОНЕМЕНТ В ЗАЛ (для перерасчёта баланса)
   @UseGuards(AccessTokenGuard)
   @Get('gyms/decrement:gymId')

@@ -7,6 +7,8 @@ import {SortOrderMap} from 'src/types/sort.types';
 import {Training} from 'src/types/training.interface';
 import {TrainingEntity} from './training.entity';
 import {TrainingModel} from './training.model';
+import {GetTrainingsCatalog} from 'src/query/get-trainings-catalog.query';
+import {RESPONSE_ENTITIES_MAX_COUNT, TrainingCaloriesCount, TrainingPrice} from 'src/app.constant';
 
 @Injectable()
 export class TrainingRepository implements CRUDRepository<TrainingEntity, string, Training> {
@@ -19,27 +21,52 @@ export class TrainingRepository implements CRUDRepository<TrainingEntity, string
     return newTraining.save();
   }
 
-  public async find(coachId: string, query: GetTrainings): Promise<Training[]> {
-    const minPrice = query.minPrice;
-    const maxPrice = query.maxPrice;
-    const minCaloriesCount = query.minCaloriesCount;
-    const maxCaloriesCount = query.maxCaloriesCount;
-    const rating = query.rating;
-    const duration = query.duration;
-    const sortType = query.sortType;
-    const sortOrder = query.sortOrder;
-    const page = query.page;
-    const limit = query.limit;
+  public async find(query: GetTrainingsCatalog) {
+    const {
+      minPrice,
+      maxPrice,
+      minCaloriesCount,
+      maxCaloriesCount,
+      rating,
+      sortType,
+      sortOrder,
+      page,
+      limit
+    } = query;
+
+    return this.trainingModel
+      .find()
+      .where('price').gte(minPrice ? minPrice : TrainingPrice.MIN).lte(maxPrice ? maxPrice : TrainingPrice.MAX)
+      .where('caloriesCount').gte(minCaloriesCount ? minCaloriesCount : TrainingCaloriesCount.MIN).lte(maxCaloriesCount ? maxCaloriesCount : TrainingCaloriesCount.MAX)
+      .where(rating ? {rating} : {})
+      .sort({[sortType]: SortOrderMap[sortOrder]})
+      .skip(page > 0 ? (page - 1) * limit : 0)
+      .limit(limit ?? RESPONSE_ENTITIES_MAX_COUNT);
+  }
+
+  public async findManyByCoachId(coachId: string, query: GetTrainings): Promise<Training[]> {
+    const {
+      minPrice,
+      maxPrice,
+      minCaloriesCount,
+      maxCaloriesCount,
+      rating,
+      duration,
+      sortType,
+      sortOrder,
+      page,
+      limit
+    } = query;
 
     return this.trainingModel
       .find({coachId})
-      .where('price').gte(minPrice ? minPrice : 0).lte(maxPrice ? maxPrice : 1000000)
-      .where('caloriesCount').gte(minCaloriesCount ? minCaloriesCount : 0).lte(maxCaloriesCount ? maxCaloriesCount : 1000000)
+      .where('price').gte(minPrice ? minPrice : TrainingPrice.MIN).lte(maxPrice ? maxPrice : TrainingPrice.MAX)
+      .where('caloriesCount').gte(minCaloriesCount ? minCaloriesCount : TrainingCaloriesCount.MIN).lte(maxCaloriesCount ? maxCaloriesCount : TrainingCaloriesCount.MAX)
       .where(rating ? {rating} : {})
       .where(duration ? {duration} : {})
       .sort({[sortType]: SortOrderMap[sortOrder]})
       .skip(page > 0 ? (page - 1) * limit : 0)
-      .limit(limit ?? 0);
+      .limit(limit ?? RESPONSE_ENTITIES_MAX_COUNT);
   }
 
   public async findById(id: string): Promise<Training | null> {

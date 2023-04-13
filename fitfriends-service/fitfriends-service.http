@@ -9,7 +9,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDM1OTEyO
   "bgImageUrl": "img/content/thumbnails/training-02.jpg",
   "level": "любитель",
   "type": "стрейчинг",
-  "duration": "100 мин — 120 мин",
+  "duration": "10-30 мин",
   "caloriesCount": 5000,
   "description": "Упражнения укрепляют мышечный корсет, делают суставы более гибкими, улучшают осанку и координацию.",
   "gender": "для всех",

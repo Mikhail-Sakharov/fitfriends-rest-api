@@ -13,6 +13,7 @@ import {TrainingRdo} from 'src/rdo/training.rdo';
 import {Payload} from 'src/types/payload.interface';
 import {TrainingsService} from './trainings.service';
 import {UserRole} from 'src/types/user-role.enum';
+import {GetTrainingsCatalog} from 'src/query/get-trainings-catalog.query';
 
 @ApiTags('trainings')
 @Controller('trainings')
@@ -43,6 +44,22 @@ export class TrainingsController {
     const coachName = req.user.userName;
     const training = await this.trainingsService.create(coachId, coachName, dto);
     return fillObject(TrainingRdo, training);
+  }
+
+  @ApiResponse({
+    type: TrainingRdo,
+    status: HttpStatus.OK,
+    description: 'The catalog of trainings was received'
+  })
+  // КАТАЛОГ ТРЕНИРОВОК
+  @UseGuards(AccessTokenGuard)
+  @Get('catalog')
+  @HttpCode(HttpStatus.OK)
+  public async getTrainingsCatalog(
+    @Query() query: GetTrainingsCatalog
+  ) {
+    const catalog = await this.trainingsService.getTrainingsCatalog(query);
+    return fillObject(TrainingRdo, catalog);
   }
 
   @ApiResponse({
