@@ -37,8 +37,13 @@ export class GymsController {
   @Get('')
   @HttpCode(HttpStatus.OK)
   public async getGyms(
-    @Query() query: GetGymsQuery
+    @Query() query: GetGymsQuery,
+    @Req() req: RawBodyRequest<{user: Payload}>
   ) {
+    const role = req.user.userRole;
+    if (role !== UserRole.User) {
+      throw new ForbiddenException('Only for Users');
+    }
     const gyms = await this.gymsService.getCatalog(query);
     return fillObject(GymRdo, gyms);
   }

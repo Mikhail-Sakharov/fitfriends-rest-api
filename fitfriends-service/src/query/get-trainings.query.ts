@@ -1,5 +1,4 @@
 import {IsEnum, IsNumberString, IsOptional} from 'class-validator';
-import {Duration} from 'src/types/duration.enum';
 import {ClientSortOrder, SortType} from 'src/types/sort.types';
 
 export class GetTrainingsQuery {
@@ -21,11 +20,14 @@ export class GetTrainingsQuery {
 
   @IsOptional()
   @IsNumberString()
-  public rating?: number;
+  public minRating?: number;
 
   @IsOptional()
-  @IsEnum(Duration)
-  public duration?: Duration;
+  @IsNumberString()
+  public maxRating?: number;
+
+  @IsOptional()
+  public duration?: string;
 
   @IsOptional()
   @IsEnum(SortType)

@@ -20,7 +20,14 @@ export class GetTrainingsCatalogQuery {
 
   @IsOptional()
   @IsNumberString()
-  public rating?: number;
+  public minRating?: number;
+
+  @IsOptional()
+  @IsNumberString()
+  public maxRating?: number;
+
+  @IsOptional()
+  public trainingType?: string;
 
   @IsOptional()
   @IsEnum(SortType)

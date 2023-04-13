@@ -56,8 +56,13 @@ export class TrainingsController {
   @Get('catalog')
   @HttpCode(HttpStatus.OK)
   public async getTrainingsCatalog(
+    @Req() req: RawBodyRequest<{user: Payload}>,
     @Query() query: GetTrainingsCatalogQuery
   ) {
+    const role = req.user.userRole;
+    if (role !== UserRole.User) {
+      throw new ForbiddenException('Only for Users');
+    }
     const catalog = await this.trainingsService.getTrainingsCatalog(query);
     return fillObject(TrainingRdo, catalog);
   }

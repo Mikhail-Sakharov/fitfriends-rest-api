@@ -8,7 +8,7 @@ import {Training} from 'src/types/training.interface';
 import {TrainingEntity} from './training.entity';
 import {TrainingModel} from './training.model';
 import {GetTrainingsCatalogQuery} from 'src/query/get-trainings-catalog.query';
-import {RESPONSE_ENTITIES_MAX_COUNT, TrainingCaloriesCount, TrainingPrice} from 'src/app.constant';
+import {RESPONSE_ENTITIES_MAX_COUNT, ReviewRatingCount, TrainingCaloriesCount, TrainingPrice} from 'src/app.constant';
 
 @Injectable()
 export class TrainingRepository implements CRUDRepository<TrainingEntity, string, Training> {
@@ -27,7 +27,9 @@ export class TrainingRepository implements CRUDRepository<TrainingEntity, string
       maxPrice,
       minCaloriesCount,
       maxCaloriesCount,
-      rating,
+      minRating,
+      maxRating,
+      trainingType,
       sortType,
       sortOrder,
       page,
@@ -36,9 +38,16 @@ export class TrainingRepository implements CRUDRepository<TrainingEntity, string
 
     return this.trainingModel
       .find()
-      .where('price').gte(minPrice ? minPrice : TrainingPrice.MIN).lte(maxPrice ? maxPrice : TrainingPrice.MAX)
-      .where('caloriesCount').gte(minCaloriesCount ? minCaloriesCount : TrainingCaloriesCount.MIN).lte(maxCaloriesCount ? maxCaloriesCount : TrainingCaloriesCount.MAX)
-      .where(rating ? {rating} : {})
+      .where('price')
+        .gte(minPrice ? minPrice : TrainingPrice.MIN)
+        .lte(maxPrice ? maxPrice : TrainingPrice.MAX)
+      .where('caloriesCount')
+        .gte(minCaloriesCount ? minCaloriesCount : TrainingCaloriesCount.MIN)
+        .lte(maxCaloriesCount ? maxCaloriesCount : TrainingCaloriesCount.MAX)
+      .where('rating')
+        .gte(minRating ? minRating : ReviewRatingCount.MIN)
+        .lte(maxRating ? maxRating : ReviewRatingCount.MAX)
+      .where(trainingType ? {trainingType: {$in: trainingType.split(',')}} : {})
       .sort({[sortType]: SortOrderMap[sortOrder]})
       .skip(page > 0 ? (page - 1) * limit : 0)
       .limit(limit ?? RESPONSE_ENTITIES_MAX_COUNT);
@@ -50,7 +59,8 @@ export class TrainingRepository implements CRUDRepository<TrainingEntity, string
       maxPrice,
       minCaloriesCount,
       maxCaloriesCount,
-      rating,
+      minRating,
+      maxRating,
       duration,
       sortType,
       sortOrder,
@@ -60,10 +70,16 @@ export class TrainingRepository implements CRUDRepository<TrainingEntity, string
 
     return this.trainingModel
       .find({coachId})
-      .where('price').gte(minPrice ? minPrice : TrainingPrice.MIN).lte(maxPrice ? maxPrice : TrainingPrice.MAX)
-      .where('caloriesCount').gte(minCaloriesCount ? minCaloriesCount : TrainingCaloriesCount.MIN).lte(maxCaloriesCount ? maxCaloriesCount : TrainingCaloriesCount.MAX)
-      .where(rating ? {rating} : {})
-      .where(duration ? {duration} : {})
+      .where('price')
+        .gte(minPrice ? minPrice : TrainingPrice.MIN)
+        .lte(maxPrice ? maxPrice : TrainingPrice.MAX)
+      .where('caloriesCount')
+        .gte(minCaloriesCount ? minCaloriesCount : TrainingCaloriesCount.MIN)
+        .lte(maxCaloriesCount ? maxCaloriesCount : TrainingCaloriesCount.MAX)
+      .where('rating')
+        .gte(minRating ? minRating : ReviewRatingCount.MIN)
+        .lte(maxRating ? maxRating : ReviewRatingCount.MAX)
+      .where(duration ? {duration: {$in: duration.split(',')}} : {})
       .sort({[sortType]: SortOrderMap[sortOrder]})
       .skip(page > 0 ? (page - 1) * limit : 0)
       .limit(limit ?? RESPONSE_ENTITIES_MAX_COUNT);
