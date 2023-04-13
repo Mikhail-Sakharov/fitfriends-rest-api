@@ -8,6 +8,7 @@ import {CoachQuestionnaire} from 'src/types/user.interface';
 import {RABBITMQ_SERVICE} from 'src/app.constant';
 import {ClientProxy} from '@nestjs/microservices';
 import {CommandEvent} from 'src/types/command-event.enum';
+import {GetUsersQuery} from 'src/query/get-users.query';
 
 @Injectable()
 export class UsersService {
@@ -87,8 +88,8 @@ export class UsersService {
     );
   }
 
-  public async getUsers() {
-    return await this.usersRepository.find();
+  public async getUsers(query: GetUsersQuery) {
+    return await this.usersRepository.find(query);
   }
 
   public async getUser(id: string) {

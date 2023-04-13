@@ -27,6 +27,8 @@ export const UserTotalCaloriesCount = {
   MAX: 5000
 };
 
+export const RESPONSE_ENTITIES_MAX_COUNT = 50;
+
 export const MAX_TRAINING_TYPES_LENGTH = 3;
 
 export const MAX_SERTIFICATES_LENGTH = 1;

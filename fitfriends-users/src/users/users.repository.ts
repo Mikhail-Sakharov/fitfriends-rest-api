@@ -5,6 +5,9 @@ import {CRUDRepository} from 'src/types/crud-repository.interface';
 import {User} from 'src/types/user.interface';
 import {UserEntity} from './user.entity';
 import {UserModel} from './user.model';
+import {GetUsersQuery} from 'src/query/get-users.query';
+import {SortOrderMap} from 'src/types/sort.types';
+import {RESPONSE_ENTITIES_MAX_COUNT} from 'src/app.constant';
 
 @Injectable()
 export class UsersRepository
@@ -19,8 +22,29 @@ export class UsersRepository
     return newUser.save();
   }
 
-  public async find(): Promise<User[]> {
-    return this.userModel.find();
+  public async find(query: GetUsersQuery): Promise<User[]> {
+    const {
+      location,
+      trainingTypes,
+      trainingLevel,
+      sortType,
+      sortOrder,
+      page,
+      limit
+    } = query;
+
+    return this.userModel
+      .find()
+      .where({
+        $and: [
+          {location: {$in: location}},
+          {trainingTypes: {$in: trainingTypes}},
+          {trainingLevel: {$eq: trainingLevel}}
+        ]
+      })
+      .sort({[sortType]: SortOrderMap[sortOrder]})
+      .skip(page > 0 ? (page - 1) * limit : 0)
+      .limit(limit ?? RESPONSE_ENTITIES_MAX_COUNT);
   }
 
   public async findFriends(id: string): Promise<User[]> {

@@ -9,6 +9,7 @@ import {
   ParseFilePipeBuilder,
   Patch,
   Post,
+  Query,
   RawBodyRequest,
   Req,
   UploadedFile,
@@ -27,6 +28,7 @@ import {UsersService} from './users.service';
 import {ConfigService} from '@nestjs/config';
 import {getFileInterceptorOptions} from 'src/config/multer.config';
 import {AVATAR_MAX_SIZE, AVATAR_URL_REG_EXP, CERTIFICATE_URL_REG_EXP, UPLOAD_DIRECTORY_REG_EXP} from 'src/app.constant';
+import {GetUsersQuery} from 'src/query/get-users.query';
 
 @ApiTags('users')
 @Controller('users')
@@ -57,18 +59,21 @@ export class UsersController {
     status: HttpStatus.OK,
     description: 'The list of users is received'
   })
-  // СПИСОК ПОЛЬЗОВАТЕЛЕЙ
+  // СПИСОК ПОЛЬЗОВАТЕЛЕЙ (КАТАЛОГ)
+  // @UseGuards(AccessTokenGuard)
   @Get('')
   @HttpCode(HttpStatus.OK)
-  public async getUsers() {
-    const users = await this.usersService.getUsers();
+  public async getUsers(
+    @Query() query: GetUsersQuery
+  ) {
+    const users = await this.usersService.getUsers(query);
     return fillObject(UserRdo, users);
   }
 
   @ApiResponse({
     type: UserRdo,
     status: HttpStatus.OK,
-    description: "The user's info was updated"
+    description: 'The user\'s info was updated'
   })
   // РЕДАКТИРОВАНИЕ ИНФ О ПОЛЬЗОВАТЕЛЕ
   @UseGuards(AccessTokenGuard)
@@ -88,7 +93,7 @@ export class UsersController {
     status: HttpStatus.OK,
     description: 'The avatar file uploading route'
   })
-  // ВЫГРУЗКА ФАЙЛА
+  // ВЫГРУЗКА ФАЙЛА АВАТАРА
   @UseGuards(AccessTokenGuard)
   @Post('avatar')
   @UseInterceptors(
