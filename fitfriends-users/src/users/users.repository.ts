@@ -6,7 +6,7 @@ import {User} from 'src/types/user.interface';
 import {UserEntity} from './user.entity';
 import {UserModel} from './user.model';
 import {GetUsersQuery} from 'src/query/get-users.query';
-import {SortOrderMap} from 'src/types/sort.types';
+import {SortOrder, SortOrderMap, SortType} from 'src/types/sort.types';
 import {RESPONSE_ENTITIES_MAX_COUNT} from 'src/app.constant';
 
 @Injectable()
@@ -27,21 +27,19 @@ export class UsersRepository
       location,
       trainingTypes,
       trainingLevel,
-      sortType,
-      sortOrder,
-      page,
+      userRole,
+      sortType = SortType.Date,
+      sortOrder = SortOrder.Down,
+      page = 1,
       limit
     } = query;
 
     return this.userModel
       .find()
-      .where({
-        $and: [
-          {location: {$in: location}},
-          {trainingTypes: {$in: trainingTypes}},
-          {trainingLevel: {$eq: trainingLevel}}
-        ]
-      })
+      .where(location ? {location: {$in: location.split(',')}} : {})
+      .where(trainingTypes ? {trainingTypes: {$in: trainingTypes.split(',')}} : {})
+      .where(trainingLevel ? {trainingLevel: {$in: trainingLevel.split(',')}} : {})
+      .where(userRole ? {userRole: {$in: userRole.split(',')}} : {})
       .sort({[sortType]: SortOrderMap[sortOrder]})
       .skip(page > 0 ? (page - 1) * limit : 0)
       .limit(limit ?? RESPONSE_ENTITIES_MAX_COUNT);

@@ -68,7 +68,7 @@ GET http://localhost:5678/auth/refresh HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDEwYjQzNGJlNjU2NDFmM2E2NmY1NjIiLCJlbWFpbCI6ImpvaG5AcXdlLnF3ZSIsInVzZXJOYW1lIjoiSm9obiIsInVzZXJSb2xlIjoi0YLRgNC10L3QtdGAIiwiaWF0IjoxNjc4ODE2MzM1LCJleHAiOjE2Nzk0MjExMzV9.vgYgk3drZn15G-nuvtL4XxD7-tZWiHYLODOGrEIJsLk
 
 ### Запрос всех пользователей
-GET http://localhost:5678/users HTTP/1.1
+GET http://localhost:5678/users?location=Спортивная,Петроградская&userRole=тренер HTTP/1.1
 
 ### Запрос детальной информации о пользователе
 GET http://localhost:5678/users/64119f8a4df4601762479d0c HTTP/1.1

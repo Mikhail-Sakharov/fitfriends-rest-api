@@ -60,7 +60,7 @@ export class UsersController {
     description: 'The list of users is received'
   })
   // СПИСОК ПОЛЬЗОВАТЕЛЕЙ (КАТАЛОГ)
-  // @UseGuards(AccessTokenGuard)
+  @UseGuards(AccessTokenGuard)
   @Get('')
   @HttpCode(HttpStatus.OK)
   public async getUsers(
