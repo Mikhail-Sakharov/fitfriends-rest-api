@@ -54,7 +54,7 @@ Content-Type: video/mp4
 //====================================ЗАЛЫ========================================
 
 ### Список всех залов
-GET http://localhost:5679/gyms HTTP/1.1
+GET http://localhost:5679/gyms?minPrice=3000 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDM1OTEzMDgzNTg3NWRiMWExYWVhZTUiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY4MTMyMzQ4NSwiZXhwIjoxNjgxMzI0Mzg1fQ.YvgJTijNySrLWDSS7Be_jr4NvHlcFceWXh6MxjfiYBc
 
 ### Добавить зал в избранное

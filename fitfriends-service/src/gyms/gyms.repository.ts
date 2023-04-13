@@ -43,8 +43,8 @@ export class GymsRepository implements CRUDRepository<GymsEntity, string, Gym> {
       .find()
       .where(isVerified ? {isVerified: true} : {})
       .where('price').gte(minPrice ? minPrice : TrainingPrice.MIN).lte(maxPrice ? maxPrice : TrainingPrice.MAX)
-      .where({location: {$in: location}})
-      .where({features: {$in: features}})
+      .where(location ? {location: {$in: location.split(',')}} : {})
+      .where(features ? {features: {$in: features.split(',')}} : {})
       .sort({[sortType]: SortOrderMap[sortOrder]})
       .skip(page > 0 ? (page - 1) * limit : 0)
       .limit(limit ?? RESPONSE_ENTITIES_MAX_COUNT);
