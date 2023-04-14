@@ -4,7 +4,7 @@ import {UsersService} from './users.service';
 import {RABBITMQ_SERVICE} from 'src/app.constant';
 import {ConfigService} from '@nestjs/config';
 
-describe('AuthController', () => {
+describe('UsersController', () => {
   let usersController: UsersController;
   const ApiServiceProvider = {
     provide: UsersService,
