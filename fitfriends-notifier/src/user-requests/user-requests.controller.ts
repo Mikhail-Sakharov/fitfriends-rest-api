@@ -58,7 +58,7 @@ export class UserRequestsController {
 
   @ApiResponse({
     type: UserRequestRdo,
-    status: HttpStatus.CREATED,
+    status: HttpStatus.OK,
     description: 'The list of personal training requests was received'
   })
   // СПИСОК ЗАЯВОК
@@ -75,7 +75,7 @@ export class UserRequestsController {
 
   @ApiResponse({
     type: UserRequestRdo,
-    status: HttpStatus.CREATED,
+    status: HttpStatus.OK,
     description: 'The status of personal training request was changed'
   })
   // ИЗМЕНЕНИЕ СТАТУСА ЗАЯВКИ
@@ -94,7 +94,7 @@ export class UserRequestsController {
 
   @ApiResponse({
     type: UserRequestRdo,
-    status: HttpStatus.CREATED,
+    status: HttpStatus.OK,
     description: 'The personal training request was deleted'
   })
   // УДАЛЕНИЕ ЗАЯВКИ
