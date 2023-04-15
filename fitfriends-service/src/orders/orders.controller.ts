@@ -100,6 +100,10 @@ export class OrdersController {
     @Param('id') id: string,
     @Req() req: RawBodyRequest<{user: Payload}>
   ) {
+    const role = req.user.userRole;
+    if (role !== UserRole.Coach) {
+      throw new ForbiddenException('Only for Coach');
+    }
     const coachId = req.user.sub;
     const order = await this.ordersService.showOrder(id, coachId);
     return fillObject(OrderRdo, order);
