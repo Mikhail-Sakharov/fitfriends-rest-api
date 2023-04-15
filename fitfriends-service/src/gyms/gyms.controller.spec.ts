@@ -3,7 +3,7 @@ import {GymsController} from './gyms.controller';
 import {GymsService} from './gyms.service';
 import {UserRole} from 'src/types/user-role.enum';
 
-describe('TrainingsController', () => {
+describe('GymsController', () => {
   let gymsController: GymsController;
   let gymsService: GymsService;
   const ApiServiceProvider = {
