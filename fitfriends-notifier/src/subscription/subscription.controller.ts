@@ -1,4 +1,4 @@
-import {Controller, Get, HttpCode, HttpStatus, Param, RawBodyRequest, Req, UseGuards} from '@nestjs/common';
+import {Controller, ForbiddenException, Get, HttpCode, HttpStatus, Param, RawBodyRequest, Req, UseGuards} from '@nestjs/common';
 import {EventPattern} from '@nestjs/microservices';
 import {CommandEvent} from 'src/types/command-event.enum';
 import {NewTrainingEmailData} from 'src/types/new-training-email-data.interface';
@@ -7,6 +7,7 @@ import {AccessTokenGuard} from 'src/guards/access-token.guard';
 import {Payload} from 'src/types/payload.interface';
 import {Coach} from 'src/types/coach.interface';
 import {ApiResponse, ApiTags} from '@nestjs/swagger';
+import {UserRole} from 'src/types/user-role.enum';
 
 @ApiTags('subscription')
 @Controller('subscription')
@@ -50,6 +51,10 @@ export class SubscriptionController {
     @Param('coachId') coachId: string,
     @Req() req: RawBodyRequest<{user: Payload}>
   ) {
+    const role = req.user.userRole;
+    if (role !== UserRole.User) {
+      throw new ForbiddenException('Only for regular Users');
+    }
     const subscriberName = req.user.userName;
     const subscriberEmail = req.user.email;
     await this.subscriptionService.toggleSubscriberStatus(coachId, {
