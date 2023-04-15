@@ -5,7 +5,7 @@ import {FoodDiaryService} from './food-diary.service';
 import {CreateFoodDiaryDto} from 'src/dto/create-food-diary.dto';
 import {UpdateFoodDiaryDto} from 'src/dto/update-food-diary.dto';
 
-describe('TrainingsDiaryController', () => {
+describe('FoodDiaryController', () => {
   let foodDiaryController: FoodDiaryController;
   let foodDiaryService: FoodDiaryService;
   const ApiServiceProvider = {
