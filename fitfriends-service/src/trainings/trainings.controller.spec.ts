@@ -4,6 +4,7 @@ import {TrainingsService} from './trainings.service';
 import {TrainingsController} from './trainings.controller';
 import CreateTrainingDto from 'src/dto/create-training.dto';
 import UpdateTrainingDto from 'src/dto/update-training.dto';
+import {UserRole} from 'src/types/user-role.enum';
 
 describe('TrainingsController', () => {
   let trainingsController: TrainingsController;
@@ -45,7 +46,7 @@ describe('TrainingsController', () => {
     const req = {user: {
       sub: '',
       userName: '',
-      userRole: '',
+      userRole: UserRole.Coach,
       email: ''
     }};
 
@@ -57,7 +58,7 @@ describe('TrainingsController', () => {
     const req = {user: {
       sub: '',
       userName: '',
-      userRole: '',
+      userRole: UserRole.User,
       email: ''
     }};
     const query = {
