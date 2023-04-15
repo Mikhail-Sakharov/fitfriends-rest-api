@@ -57,7 +57,7 @@ describe('UsersController', () => {
 
     usersController.getFriends(req);
     expect(usersService.getFriends).toHaveBeenCalled();
-  })
+  });
 
   it("calling getUsers method", () => {
     const query = {
@@ -66,7 +66,7 @@ describe('UsersController', () => {
 
     usersController.getUsers(query);
     expect(usersService.getUsers).toHaveBeenCalled();
-  })
+  });
 
   it("calling updateUser method", () => {
     const dto = new UpdateUserDto();
@@ -79,5 +79,5 @@ describe('UsersController', () => {
 
     usersController.updateUser(dto, req);
     expect(usersService.updateUser).toHaveBeenCalled();
-  })
+  });
 });
