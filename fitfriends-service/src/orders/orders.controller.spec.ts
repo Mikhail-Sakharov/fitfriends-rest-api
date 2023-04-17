@@ -5,7 +5,6 @@ import {OrdersController} from './orders.controller';
 import {UserRole} from 'src/types/user-role.enum';
 import CreateOrderDto from 'src/dto/create-order.dto';
 import {CreateGymOrderDto} from 'src/dto/create-gym-order.dto';
-import {SortOrder, SortType} from 'src/types/sort.types';
 import {GetOrdersQuery} from 'src/query/get-orders.query';
 
 describe('OrdersController', () => {
