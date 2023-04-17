@@ -6,6 +6,7 @@ import {OrdersRepository} from './orders.repository';
 import {GymMembershipEntity} from './gym-membership.entity';
 import {CreateGymOrderDto} from 'src/dto/create-gym-order.dto';
 import {GymMembershipRepository} from './gym-membership.repository';
+import {GetOrdersQuery} from 'src/query/get-orders.query';
 
 @Injectable()
 export class OrdersService {
@@ -47,8 +48,8 @@ export class OrdersService {
     return order;
   }
 
-  public async getOrders(coachId: string) {
-    const orders = await this.ordersRepository.find(coachId);    
+  public async getOrders(coachId: string, query?: GetOrdersQuery) {
+    const orders = await this.ordersRepository.find(coachId, query);    
     return orders;
   }
 

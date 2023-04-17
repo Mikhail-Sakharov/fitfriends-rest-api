@@ -1,4 +1,4 @@
-import {Body, Controller, ForbiddenException, Get, HttpCode, HttpStatus, Param, Post, RawBodyRequest, Req, UseGuards} from '@nestjs/common';
+import {Body, Controller, ForbiddenException, Get, HttpCode, HttpStatus, Param, Post, Query, RawBodyRequest, Req, UseGuards} from '@nestjs/common';
 import {ApiResponse, ApiTags} from '@nestjs/swagger';
 import {fillObject} from 'common/helpers';
 import CreateOrderDto from 'src/dto/create-order.dto';
@@ -9,6 +9,8 @@ import {OrdersService} from './orders.service';
 import {UserRole} from 'src/types/user-role.enum';
 import {CreateGymOrderDto} from 'src/dto/create-gym-order.dto';
 import {GymOrderRdo} from 'src/rdo/gym-order.rdo';
+import {GetOrdersQuery} from 'src/query/get-orders.query';
+import {ClientSortOrder} from 'src/types/sort.types';
 
 @ApiTags('orders')
 @Controller('orders')
@@ -71,19 +73,29 @@ export class OrdersController {
   @Get('trainings')
   @HttpCode(HttpStatus.OK)
   public async getOrders(
-    @Req() req: RawBodyRequest<{user: Payload}>
+    @Req() req: RawBodyRequest<{user: Payload}>,
+    @Query() query?: GetOrdersQuery
   ) {
     const role = req.user.userRole;
     if (role !== UserRole.Coach) {
       throw new ForbiddenException('Only for Coach');
     }
-    // Клиент может применить сортировку для списка заказов:
-    // - количество купленных тренировок (возрастание, убывание),
-    // - заработанная сумма (возрастание, убывание)
     const coachId = req.user.sub;
-    const orders = await this.ordersService.getOrders(coachId);
+    const orders = await this.ordersService.getOrders(coachId, query);
     const transformedOrders = (fillObject(OrderRdo, orders) as unknown) as OrderRdo[];
     const ordersWithStatistics = await this.ordersService.getOrdersWithStatistics(transformedOrders);
+
+    if (query.sortOrder && query.sortType) {
+      switch(query.sortOrder) {
+        case ClientSortOrder.Desc:
+          return ordersWithStatistics.sort((nextOrder, currentOrder) => currentOrder.statistics[query.sortType] - nextOrder.statistics[query.sortType]);
+        case ClientSortOrder.Asc:
+          return ordersWithStatistics.sort((nextOrder, currentOrder) => nextOrder.statistics[query.sortType] - currentOrder.statistics[query.sortType]);
+        default:
+          return ordersWithStatistics;
+      }
+    }
+
     return ordersWithStatistics;
   }
 

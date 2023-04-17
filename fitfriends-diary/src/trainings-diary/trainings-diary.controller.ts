@@ -49,7 +49,7 @@ export class TrainingsDiaryController {
   public async getTrainingsDiaries(
     @Req() req: RawBodyRequest<{user: Payload}>
   ) {
-    // - отсортировать список дневников в порядке убывания по дате
+    // TODO: При состыковке с клиентской частью:
     // - отфильтровать записи с датой не ранее ПН текущей недели
     const role = req.user.userRole;
     if (role !== UserRole.User) {

@@ -101,8 +101,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDM1OTEzM
 }
 
 ### Запрос всех заказов на тренировку
-GET http://localhost:5679/orders/trainings HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDM1OTEyOTgzNTg3NWRiMWExYWVhZGUiLCJlbWFpbCI6ImpvaG5AcXdlLnF3ZSIsInVzZXJOYW1lIjoiSm9obiIsInVzZXJSb2xlIjoi0YLRgNC10L3QtdGAIiwiaWF0IjoxNjgxMzE0OTE0LCJleHAiOjE2ODEzMTU4MTR9.EyO4-dLLI9brRSjouQkljoISIr9ySIKzBc0Y9X18jwg
+GET http://localhost:5679/orders/trainings?sortType=totalSoldQuantity HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDM1OTEyOTgzNTg3NWRiMWExYWVhZGUiLCJlbWFpbCI6ImpvaG5AcXdlLnF3ZSIsInVzZXJOYW1lIjoiSm9obiIsInVzZXJSb2xlIjoi0YLRgNC10L3QtdGAIiwiaWF0IjoxNjgxNzE3MTg1LCJleHAiOjE2ODE3MTgwODV9.TRVhmGJujDbsxYLohDl4ReAsce-ibmjC8P0BgUDDqq8
 
 ### Запрос детальной информации по заказу
 GET http://localhost:5679/orders/trainings/64189bb68f238f540075037a HTTP/1.1

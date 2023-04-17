@@ -5,6 +5,8 @@ import {CRUDRepository} from 'src/types/crud-repository.interface';
 import {Order} from 'src/types/order.interface';
 import {OrderEntity} from './order.entity';
 import {OrderModel} from './order.model';
+import {GetOrdersQuery} from 'src/query/get-orders.query';
+import {RESPONSE_ENTITIES_MAX_COUNT} from 'src/app.constant';
 
 @Injectable()
 export class OrdersRepository implements CRUDRepository<OrderEntity, string, Order> {
@@ -17,8 +19,17 @@ export class OrdersRepository implements CRUDRepository<OrderEntity, string, Ord
     return order.populate('trainingId');
   }
 
-  public async find(coachId: string): Promise<Order[]> {
-    return await this.orderModel.find({coachId}).populate('trainingId');
+  public async find(coachId: string, query?: Omit<GetOrdersQuery, 'sortType' | 'sortOrder'>): Promise<Order[]> {
+    const {
+      page,
+      limit
+    } = query;
+
+    return await this.orderModel
+      .find({coachId})
+      .populate('trainingId')
+      .skip(page > 0 ? (page - 1) * limit : 0)
+      .limit(limit ?? RESPONSE_ENTITIES_MAX_COUNT);
   }
 
   public async getTrainingPurchases(traineeId: string): Promise<Order[]> {

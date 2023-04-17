@@ -5,6 +5,7 @@ import {CRUDRepository} from 'src/types/crud-repository.interface';
 import {TrainingsDiary} from 'src/types/trainings-diary.interface';
 import {TrainingsDiaryEntity} from './trainings-diary.entity';
 import {TrainingsDiaryModel} from './trainings-diary.model';
+import {SortOrder} from 'src/types/sort.types';
 
 @Injectable()
 export class TrainingsDiaryRepository implements CRUDRepository<TrainingsDiaryEntity, string, TrainingsDiary> {
@@ -18,7 +19,7 @@ export class TrainingsDiaryRepository implements CRUDRepository<TrainingsDiaryEn
   }
 
   public async find(userId: string): Promise<TrainingsDiary[]> {
-    return await this.trainingsDiaryModel.find({userId});
+    return await this.trainingsDiaryModel.find({userId}).sort({'createdAt': SortOrder.Down});
   }
 
   public async findById(id: string): Promise<TrainingsDiary | null> {
