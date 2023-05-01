@@ -10,6 +10,8 @@ import multerConfig from './config/multer.config';
 import envSchema from './env.schema';
 import {UsersModule} from './users/users.module';
 import {rabbitMqOptions} from './config/rabbitmq.config';
+import {join} from 'path';
+import {ServeStaticModule} from '@nestjs/serve-static';
 
 @Module({
   imports: [
@@ -28,6 +30,10 @@ import {rabbitMqOptions} from './config/rabbitmq.config';
       inject: [ConfigService]
     }),
     MongooseModule.forRootAsync(getMongoDbConfig()),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '../../'),
+      renderPath: '/files'
+    }),
     AuthModule,
     UsersModule
   ],
