@@ -85,7 +85,7 @@ export class UsersController {
   ) {
     const id = req.user.sub;
     const user = await this.usersService.updateUser(id, dto);
-    return user;
+    return fillObject(UserRdo, user);
   }
 
   @ApiResponse({
