@@ -109,8 +109,15 @@ export class UsersService {
       throw new NotFoundException('No user with such id');
     }
 
-    const userEntity = new UserEntity({...user, ...dto});
+    if (dto.questionnaire) {
+      const updatedQuestionnaire = {...user.questionnaire, ...dto.questionnaire};
+      const updatedUser = {...user, ...dto, questionnaire: updatedQuestionnaire};
 
+      const userEntity = new UserEntity(updatedUser);
+      return this.usersRepository.update(id, userEntity);
+    }
+
+    const userEntity = new UserEntity({...user, ...dto});
     return this.usersRepository.update(id, userEntity);
   }
 

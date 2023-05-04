@@ -15,6 +15,7 @@ export type UserQuestionnaire = {
   trainingDuration: Duration;
   dailyCaloriesCount: number;
   totalCaloriesCount: number;
+  description?: string;
   isReadyToGetTrained: boolean;
 };
 

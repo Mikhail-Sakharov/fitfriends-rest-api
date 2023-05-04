@@ -18,6 +18,7 @@ class UserQuestionnaire {
   trainingDuration: Duration;
   dailyCaloriesCount: number;
   totalCaloriesCount: number;
+  description: string;
   isReadyToGetTrained: boolean;
 }
 
@@ -86,7 +87,7 @@ export class UserModel extends Document implements User {
   @Prop({
     required: true
   })
-  questionnaire: Questionnaire; // нужен union type
+  questionnaire: Questionnaire;
 
   @Prop({
     default: []
