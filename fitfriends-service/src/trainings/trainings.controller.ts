@@ -49,7 +49,19 @@ export class TrainingsController {
   @UseGuards(AccessTokenGuard)
   @Post('')
   @HttpCode(HttpStatus.CREATED)
+  @UseInterceptors(
+    FileInterceptor('video', getFileInterceptorOptions())
+  )
   public async createTraining(
+    @UploadedFile(
+      new ParseFilePipeBuilder()
+        .addFileTypeValidator({
+          fileType: VIDEO_URL_REG_EXP,
+        })
+        .build({
+          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY
+        })
+    ) file: Express.Multer.File,
     @Body() dto: CreateTrainingDto,
     @Req() req: RawBodyRequest<{user: Payload}>
   ) {
@@ -59,7 +71,13 @@ export class TrainingsController {
     }
     const coachId = req.user.sub;
     const coachName = req.user.userName;
-    const training = await this.trainingsService.create(coachId, coachName, dto);
+
+    const createdTraining = await this.trainingsService.create(coachId, coachName, dto);
+    const trainingId = createdTraining._id;
+
+    const uploadDirectory = this.configService.get('multer.uploadDirectory').match(UPLOAD_DIRECTORY_REG_EXP);
+    const training = this.trainingsService.setVideoFilePath(coachId, trainingId, `${uploadDirectory}/${file.filename}`);
+
     return fillObject(TrainingRdo, training);
   }
 
@@ -163,7 +181,7 @@ export class TrainingsController {
   ) {
     const coachId = req.user.sub;
     const uploadDirectory = this.configService.get('multer.uploadDirectory').match(UPLOAD_DIRECTORY_REG_EXP);
-    const user = this.trainingsService.setVideoFilePath(coachId, id, `${uploadDirectory}/${file.filename}`);
-    return fillObject(TrainingRdo, user);
+    const training = this.trainingsService.setVideoFilePath(coachId, id, `${uploadDirectory}/${file.filename}`);
+    return fillObject(TrainingRdo, training);
   }
 }

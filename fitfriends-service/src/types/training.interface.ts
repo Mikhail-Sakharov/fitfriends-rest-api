@@ -15,7 +15,7 @@ export interface Training {
   caloriesCount: number;
   description: string;
   gender: TrainingGenderType;
-  videoUrl: string;
+  videoUrl?: string;
   rating?: number;
   coachId: string;
   isSpecialOffer?: boolean;

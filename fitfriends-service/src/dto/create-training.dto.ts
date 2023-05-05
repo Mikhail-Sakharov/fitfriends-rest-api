@@ -1,4 +1,5 @@
 import {ApiProperty} from '@nestjs/swagger';
+import {Transform} from 'class-transformer';
 import {
   MinLength,
   MaxLength,
@@ -6,7 +7,6 @@ import {
   IsString,
   Matches,
   IsOptional,
-  IsBoolean,
   IsNumber,
   Min,
   IsInt,
@@ -17,9 +17,7 @@ import {
   TrainingCaloriesCount,
   TrainingDescriptionLength,
   BG_IMAGE_URL_REG_EXP,
-  VIDEO_URL_REG_EXP,
   PRICE_DEFAULT_VALUE,
-  RATING_DEFAULT_VALUE,
 } from 'src/app.constant';
 import {Duration} from 'src/types/duration.enum';
 import {TrainingGenderType} from 'src/types/training-gender.enum';
@@ -69,6 +67,7 @@ export default class CreateTrainingDto {
     example: 1500
   })
   @IsOptional()
+  @Transform(({obj}) => Number(obj.price))
   @IsNumber()
   @IsInt()
   @Min(PRICE_DEFAULT_VALUE)
@@ -78,6 +77,7 @@ export default class CreateTrainingDto {
     description: 'Training calories number to burn',
     example: 1500
   })
+  @Transform(({obj}) => Number(obj.caloriesCount))
   @Min(TrainingCaloriesCount.MIN)
   @Max(TrainingCaloriesCount.MAX)
   public caloriesCount!: number;
@@ -96,29 +96,4 @@ export default class CreateTrainingDto {
   })
   @IsEnum(TrainingGenderType)
   public gender!: TrainingGenderType;
-
-  @ApiProperty({
-    description: 'Training video URL',
-    example: 'videos/0q3874yr-4q3rq3-q34r-erq74.mp4'
-  })
-  @IsString()
-  @Matches(VIDEO_URL_REG_EXP)
-  public videoUrl!: string;
-
-  @ApiProperty({
-    description: 'Training raiting',
-    example: 5
-  })
-  @IsOptional()
-  @IsNumber()
-  @Min(RATING_DEFAULT_VALUE)
-  public rating?: number;
-
-  @ApiProperty({
-    description: 'Indicates if the training is special offer',
-    example: true
-  })
-  @IsOptional()
-  @IsBoolean()
-  public isSpecialOffer!: boolean;
 }

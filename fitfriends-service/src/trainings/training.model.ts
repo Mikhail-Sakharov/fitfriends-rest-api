@@ -57,9 +57,9 @@ export class TrainingModel extends Document implements Training {
   public gender: TrainingGenderType;
 
   @Prop({
-    required: true
+    default: ''
   })
-  public videoUrl: string;
+  public videoUrl?: string;
 
   @Prop({
     default: 0
