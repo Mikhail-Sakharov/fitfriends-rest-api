@@ -46,7 +46,7 @@ export const ReviewRatingCount = {
   MAX: 5
 };
 
-export const VIDEO_URL_REG_EXP = /^.+(?:.mov)|.+(?:.avi)|.+(?:.mp4)$/;
+export const VIDEO_URL_REG_EXP = /.+(?:.mov).*|.+(?:.avi).*|.+(?:.mp4).*|.+(?:.quicktime).*/;
 
 export const BG_IMAGE_URL_REG_EXP = /^.+(?:.jpg)|.+(?:.png)$/;
 

@@ -3,12 +3,12 @@ import {InjectModel} from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 import {GetTrainingsQuery} from 'src/query/get-trainings.query';
 import {CRUDRepository} from 'src/types/crud-repository.interface';
-import {SortOrderMap} from 'src/types/sort.types';
+import {SortOrder, SortOrderMap, SortType} from 'src/types/sort.types';
 import {Training} from 'src/types/training.interface';
 import {TrainingEntity} from './training.entity';
 import {TrainingModel} from './training.model';
 import {GetTrainingsCatalogQuery} from 'src/query/get-trainings-catalog.query';
-import {RESPONSE_ENTITIES_MAX_COUNT, ReviewRatingCount, TrainingCaloriesCount, TrainingPrice} from 'src/app.constant';
+import {RATING_DEFAULT_VALUE, RESPONSE_ENTITIES_MAX_COUNT, ReviewRatingCount, TrainingCaloriesCount, TrainingPrice} from 'src/app.constant';
 
 @Injectable()
 export class TrainingRepository implements CRUDRepository<TrainingEntity, string, Training> {
@@ -71,16 +71,16 @@ export class TrainingRepository implements CRUDRepository<TrainingEntity, string
     return this.trainingModel
       .find({coachId})
       .where('price')
-        .gte(minPrice ? minPrice : TrainingPrice.MIN)
-        .lte(maxPrice ? maxPrice : TrainingPrice.MAX)
+        .gte(minPrice ?? TrainingPrice.MIN)
+        .lte(maxPrice ?? TrainingPrice.MAX)
       .where('caloriesCount')
-        .gte(minCaloriesCount ? minCaloriesCount : TrainingCaloriesCount.MIN)
-        .lte(maxCaloriesCount ? maxCaloriesCount : TrainingCaloriesCount.MAX)
+        .gte(minCaloriesCount ?? TrainingCaloriesCount.MIN)
+        .lte(maxCaloriesCount ?? TrainingCaloriesCount.MAX)
       .where('rating')
-        .gte(minRating ? minRating : ReviewRatingCount.MIN)
-        .lte(maxRating ? maxRating : ReviewRatingCount.MAX)
+        .gte(minRating ?? RATING_DEFAULT_VALUE)
+        .lte(maxRating ?? ReviewRatingCount.MAX)
       .where(duration ? {duration: {$in: duration.split(',')}} : {})
-      .sort({[sortType]: SortOrderMap[sortOrder]})
+      .sort({[sortType ?? SortType.Date]: sortOrder ? SortOrderMap[sortOrder] : SortOrder.Down})
       .skip(page > 0 ? (page - 1) * limit : 0)
       .limit(limit ?? RESPONSE_ENTITIES_MAX_COUNT);
   }
