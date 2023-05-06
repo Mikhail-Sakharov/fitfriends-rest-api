@@ -37,7 +37,7 @@ export const EMAIL_REG_EXP = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,5}$/;
 
 export const AVATAR_URL_REG_EXP = /^.+(?:.jpg)|.+(?:.png)$/;
 
-export const CERTIFICATE_URL_REG_EXP = /^.+(?:.pdf)$/;
+export const CERTIFICATE_URL_REG_EXP = /^.+(?:.pdf)|.+(?:.jpg)|.+(?:.png)$/;
 
 export const AVATAR_MAX_SIZE = 1000000;
 

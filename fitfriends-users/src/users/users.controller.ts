@@ -29,6 +29,7 @@ import {ConfigService} from '@nestjs/config';
 import {getFileInterceptorOptions} from 'src/config/multer.config';
 import {AVATAR_MAX_SIZE, AVATAR_URL_REG_EXP, CERTIFICATE_URL_REG_EXP, UPLOAD_DIRECTORY_REG_EXP} from 'src/app.constant';
 import {GetUsersQuery} from 'src/query/get-users.query';
+import {DeleteCertificateQuery} from 'src/query/delete-certificate.query';
 
 @ApiTags('users')
 @Controller('users')
@@ -146,6 +147,26 @@ export class UsersController {
     const user = this.usersService.setCertificateFilePath(req.user.sub, `${uploadDirectory}/${file.filename}`);
     return fillObject(UserRdo, user);
   }
+
+  @ApiResponse({
+    type: UserRdo,
+    status: HttpStatus.OK,
+    description: 'The certificate file deleting route'
+  })
+  // УДАЛЕНИЕ СЕРТИФИКАТА
+  @UseGuards(AccessTokenGuard)
+  @Get('certificate/delete')
+  @HttpCode(HttpStatus.OK)
+  public async deleteCertificate(
+    @Req() req: RawBodyRequest<{user: Payload}>,
+    @Query() query: DeleteCertificateQuery
+  ) {
+    const userId = req.user.sub;
+    const certificateUrl = query.certificateUrl;
+    const user = this.usersService.deleteCertificate(userId, certificateUrl);
+    return fillObject(UserRdo, user);
+  }
+
 
   @ApiResponse({
     type: UserRdo,

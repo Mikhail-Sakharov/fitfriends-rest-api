@@ -18,7 +18,8 @@ describe('UsersController', () => {
       getUser: jest.fn(),
       updateUser: jest.fn(),
       setAvatarPath: jest.fn(),
-      setCertificateFilePath: jest.fn()
+      setCertificateFilePath: jest.fn(),
+      deleteCertificate: jest.fn()
     })
   };
 
@@ -79,5 +80,20 @@ describe('UsersController', () => {
 
     usersController.updateUser(dto, req);
     expect(usersService.updateUser).toHaveBeenCalled();
+  });
+
+  it("calling deleteCertificate method", () => {
+    const req = {user: {
+      sub: '',
+      userName: '',
+      userRole: '',
+      email: ''
+    }};
+    const query = {
+      certificateUrl: 'certificateUrl'
+    };
+
+    usersController.deleteCertificate(req, query);
+    expect(usersService.deleteCertificate).toHaveBeenCalled();
   });
 });

@@ -146,8 +146,32 @@ export class UsersService {
     const questionnaire = user.questionnaire as CoachQuestionnaire;
     const certificates = questionnaire.certificates;
 
-    if (fs.existsSync(certificates[0])) {
+    /* if (fs.existsSync(certificates[0])) {
       fs.unlink(certificates[0], (err) => {
+        if (err) {
+         console.error(err);
+         return err;
+        }
+      });
+    } */
+
+    const updatedCertificates = [...certificates, certificateUrl];
+    const updatedQuestionnaire = {...questionnaire, certificates: updatedCertificates};
+    return this.updateUser(userId, {questionnaire: updatedQuestionnaire});
+  }
+
+  public async deleteCertificate(userId: string, certificateUrl: string) {
+    const user = await this.usersRepository.findById(userId);
+
+    if (user.userRole !== UserRole.Coach) {
+      throw new ForbiddenException('Access denied');
+    }
+
+    const questionnaire = user.questionnaire as CoachQuestionnaire;
+    const certificates = questionnaire.certificates;
+
+    if (fs.existsSync(certificateUrl)) {
+      fs.unlink(certificateUrl, (err) => {
         if (err) {
          console.error(err);
          return err;
@@ -155,7 +179,8 @@ export class UsersService {
       });
     }
 
-    const updatedQuestionnaire = {...questionnaire, certificates: [certificateUrl]};
+    const updatedCertificates = [...certificates].filter((certificate) => certificate !== certificateUrl);
+    const updatedQuestionnaire = {...questionnaire, certificates: updatedCertificates};
     return this.updateUser(userId, {questionnaire: updatedQuestionnaire});
   }
 }
