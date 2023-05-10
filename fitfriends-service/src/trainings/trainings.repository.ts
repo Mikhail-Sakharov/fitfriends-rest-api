@@ -82,7 +82,7 @@ export class TrainingRepository implements CRUDRepository<TrainingEntity, string
       .where(duration ? {duration: {$in: duration.split(',')}} : {})
       .sort({[sortType ?? SortType.Date]: sortOrder ? SortOrderMap[sortOrder] : SortOrder.Down})
       .skip(page > 0 ? (page - 1) * limit : 0)
-      .limit(limit ?? RESPONSE_ENTITIES_MAX_COUNT);
+      .limit(limit && limit <= RESPONSE_ENTITIES_MAX_COUNT ? limit : RESPONSE_ENTITIES_MAX_COUNT);
   }
 
   public async findById(id: string): Promise<Training | null> {

@@ -1,5 +1,5 @@
 import {ApiProperty} from '@nestjs/swagger';
-import {MinLength, MaxLength, IsEnum, IsNumber, IsInt, Min, Max, IsString, Matches, IsBoolean} from 'class-validator';
+import {MinLength, MaxLength, IsEnum, IsNumber, IsInt, Min, Max, IsString, Matches, IsBoolean, IsOptional} from 'class-validator';
 import {TrainingTitleLength, PRICE_DEFAULT_VALUE, TrainingCaloriesCount, TrainingDescriptionLength, VIDEO_URL_REG_EXP} from 'src/app.constant';
 import {Duration} from 'src/types/duration.enum';
 import {TrainingGenderType} from 'src/types/training-gender.enum';
@@ -11,6 +11,7 @@ export default class UpdateTrainingDto {
     description: 'Training title',
     example: 'energy'
   })
+  @IsOptional()
   @MinLength(TrainingTitleLength.MIN)
   @MaxLength(TrainingTitleLength.MAX)
   public title?: string;
@@ -19,6 +20,7 @@ export default class UpdateTrainingDto {
     description: 'User\'s training level',
     example: 'любитель'
   })
+  @IsOptional()
   @IsEnum(TrainingLevel)
   public level?: TrainingLevel;
 
@@ -26,6 +28,7 @@ export default class UpdateTrainingDto {
     description: 'Type of training',
     example: 'стрейчинг'
   })
+  @IsOptional()
   @IsEnum(TrainingType)
   public type?: TrainingType;
 
@@ -33,6 +36,7 @@ export default class UpdateTrainingDto {
     description: 'Training duration',
     example: '30-50 мин'
   })
+  @IsOptional()
   @IsEnum(Duration)
   public duration?: Duration;
 
@@ -40,6 +44,7 @@ export default class UpdateTrainingDto {
     description: 'Training price',
     example: 1500
   })
+  @IsOptional()
   @IsNumber()
   @IsInt()
   @Min(PRICE_DEFAULT_VALUE)
@@ -49,6 +54,7 @@ export default class UpdateTrainingDto {
     description: 'Training calories number to burn',
     example: 1500
   })
+  @IsOptional()
   @Min(TrainingCaloriesCount.MIN)
   @Max(TrainingCaloriesCount.MAX)
   public caloriesCount?: number;
@@ -57,6 +63,7 @@ export default class UpdateTrainingDto {
     description: 'Training description text',
     example: 'Упражнения укрепляют мышечный корсет, делают суставы более гибкими, улучшают осанку и координацию.'
   })
+  @IsOptional()
   @MinLength(TrainingDescriptionLength.MIN)
   @MaxLength(TrainingDescriptionLength.MAX)
   public description?: string;
@@ -65,6 +72,7 @@ export default class UpdateTrainingDto {
     description: 'What gender the training is destined for',
     example: 'для всех'
   })
+  @IsOptional()
   @IsEnum(TrainingGenderType)
   public gender?: TrainingGenderType;
 
@@ -72,6 +80,7 @@ export default class UpdateTrainingDto {
     description: 'Training video URL',
     example: 'videos/0q3874yr-4q3rq3-q34r-erq74.mp4'
   })
+  @IsOptional()
   @IsString()
   @Matches(VIDEO_URL_REG_EXP)
   public videoUrl?: string;
@@ -80,6 +89,7 @@ export default class UpdateTrainingDto {
     description: 'Indicates if the training is special offer',
     example: true
   })
+  @IsOptional()
   @IsBoolean()
   public isSpecialOffer?: boolean;
 }
