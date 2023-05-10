@@ -13,6 +13,8 @@ import {GymsModule} from './gyms/gyms.module';
 import {ReviewsModule} from './reviews/reviews.module';
 import {rabbitMqOptions} from './config/rabbitmq.config';
 import { UserPurchasesModule } from './user-purchases/user-purchases.module';
+import {ServeStaticModule} from '@nestjs/serve-static';
+import {join} from 'path';
 
 @Module({
   imports: [
@@ -33,6 +35,10 @@ import { UserPurchasesModule } from './user-purchases/user-purchases.module';
     MongooseModule.forRootAsync(
       getMongoDbConfig()
     ),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '../../'),
+      renderPath: '/files'
+    }),
     TrainingsModule,
     OrdersModule,
     GymsModule,
