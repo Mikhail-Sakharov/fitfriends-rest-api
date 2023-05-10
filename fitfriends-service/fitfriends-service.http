@@ -107,16 +107,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIzMDYxM
 ### Создание заказа на тренировку
 POST http://localhost:5679/orders/trainings HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDM1OTEzMDgzNTg3NWRiMWExYWVhZTUiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY4MTMwNzIyMCwiZXhwIjoxNjgxMzA4MTIwfQ.sxqhRZvTBC8k8EDapCA0O0abwh0a-USFhq5YwMp2Kw4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDViN2U1ZWQ5ZjRlY2Y3MDJiNDc2NmQiLCJlbWFpbCI6InF3ZTFAcXdlLnF3ZSIsInVzZXJOYW1lIjoi0JzQuNGF0LDQuNC7IiwidXNlclJvbGUiOiLQv9C-0LvRjNC30L7QstCw0YLQtdC70YwiLCJpYXQiOjE2ODM3MTc3MjYsImV4cCI6MTY4MzcxODYyNn0.bI5jCiyRhAxMn6GtocTs1YbRM-JU_Ao8KOLKf61G4s8
 
 {
-  "orderType": "абонемент",
-  "trainingId": "6436ac8f5c2d254b7afb7df8",
-  "price": 6500,
+  "orderType": "тренировка",
+  "trainingId": "645685e5c65fdb256f27148e",
+  "price": 6504,
   "quantity": 1,
-  "totalOrderPrice": 6500,
-  "paymentMethod": "visa",
-  "coachId": "64359129835875db1a1aeade"
+  "totalOrderPrice": 6504,
+  "paymentMethod": "umoney",
+  "coachId": "6454c3c02cfb673f87f96ac7"
 }
 
 ### Создание заказа на абонемент в зал

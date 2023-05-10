@@ -55,6 +55,15 @@ POST http://localhost:5678/auth/login HTTP/1.1
 Content-Type: application/json
 
 {
+  "email": "qwe1@qwe.qwe",
+  "password": "123456"
+}
+
+### Вход
+POST http://localhost:5678/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
   "email": "john@qwe.qwe",
   "password": "123456"
 }
@@ -88,8 +97,8 @@ GET http://localhost:5678/users/friends HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDExOWY4YTRkZjQ2MDE3NjI0NzlkMGMiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY3ODg4MjAyNiwiZXhwIjoxNjc4ODgyOTI2fQ.Op6itGILWfJa5_Un63y33gTlwXKfFvFGy1hXK2zPYBQ
 
 ### Добавить в друзья / добавиться в друзья
-GET http://localhost:5678/users/friends/add/642b0e23a146a57f8a1f3313 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIzMDYxMzIyNzM4YWM1NzJiZTEzYzgiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY4MDgwNjMxNywiZXhwIjoxNjgwODA3MjE3fQ.W1G2p9vo25XM97QF3vEr_3jn25wWjS74xnuwmZ1k6cA
+GET http://localhost:5678/users/friends/add/6454c3c02cfb673f87f96ac7 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDViN2U1ZWQ5ZjRlY2Y3MDJiNDc2NmQiLCJlbWFpbCI6InF3ZTFAcXdlLnF3ZSIsInVzZXJOYW1lIjoi0JzQuNGF0LDQuNC7IiwidXNlclJvbGUiOiLQv9C-0LvRjNC30L7QstCw0YLQtdC70YwiLCJpYXQiOjE2ODM3MzE1NzIsImV4cCI6MTY4MzczMjQ3Mn0.ST-P7zMA-hH_L_a_mBD94lgX77SzbZKjSk3hINmX5zE
 
 ### Удалить из друзей / удалиться из друзей
 GET http://localhost:5678/users/friends/remove/642b0e23a146a57f8a1f3313 HTTP/1.1

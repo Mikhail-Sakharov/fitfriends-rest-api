@@ -52,7 +52,8 @@ export class UsersController {
     @Req() req: RawBodyRequest<{user: Payload}>
   ) {
     const userId = req.user.sub;
-    return await this.usersService.getFriends(userId);
+    const friends = await this.usersService.getFriends(userId);
+    return fillObject(UserRdo, friends);
   }
 
   @ApiResponse({
