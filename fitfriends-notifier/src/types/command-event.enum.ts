@@ -1,3 +1,5 @@
+import {Status} from './status.enum';
+
 export enum CommandEvent {
   AddFriend = 'addFriend',
   RemoveFriend = 'removeFriend',
@@ -7,3 +9,8 @@ export enum CommandEvent {
   TrainingRequestAcception = 'trainingRequestAcception',
   TrainingRequestRejection = 'trainingRequestRejection'
 }
+
+export const CommandEventMap = {
+  [Status.Accepted]: CommandEvent.TrainingRequestAcception,
+  [Status.Rejected]: CommandEvent.TrainingRequestRejection
+};

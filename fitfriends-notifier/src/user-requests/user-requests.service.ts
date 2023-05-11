@@ -5,7 +5,7 @@ import {UserRequestsEntity} from './user-requests.entity';
 import {UpdateUserRequestDto} from 'src/dto/update-user-request.dto';
 import {RABBITMQ_SERVICE} from 'src/app.constant';
 import {ClientProxy} from '@nestjs/microservices';
-import {CommandEvent} from 'src/types/command-event.enum';
+import {CommandEvent, CommandEventMap} from 'src/types/command-event.enum';
 
 @Injectable()
 export class UserRequestsService {
@@ -56,7 +56,7 @@ export class UserRequestsService {
     return userRequests;
   }
 
-  public async changeUserRequestStatus(id: string, userId: string, dto: UpdateUserRequestDto) {
+  public async changeUserRequestStatus(id: string, userId: string, userName: string, dto: UpdateUserRequestDto) {
     const userRequest = await this.userRequestsRepository.findById(id);
     if (userId !== userRequest.userId) {
       throw new ForbiddenException('Access denied');
@@ -66,6 +66,16 @@ export class UserRequestsService {
     }
     const userRequestEntity = new UserRequestsEntity({...userRequest, ...dto});
     const updatedUserRequest = await this.userRequestsRepository.update(id, userRequestEntity);
+
+    this.rabbitClient.emit(
+      {cmd: CommandEventMap[dto.status]},
+      {
+        addresseeId: updatedUserRequest.initiatorId,
+        senderId: userId,
+        senderName: userName
+      }
+    );
+
     return updatedUserRequest;
   }
 

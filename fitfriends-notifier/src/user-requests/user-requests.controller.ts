@@ -106,7 +106,8 @@ export class UserRequestsController {
     @Req() req: RawBodyRequest<{user: Payload}>
   ) {
     const userId = req.user.sub;
-    const updatedUserRequest = await this.userRequestsService.changeUserRequestStatus(id, userId, dto);
+    const userName = req.user.userName;
+    const updatedUserRequest = await this.userRequestsService.changeUserRequestStatus(id, userId, userName, dto);
     return fillObject(UserRequestRdo, updatedUserRequest);
   }
 
