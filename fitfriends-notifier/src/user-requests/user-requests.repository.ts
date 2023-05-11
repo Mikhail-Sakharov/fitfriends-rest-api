@@ -19,8 +19,12 @@ export class UserRequestsRepository implements CRUDRepository<UserRequestsEntity
     return await this.userRequestsModel.findById(id);
   }
 
-  public async find(userId: string): Promise<UserRequest[]> {
+  public async findIncoming(userId: string): Promise<UserRequest[]> {
     return await this.userRequestsModel.find({userId});
+  }
+
+  public async findOutgoing(userId: string): Promise<UserRequest[]> {
+    return await this.userRequestsModel.find().where({initiatorId: userId});
   }
 
   public async update(id: string, item: UserRequestsEntity): Promise<UserRequest> {

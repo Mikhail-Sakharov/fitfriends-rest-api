@@ -12,7 +12,8 @@ describe('UserRequestsController', () => {
     provide: UserRequestsService,
     useFactory: () => ({
       createUserRequest: jest.fn(),
-      getUserRequests: jest.fn(),
+      getIncomingRequests: jest.fn(),
+      getOutgoingRequests: jest.fn(),
       changeUserRequestStatus: jest.fn(),
       deleteUserRequest: jest.fn()
     })
@@ -49,7 +50,7 @@ describe('UserRequestsController', () => {
     expect(userRequestsService.createUserRequest).toHaveBeenCalled();
   });
 
-  it("calling getUserRequests method", () => {
+  it("calling getIncomingRequests method", () => {
     const req = {user: {
       sub: '',
       userName: '',
@@ -57,8 +58,20 @@ describe('UserRequestsController', () => {
       email: ''
     }};
 
-    userRequestsController.getUserRequests(req);
-    expect(userRequestsService.getUserRequests).toHaveBeenCalled();
+    userRequestsController.getIncomingRequests(req);
+    expect(userRequestsService.getIncomingRequests).toHaveBeenCalled();
+  });
+
+  it("calling getOutgoingRequests method", () => {
+    const req = {user: {
+      sub: '',
+      userName: '',
+      userRole: UserRole.User,
+      email: ''
+    }};
+
+    userRequestsController.getOutgoingRequests(req);
+    expect(userRequestsService.getOutgoingRequests).toHaveBeenCalled();
   });
 
   it("calling changeUserRequestStatus method", () => {

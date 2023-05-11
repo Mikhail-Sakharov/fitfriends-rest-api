@@ -16,8 +16,13 @@ export class UserRequestsService {
     return userRequest;
   }
 
-  public async getUserRequests(userId: string) {
-    const userRequests = await this.userRequestsRepository.find(userId);
+  public async getIncomingRequests(userId: string) {
+    const userRequests = await this.userRequestsRepository.findIncoming(userId);
+    return userRequests;
+  }
+
+  public async getOutgoingRequests(userId: string) {
+    const userRequests = await this.userRequestsRepository.findOutgoing(userId);
     return userRequests;
   }
 

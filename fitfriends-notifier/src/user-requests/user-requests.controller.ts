@@ -59,17 +59,34 @@ export class UserRequestsController {
   @ApiResponse({
     type: UserRequestRdo,
     status: HttpStatus.OK,
-    description: 'The list of personal training requests was received'
+    description: 'The list of incoming training requests was received'
   })
-  // СПИСОК ЗАЯВОК
+  // СПИСОК ВХОДЯЩИХ ЗАЯВОК
   @UseGuards(AccessTokenGuard)
-  @Get('')
+  @Get('incoming')
   @HttpCode(HttpStatus.OK)
-  public async getUserRequests(
+  public async getIncomingRequests(
     @Req() req: RawBodyRequest<{user: Payload}>
   ) {
     const userId = req.user.sub;
-    const userRequests = await this.userRequestsService.getUserRequests(userId);
+    const userRequests = await this.userRequestsService.getIncomingRequests(userId);
+    return fillObject(UserRequestRdo, userRequests);
+  }
+
+  @ApiResponse({
+    type: UserRequestRdo,
+    status: HttpStatus.OK,
+    description: 'The list of incoming training requests was received'
+  })
+  // СПИСОК ИСХОДЯЩИХ ЗАЯВОК
+  @UseGuards(AccessTokenGuard)
+  @Get('outgoing')
+  @HttpCode(HttpStatus.OK)
+  public async getOutgoingRequests(
+    @Req() req: RawBodyRequest<{user: Payload}>
+  ) {
+    const userId = req.user.sub;
+    const userRequests = await this.userRequestsService.getOutgoingRequests(userId);
     return fillObject(UserRequestRdo, userRequests);
   }
 

@@ -12,6 +12,11 @@ services:
       - 27019:27017
     volumes:
       - ./db:/data/db
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
 
   mongodb-express-fitfriends-service:
     image: mongo-express
@@ -23,3 +28,8 @@ services:
       ME_CONFIG_MONGODB_ADMINUSERNAME: admin
       ME_CONFIG_MONGODB_ADMINPASSWORD: test
       ME_CONFIG_MONGODB_URL: mongodb://admin:test@mongodb-fitfriends-service:27017/
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 500M
