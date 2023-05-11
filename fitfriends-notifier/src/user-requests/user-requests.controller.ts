@@ -44,15 +44,16 @@ export class UserRequestsController {
     @Body() dto: CreateUserRequestDto,
     @Req() req: RawBodyRequest<{user: Payload}>
   ) {
-    const role = req.user.userRole;
-    if (role !== UserRole.User) {
+    const userName = req.user.userName;
+    const userRole = req.user.userRole;
+    if (userRole !== UserRole.User) {
       throw new ForbiddenException('Only for regular Users');
     }
     const initiatorId = req.user.sub;
     if (initiatorId === dto.userId) {
       throw new ConflictException('The user ID can not be equal to the initiator ID!');
     }
-    const userRequest = await this.userRequestsService.createUserRequest({...dto, initiatorId});
+    const userRequest = await this.userRequestsService.createUserRequest({...dto, initiatorId, userName});
     return fillObject(UserRequestRdo, userRequest);
   }
 

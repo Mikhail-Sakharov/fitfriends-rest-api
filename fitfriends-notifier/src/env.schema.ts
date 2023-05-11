@@ -23,6 +23,8 @@ export default Joi.object({
   RABBIT_USER: Joi.string().required(),
   RABBIT_PASSWORD: Joi.string().required(),
   RABBIT_USERS_SERVICE_QUEUE: Joi.string().required(),
+  RABBIT_TRAININGS_SERVICE_QUEUE: Joi.string().required(),
+  RABBIT_NOTIFIER_SERVICE_QUEUE: Joi.string().required(),
   ACCESS_TOKEN_SECRET: Joi.string().required(),
   MAIL_SMTP_HOST: Joi.string().default(DEFAULT_SMTP_HOST).required(),
   MAIL_SMTP_PORT: Joi.number().port().default(DEFAULT_SMTP_PORT).required(),
