@@ -1,4 +1,4 @@
-import {BadRequestException, ForbiddenException, Injectable} from '@nestjs/common';
+import {BadRequestException, ConflictException, ForbiddenException, Injectable} from '@nestjs/common';
 import {UserRequestsRepository} from './user-requests.repository';
 import {CreateUserRequestDto} from 'src/dto/create-user-request.dto';
 import {UserRequestsEntity} from './user-requests.entity';
@@ -11,6 +11,22 @@ export class UserRequestsService {
   ) {}
 
   public async createUserRequest(requestData: CreateUserRequestDto & {initiatorId: string}) {
+    const currentRequestInitiatorId = requestData.initiatorId;
+    const currentRequestAddresseeId = requestData.userId;
+
+    const allOutgoingRequests = await this.getOutgoingRequests(currentRequestInitiatorId);
+    const allIncomingRequests = await this.getIncomingRequests(currentRequestInitiatorId);
+
+    const isAlreadyInOutgoings = allOutgoingRequests.some((request) => request.userId === currentRequestAddresseeId);
+    const isAlreadyInIncomings = allIncomingRequests.some((request) => request.initiatorId === currentRequestAddresseeId);
+
+    if (isAlreadyInOutgoings) {
+      throw new ConflictException('The request of the same type is already has been sent to the user');
+    }
+    if (isAlreadyInIncomings) {
+      throw new ConflictException('The request of the same type is already has been sent to you');
+    }
+
     const userRequestEntity = new UserRequestsEntity(requestData);
     const userRequest = await this.userRequestsRepository.create(userRequestEntity);
     return userRequest;
