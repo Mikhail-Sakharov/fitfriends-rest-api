@@ -13,6 +13,7 @@ describe('GymsController', () => {
       getGyms: jest.fn(),
       getCatalog: jest.fn(),
       addGymToFavorites: jest.fn(),
+      showGym: jest.fn(),
       removeGymFromFavorites: jest.fn(),
       getFavoriteGyms: jest.fn(),
       seed: jest.fn()
@@ -62,6 +63,13 @@ describe('GymsController', () => {
 
     gymsController.getFavoriteGyms(req);
     expect(gymsService.getFavoriteGyms).toHaveBeenCalled();
+  });
+
+  it("calling showGym method", () => {
+    const id = '';
+
+    gymsController.showGym(id);
+    expect(gymsService.showGym).toHaveBeenCalled();
   });
 
   it("calling addGymToFavorites method", () => {

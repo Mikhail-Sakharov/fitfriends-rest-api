@@ -70,6 +70,22 @@ export class GymsController {
   }
 
   @ApiResponse({
+    type: GymRdo,
+    status: HttpStatus.OK,
+    description: 'The detailed info about the gym was received'
+  })
+  // ПОДРОБНАЯ ИНФОРМАЦИЯ О ЗАЛЕ
+  @UseGuards(AccessTokenGuard)
+  @Get(':id')
+  @HttpCode(HttpStatus.OK)
+  public async showGym(
+    @Param('id') id: string
+  ) {
+    const gym = await this.gymsService.showGym(id);
+    return fillObject(GymRdo, gym);
+  }
+
+  @ApiResponse({
     type: FavoriteGymRdo,
     status: HttpStatus.CREATED,
     description: 'The gym was added to the favorites'

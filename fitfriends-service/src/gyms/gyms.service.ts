@@ -20,6 +20,11 @@ export class GymsService {
     return await this.gymsRepository.create(gymEntity);
   }
 
+  public async showGym(id: string) {
+    const gym = await this.gymsRepository.findById(id);
+    return gym;
+  }
+
   public async getGyms() {
     const gyms = await this.gymsRepository.find();
     return gyms;
