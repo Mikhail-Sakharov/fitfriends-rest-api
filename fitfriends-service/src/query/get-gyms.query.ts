@@ -1,3 +1,4 @@
+import {Transform} from 'class-transformer';
 import {IsBoolean, IsEnum, IsNumberString, IsOptional} from 'class-validator';
 import {ClientSortOrder, SortType} from 'src/types/sort.types';
 
@@ -18,6 +19,14 @@ export class GetGymsQuery {
 
   @IsOptional()
   @IsBoolean()
+  @Transform(({obj}) => {
+    switch(obj.isVerified) {
+      case 'true':
+        return true;
+      case 'false':
+        return false;
+    }
+  })
   public isVerified?: boolean;
 
   @IsOptional()
