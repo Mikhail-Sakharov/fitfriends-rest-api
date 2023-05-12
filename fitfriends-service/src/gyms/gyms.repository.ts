@@ -26,7 +26,7 @@ export class GymsRepository implements CRUDRepository<GymsEntity, string, Gym> {
     return await this.gymsModel.find();
   }
 
-  public async getCatalog(query: GetGymsQuery): Promise<Gym[]> {
+  public async getCatalog(query?: GetGymsQuery): Promise<Gym[]> {
     const {
       minPrice,
       maxPrice,
@@ -38,6 +38,10 @@ export class GymsRepository implements CRUDRepository<GymsEntity, string, Gym> {
       page,
       limit
     } = query;
+
+    /* if (!query) {
+      return await this.gymsModel.find();
+    } */
 
     return await this.gymsModel
       .find()

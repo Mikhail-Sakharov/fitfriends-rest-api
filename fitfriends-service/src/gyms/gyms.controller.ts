@@ -37,8 +37,8 @@ export class GymsController {
   @Get('')
   @HttpCode(HttpStatus.OK)
   public async getGyms(
-    @Query() query: GetGymsQuery,
-    @Req() req: RawBodyRequest<{user: Payload}>
+    @Req() req: RawBodyRequest<{user: Payload}>,
+    @Query() query?: GetGymsQuery
   ) {
     const role = req.user.userRole;
     if (role !== UserRole.User) {

@@ -48,7 +48,7 @@ describe('GymsController', () => {
       minPrice: 1000
     };
 
-    gymsController.getGyms(query, req);
+    gymsController.getGyms(req, query);
     expect(gymsService.getCatalog).toHaveBeenCalled();
   });
 

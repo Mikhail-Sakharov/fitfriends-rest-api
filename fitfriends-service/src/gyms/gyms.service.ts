@@ -25,7 +25,7 @@ export class GymsService {
     return gyms;
   }
 
-  public async getCatalog(query: GetGymsQuery) {
+  public async getCatalog(query?: GetGymsQuery) {
     const gyms = await this.gymsRepository.getCatalog(query);
     return gyms;
   }
