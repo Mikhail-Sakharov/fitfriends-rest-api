@@ -175,9 +175,12 @@ export class UsersController {
     description: 'The detailed info is received'
   })
   // ДЕТАЛЬНАЯ ИНФ О ПОЛЬЗОВАТЕЛЕ
+  @UseGuards(AccessTokenGuard)
   @Get(':id')
   @HttpCode(HttpStatus.OK)
-  public async getUser(@Param('id') id: string) {
+  public async getUser(
+    @Param('id') id: string
+  ) {
     const user = await this.usersService.getUser(id);
     return fillObject(UserRdo, user);
   }

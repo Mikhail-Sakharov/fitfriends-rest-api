@@ -24,6 +24,7 @@ export type Questionnaire = CoachQuestionnaire | UserQuestionnaire;
 export interface User {
   _id?: string;
   createdAt?: string;
+  updatedAt?: string;
   userName: string;
   email: string;
   avatarUrl?: string;

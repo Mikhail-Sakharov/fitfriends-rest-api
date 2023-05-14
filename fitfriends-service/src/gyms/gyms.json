@@ -1,42 +1,62 @@
 [
   {
-    "title": "Название зала 1",
+    "title": "Муравей",
     "location": "Петроградская",
     "features": ["бассейн", "бесплатная парковка", "детская комната"],
-    "images": ["img/image_01.png", "img/image_02.png"],
-    "description": "Описание зала",
-    "price": 2500
+    "images": [
+      "../img/content/slider-gyms/gym-01.jpg",
+      "../img/content/slider-gyms/gym-02.jpg",
+      "../img/content/slider-gyms/gym-03.jpg"
+    ],
+    "description": "Огромный зал с отдельной зоной кроссфит. Разнообразное оборудование для занятий практически любым видом спорта.",
+    "price": 1000
   },
   {
-    "title": "Название зала 2",
-    "location": "Петроградская",
-    "features": ["бассейн", "бесплатная парковка", "детская комната"],
-    "images": ["img/image_01.png", "img/image_02.png"],
-    "description": "Описание зала",
-    "price": 2500
+    "title": "World Gym",
+    "location": "Спортивная",
+    "features": ["бассейн", "бесплатная парковка"],
+    "images": [
+      "../img/content/slider-gyms/gym-01.jpg",
+      "../img/content/slider-gyms/gym-02.jpg",
+      "../img/content/slider-gyms/gym-03.jpg"
+    ],
+    "description": "Огромный зал с отдельной зоной кроссфит. Разнообразное оборудование для занятий практически любым видом спорта.",
+    "price": 1500
   },
   {
-    "title": "Название зала 3",
-    "location": "Петроградская",
+    "title": "Atmosphere Fitness",
+    "location": "Удельная",
     "features": ["бассейн", "бесплатная парковка", "детская комната"],
-    "images": ["img/image_01.png", "img/image_02.png"],
-    "description": "Описание зала",
-    "price": 2500
+    "images": [
+      "../img/content/slider-gyms/gym-01.jpg",
+      "../img/content/slider-gyms/gym-02.jpg",
+      "../img/content/slider-gyms/gym-03.jpg"
+    ],
+    "description": "Огромный зал с отдельной зоной кроссфит. Разнообразное оборудование для занятий практически любым видом спорта.",
+    "price": 4500
   },
   {
-    "title": "Название зала 4",
-    "location": "Петроградская",
-    "features": ["бассейн", "бесплатная парковка", "детская комната"],
-    "images": ["img/image_01.png", "img/image_02.png"],
-    "description": "Описание зала",
-    "price": 2500
+    "title": "Reforma",
+    "location": "Звёздная",
+    "features": ["бассейн", "детская комната"],
+    "images": [
+      "../img/content/slider-gyms/gym-01.jpg",
+      "../img/content/slider-gyms/gym-02.jpg",
+      "../img/content/slider-gyms/gym-03.jpg"
+    ],
+    "description": "Огромный зал с отдельной зоной кроссфит. Разнообразное оборудование для занятий практически любым видом спорта.",
+    "price": 7000
   },
   {
-    "title": "Название зала 5",
-    "location": "Петроградская",
-    "features": ["бассейн", "бесплатная парковка", "детская комната"],
-    "images": ["img/image_01.png", "img/image_02.png"],
-    "description": "Описание зала",
-    "price": 2500
+    "title": "World Class",
+    "location": "Пионерская",
+    "features": ["бесплатная парковка", "детская комната"],
+    "images": [
+      "../img/content/slider-gyms/gym-01.jpg",
+      "../img/content/slider-gyms/gym-02.jpg",
+      "../img/content/slider-gyms/gym-03.jpg"
+    ],
+    "description": "Огромный зал с отдельной зоной кроссфит. Разнообразное оборудование для занятий практически любым видом спорта.",
+    "price": 12500
   }
 ]

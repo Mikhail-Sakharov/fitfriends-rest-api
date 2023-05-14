@@ -25,6 +25,13 @@ export class UserRdo {
   public createdAt: string[];
 
   @ApiProperty({
+    description: 'The date a user entry was updated last time',
+    example: '2023-03-14T16:58:30.805Z'
+  })
+  @Expose()
+  public updatedAt: string[];
+
+  @ApiProperty({
     description: 'The name of a user',
     example: 'John'
   })
