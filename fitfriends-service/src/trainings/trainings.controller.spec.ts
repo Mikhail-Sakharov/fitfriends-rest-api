@@ -83,7 +83,7 @@ describe('TrainingsController', () => {
     expect(trainingsService.getTrainingsCatalog).toHaveBeenCalled();
   });
 
-  it("calling getCoachTrainings method", () => {
+  it("calling getMyTrainings method", () => {
     const req = {user: {
       sub: '',
       userName: '',
@@ -94,7 +94,14 @@ describe('TrainingsController', () => {
       minPrice: 1000
     };
 
-    trainingsController.getCoachTrainings(req, query);
+    trainingsController.getMyTrainings(req, query);
+    expect(trainingsService.findTrainings).toHaveBeenCalled();
+  });
+
+  it("calling getCoachTrainings method", () => {
+    const coachId = '';
+
+    trainingsController.getCoachTrainings(coachId);
     expect(trainingsService.findTrainings).toHaveBeenCalled();
   });
 

@@ -44,7 +44,7 @@ export class TrainingsService {
     return trainings;
   }
 
-  public async findTrainings(coachId: string, query: GetTrainingsQuery) {
+  public async findTrainings(coachId: string, query?: GetTrainingsQuery) {
     const trainings = await this.trainingsRepository.findManyByCoachId(coachId, query);
     return trainings;
   }

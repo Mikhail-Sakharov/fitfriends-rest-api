@@ -53,7 +53,7 @@ export class TrainingRepository implements CRUDRepository<TrainingEntity, string
       .limit(limit && limit <= RESPONSE_ENTITIES_MAX_COUNT ? limit : RESPONSE_ENTITIES_MAX_COUNT);
   }
 
-  public async findManyByCoachId(coachId: string, query: GetTrainingsQuery): Promise<Training[]> {
+  public async findManyByCoachId(coachId: string, query?: GetTrainingsQuery): Promise<Training[]> {
     const {
       minPrice,
       maxPrice,

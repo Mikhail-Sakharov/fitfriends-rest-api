@@ -107,16 +107,32 @@ export class TrainingsController {
     status: HttpStatus.OK,
     description: 'The list of coach trainings was received'
   })
-  // СПИСОК ТРЕНИРОВОК ОПРЕДЕЛЁННОГО ТРЕНЕРА
+  // СПИСОК МОИ ТРЕНИРОВКИ (для Тренера)
   @UseGuards(AccessTokenGuard)
   @Get('')
   @HttpCode(HttpStatus.OK)
-  public async getCoachTrainings(
+  public async getMyTrainings(
     @Req() req: RawBodyRequest<{user: Payload}>,
-    @Query() query: GetTrainingsQuery
+    @Query() query?: GetTrainingsQuery
   ) {
     const coachId = req.user.sub;
     const trainings = await this.trainingsService.findTrainings(coachId, query);
+    return fillObject(TrainingRdo, trainings);
+  }
+
+  @ApiResponse({
+    type: TrainingRdo,
+    status: HttpStatus.OK,
+    description: 'The list of coach trainings was received'
+  })
+  // СПИСОК ТРЕНИРОВОК ОПРЕДЕЛЁННОГО ТРЕНЕРА (для карточки пользователя, роль Тренер)
+  @UseGuards(AccessTokenGuard)
+  @Get('/coach/:coachId')
+  @HttpCode(HttpStatus.OK)
+  public async getCoachTrainings(
+    @Param('coachId') coachId: string
+  ) {
+    const trainings = await this.trainingsService.findTrainings(coachId);
     return fillObject(TrainingRdo, trainings);
   }
 
