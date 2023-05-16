@@ -21,7 +21,7 @@ export class TrainingRepository implements CRUDRepository<TrainingEntity, string
     return newTraining.save();
   }
 
-  public async find(query: GetTrainingsCatalogQuery) {
+  public async find(query?: GetTrainingsCatalogQuery) {
     const {
       minPrice,
       maxPrice,
@@ -39,18 +39,18 @@ export class TrainingRepository implements CRUDRepository<TrainingEntity, string
     return this.trainingModel
       .find()
       .where('price')
-        .gte(minPrice ? minPrice : TrainingPrice.MIN)
-        .lte(maxPrice ? maxPrice : TrainingPrice.MAX)
+        .gte(minPrice ?? TrainingPrice.MIN)
+        .lte(maxPrice ?? TrainingPrice.MAX)
       .where('caloriesCount')
-        .gte(minCaloriesCount ? minCaloriesCount : TrainingCaloriesCount.MIN)
-        .lte(maxCaloriesCount ? maxCaloriesCount : TrainingCaloriesCount.MAX)
+        .gte(minCaloriesCount ?? TrainingCaloriesCount.MIN)
+        .lte(maxCaloriesCount ?? TrainingCaloriesCount.MAX)
       .where('rating')
-        .gte(minRating ? minRating : ReviewRatingCount.MIN)
-        .lte(maxRating ? maxRating : ReviewRatingCount.MAX)
-      .where(trainingType ? {trainingType: {$in: trainingType.split(',')}} : {})
-      .sort({[sortType]: SortOrderMap[sortOrder]})
+        .gte(minRating ?? RATING_DEFAULT_VALUE)
+        .lte(maxRating ?? ReviewRatingCount.MAX)
+      .where(trainingType ? {type: {$in: trainingType.split(',')}} : {})
+      .sort({[sortType ?? SortType.Date]: sortOrder ? SortOrderMap[sortOrder] : SortOrder.Down})
       .skip(page > 0 ? (page - 1) * limit : 0)
-      .limit(limit ?? RESPONSE_ENTITIES_MAX_COUNT);
+      .limit(limit && limit <= RESPONSE_ENTITIES_MAX_COUNT ? limit : RESPONSE_ENTITIES_MAX_COUNT);
   }
 
   public async findManyByCoachId(coachId: string, query: GetTrainingsQuery): Promise<Training[]> {

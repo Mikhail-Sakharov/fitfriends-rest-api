@@ -122,14 +122,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDViN2U1Z
 ### Создание заказа на абонемент в зал
 POST http://localhost:5679/orders/gyms HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDM1OTEzMDgzNTg3NWRiMWExYWVhZTUiLCJlbWFpbCI6InF3ZUBxd2UucXdlIiwidXNlck5hbWUiOiLQnNC40YXQsNC40LsiLCJ1c2VyUm9sZSI6ItC_0L7Qu9GM0LfQvtCy0LDRgtC10LvRjCIsImlhdCI6MTY4MTMyMzQ4NSwiZXhwIjoxNjgxMzI0Mzg1fQ.YvgJTijNySrLWDSS7Be_jr4NvHlcFceWXh6MxjfiYBc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDViN2U1ZWQ5ZjRlY2Y3MDJiNDc2NmQiLCJlbWFpbCI6InF3ZTFAcXdlLnF3ZSIsInVzZXJOYW1lIjoi0JzQuNGF0LDQuNC7IiwidXNlclJvbGUiOiLQv9C-0LvRjNC30L7QstCw0YLQtdC70YwiLCJpYXQiOjE2ODQwOTEyMTMsImV4cCI6MTY4NDA5MjExM30.d32XJ1MIVef50rm18SkLYfYvXFIslkYalAR4ZM8cAFs
 
 {
   
-  "gymId": "6436ac8f5c2d254b7afb7df8",
-  "price": 2500,
+  "gymId": "6436ac8f5c2d254b7afb7df6",
+  "price": 1500,
   "quantity": 1,
-  "totalOrderPrice": 2500,
+  "totalOrderPrice": 1500,
   "paymentMethod": "visa"
 }
 

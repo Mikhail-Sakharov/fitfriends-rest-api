@@ -39,7 +39,7 @@ export class TrainingsService {
     return await this.trainingsRepository.create(trainingEntity);
   }
 
-  public async getTrainingsCatalog(query: GetTrainingsCatalogQuery) {
+  public async getTrainingsCatalog(query?: GetTrainingsCatalogQuery) {
     const trainings = await this.trainingsRepository.find(query);
     return trainings;
   }

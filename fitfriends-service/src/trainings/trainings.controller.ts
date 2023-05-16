@@ -92,7 +92,7 @@ export class TrainingsController {
   @HttpCode(HttpStatus.OK)
   public async getTrainingsCatalog(
     @Req() req: RawBodyRequest<{user: Payload}>,
-    @Query() query: GetTrainingsCatalogQuery
+    @Query() query?: GetTrainingsCatalogQuery
   ) {
     const role = req.user.userRole;
     if (role !== UserRole.User) {
