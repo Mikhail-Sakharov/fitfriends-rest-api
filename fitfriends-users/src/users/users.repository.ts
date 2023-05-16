@@ -22,7 +22,7 @@ export class UsersRepository
     return newUser.save();
   }
 
-  public async find(query: GetUsersQuery): Promise<User[]> {
+  public async find(query?: GetUsersQuery): Promise<User[]> {
     const {
       location,
       trainingTypes,

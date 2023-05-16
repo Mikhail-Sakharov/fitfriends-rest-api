@@ -88,7 +88,7 @@ export class UsersService {
     );
   }
 
-  public async getUsers(query: GetUsersQuery) {
+  public async getUsers(query?: GetUsersQuery) {
     return await this.usersRepository.find(query);
   }
 

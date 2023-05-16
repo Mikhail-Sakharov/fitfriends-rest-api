@@ -66,7 +66,7 @@ export class UsersController {
   @Get('')
   @HttpCode(HttpStatus.OK)
   public async getUsers(
-    @Query() query: GetUsersQuery
+    @Query() query?: GetUsersQuery
   ) {
     const users = await this.usersService.getUsers(query);
     return fillObject(UserRdo, users);
