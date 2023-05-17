@@ -43,9 +43,9 @@ export class UserPurchasesService {
     return balance;
   }
   
-  public async incrementTrainingsCount(trainingId: string, traineeId: string) {
+  /* public async incrementTrainingsCount(trainingId: string, traineeId: string) {
     await this.ordersService.incrementTrainingsCount(trainingId, traineeId);
-  }
+  } */
 
   public async incrementGymsCount(gymId: string, traineeId: string) {
     await this.ordersService.incrementGymsCount(gymId, traineeId);

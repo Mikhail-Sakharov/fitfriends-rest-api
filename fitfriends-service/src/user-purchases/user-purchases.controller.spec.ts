@@ -60,19 +60,6 @@ describe('UserPurchasesController', () => {
     expect(userPurchasesService.getBalance).toHaveBeenCalled();
   });
 
-  it("calling incrementTrainingsCount method", () => {
-    const id = '';
-    const req = {user: {
-      sub: '',
-      userName: '',
-      userRole: UserRole.User,
-      email: ''
-    }};
-
-    userPurchasesController.incrementTrainingsCount(id, req);
-    expect(userPurchasesService.incrementTrainingsCount).toHaveBeenCalled();
-  });
-
   it("calling incrementGymsCount method", () => {
     const id = '';
     const req = {user: {

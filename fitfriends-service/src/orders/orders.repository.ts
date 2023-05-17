@@ -40,6 +40,10 @@ export class OrdersRepository implements CRUDRepository<OrderEntity, string, Ord
     return await this.orderModel.findById(id).populate('trainingId');
   }
 
+  public async findByTrainingId(trainingId: string): Promise<Order | null> {
+    return await this.orderModel.findOne({trainingId}).populate('trainingId');
+  }
+
   public async update(id: string, item: OrderEntity): Promise<Order> {
     return await this.orderModel.findByIdAndUpdate(id, item.toObject(), {new: true}).populate('trainingId');
   }

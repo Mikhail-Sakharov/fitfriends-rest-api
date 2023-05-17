@@ -7,6 +7,7 @@ import {GymMembershipEntity} from './gym-membership.entity';
 import {CreateGymOrderDto} from 'src/dto/create-gym-order.dto';
 import {GymMembershipRepository} from './gym-membership.repository';
 import {GetOrdersQuery} from 'src/query/get-orders.query';
+import {Order} from 'src/types/order.interface';
 
 @Injectable()
 export class OrdersService {
@@ -37,6 +38,10 @@ export class OrdersService {
   }
 
   public async createOrder(dto: CreateOrderDto & {traineeId: string}) {
+    const existingOrder = await this.ordersRepository.findByTrainingId(dto.trainingId);
+    if (existingOrder) {
+      return await this.incrementTrainingsCount(dto, existingOrder);
+    }
     const orderEntity = new OrderEntity(dto);
     const order = await this.ordersRepository.create(orderEntity);
     return order;
@@ -82,14 +87,18 @@ export class OrdersService {
     return deactivatedOrder;
   }
 
-  public async incrementTrainingsCount(trainingId: string, traineeId: string) {
-    const trainingOrder = await this.ordersRepository.findById(trainingId);
-    if (trainingOrder.traineeId !== traineeId) {
+  public async incrementTrainingsCount(dto: CreateOrderDto & {traineeId: string}, existingOrder: Order) {
+    if (existingOrder.traineeId !== dto.traineeId) {
       throw new ForbiddenException('Access denied');
     }
-    const quantity = trainingOrder.quantity + 1;
-    const orderEntity = new OrderEntity({...trainingOrder, quantity});
-    await this.ordersRepository.update(trainingId, orderEntity);
+
+    const quantity = existingOrder.quantity + dto.quantity;
+    const totalOrderPrice = existingOrder.totalOrderPrice + dto.totalOrderPrice;
+    const paymentMethod = dto.paymentMethod;
+
+    const orderEntity = new OrderEntity({...existingOrder, quantity, totalOrderPrice, paymentMethod});
+
+    await this.ordersRepository.update(existingOrder._id, orderEntity);
   }
 
   public async incrementGymsCount(gymId: string, traineeId: string) {

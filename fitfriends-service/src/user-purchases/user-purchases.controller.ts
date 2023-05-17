@@ -54,26 +54,6 @@ export class UserPurchasesController {
 
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'The training order quantity was incremented'
-  })
-  // ИНКРЕМЕНТ КОЛИЧЕСТВА В ЗАКАЗЕ НА ТРЕНИРОВКУ (для перерасчёта баланса)
-  @UseGuards(AccessTokenGuard)
-  @Get('trainings/increment:trainingId')
-  @HttpCode(HttpStatus.OK)
-  public async incrementTrainingsCount(
-    @Param('trainingId') trainingId: string,
-    @Req() req: RawBodyRequest<{user: Payload}>
-  ) {
-    const role = req.user.userRole;
-    if (role !== UserRole.User) {
-      throw new ForbiddenException('Only for Users');
-    }
-    const traineeId = req.user.sub;
-    await this.userPurchasesService.incrementTrainingsCount(trainingId, traineeId);
-  }
-
-  @ApiResponse({
-    status: HttpStatus.OK,
     description: 'The gym order quantity was incremented'
   })
   // ИНКРЕМЕНТ КОЛИЧЕСТВА В ЗАКАЗЕ НА АБОНЕМЕНТ В ЗАЛ (для перерасчёта баланса)
