@@ -36,7 +36,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDJiMGUyM
 //===================================УВЕДОМЛЕНИЯ===================================
 
 ### Запуск рассылки
-GET http://localhost:5681/subscription HTTP/1.1
+GET http://localhost:5681/subscription/sending/start HTTP/1.1
 
 ### Подписка/отписка на новые тренировки
 GET http://localhost:5681/subscription/64359129835875db1a1aeade HTTP/1.1

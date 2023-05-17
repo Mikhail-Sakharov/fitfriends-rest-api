@@ -1,6 +1,7 @@
 import {Test, TestingModule} from '@nestjs/testing';
 import {UserRequestsRepository} from './user-requests.repository';
 import {UserRequestsService} from './user-requests.service';
+import {RABBITMQ_SERVICE} from 'src/app.constant';
 
 describe('UserRequestsService', () => {
   let userRequestsService: UserRequestsService;
@@ -20,7 +21,13 @@ describe('UserRequestsService', () => {
       providers: [
         UserRequestsService,
         UserRequestsRepository,
-        ApiUserRequestsRepositoryProvider
+        ApiUserRequestsRepositoryProvider,
+        {
+          provide: RABBITMQ_SERVICE,
+          useValue: {
+            getResult: jest.fn(),
+          },
+        }
       ],
     }).compile();
 

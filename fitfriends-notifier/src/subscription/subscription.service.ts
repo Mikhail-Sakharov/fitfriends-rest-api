@@ -8,6 +8,7 @@ import {SubscriptionRepository} from './subscription.repository';
 import {Subscriber} from 'src/types/subscriber.interface';
 import {SubscriptionEntity} from './subscription.entity';
 import {Coach} from 'src/types/coach.interface';
+import {SubscriptionStatus} from 'src/types/subscription-status.enum';
 
 @Injectable()
 export class SubscriptionService {
@@ -20,6 +21,16 @@ export class SubscriptionService {
   public async createCoach(coach: Coach) {
     const subscriptionEntity = new SubscriptionEntity(coach);
     await this.subscriptionRepository.create(subscriptionEntity);
+  }
+
+  public async getSubscriptionStatus(coachId: string, userEmail: string) {
+    const coach = await this.subscriptionRepository.findByCoachId(coachId);
+    if (!coach) {
+      throw new NotFoundException('There is no coach with the id provided');
+    }
+    const isInSubscribers = coach.subscribers.some((subscriber) => subscriber.subscriberEmail === userEmail);
+    const subscriptionStatus = isInSubscribers ? SubscriptionStatus.Subsribed : SubscriptionStatus.NotSubscribedYet;
+    return subscriptionStatus;
   }
 
   public async toggleSubscriberStatus(coachId: string, newSubscriber: Subscriber) {

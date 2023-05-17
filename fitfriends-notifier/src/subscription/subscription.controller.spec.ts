@@ -14,6 +14,7 @@ describe('SubscriptionController', () => {
     provide: SubscriptionService,
     useFactory: () => ({
       createCoach: jest.fn(),
+      getSubscriptionStatus: jest.fn(),
       toggleSubscriberStatus: jest.fn(),
       runAllQueuedTasks: jest.fn(),
       addNewTrainingMailSendTask: jest.fn()
@@ -74,6 +75,19 @@ describe('SubscriptionController', () => {
     };
     subscriptionController.createCoach(trainingData);
     expect(subscriptionService.createCoach).toHaveBeenCalled();
+  });
+
+  it("calling getSubscriptionStatus method", () => {
+    const id = '';
+    const req = {user: {
+      sub: '',
+      userName: '',
+      userRole: UserRole.User,
+      email: ''
+    }};
+
+    subscriptionController.getSubscriptionStatus(id, req);
+    expect(subscriptionService.getSubscriptionStatus).toHaveBeenCalled();
   });
 
   it("calling toggleSubscriberStatus method", () => {

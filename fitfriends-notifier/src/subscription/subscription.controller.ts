@@ -21,7 +21,7 @@ export class SubscriptionController {
     description: 'The mailing was started'
   })
   // ЗАПУСК РАССЫЛКИ
-  @Get('')
+  @Get('sending/start')
   @HttpCode(HttpStatus.OK)
   public async runAllQueuedTasks() {
     await this.subscriptionService.runAllQueuedTasks();
@@ -37,6 +37,23 @@ export class SubscriptionController {
   @EventPattern({cmd: CommandEvent.CreateCoach})
   public async createCoach(coach: Coach) {
     await this.subscriptionService.createCoach(coach);
+  }
+
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Indicates whether the user is subscribed or not'
+  })
+  // ПРОВЕРКА СТАТУСА ПОДПИСКИ
+  @UseGuards(AccessTokenGuard)
+  @Get('status/:coachId')
+  @HttpCode(HttpStatus.OK)
+  public async getSubscriptionStatus(
+    @Param('coachId') coachId: string,
+    @Req() req: RawBodyRequest<{user: Payload}>
+  ) {
+    const userEmail = req.user.email;
+    const subscriptionStatus = await this.subscriptionService.getSubscriptionStatus(coachId, userEmail);
+    return subscriptionStatus;
   }
 
   @ApiResponse({
