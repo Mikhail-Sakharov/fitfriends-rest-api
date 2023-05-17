@@ -130,9 +130,10 @@ export class TrainingsController {
   @Get('/coach/:coachId')
   @HttpCode(HttpStatus.OK)
   public async getCoachTrainings(
-    @Param('coachId') coachId: string
+    @Param('coachId') coachId: string,
+    @Query() query?: GetTrainingsQuery
   ) {
-    const trainings = await this.trainingsService.findTrainings(coachId);
+    const trainings = await this.trainingsService.findTrainings(coachId, query);
     return fillObject(TrainingRdo, trainings);
   }
 

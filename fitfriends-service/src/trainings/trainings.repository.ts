@@ -54,19 +54,17 @@ export class TrainingRepository implements CRUDRepository<TrainingEntity, string
   }
 
   public async findManyByCoachId(coachId: string, query?: GetTrainingsQuery): Promise<Training[]> {
-    const {
-      minPrice,
-      maxPrice,
-      minCaloriesCount,
-      maxCaloriesCount,
-      minRating,
-      maxRating,
-      duration,
-      sortType,
-      sortOrder,
-      page,
-      limit
-    } = query;
+    const minPrice = query && query.minPrice;
+    const maxPrice = query && query.maxPrice;
+    const minCaloriesCount = query && query.minCaloriesCount;
+    const maxCaloriesCount = query && query.maxCaloriesCount;
+    const minRating = query && query.minRating;
+    const maxRating = query && query.maxRating;
+    const duration = query && query.duration;
+    const sortType = query && query.sortType;
+    const sortOrder = query && query.sortOrder;
+    const page = query && query.page;
+    const limit = query && query.limit;
 
     return this.trainingModel
       .find({coachId})
