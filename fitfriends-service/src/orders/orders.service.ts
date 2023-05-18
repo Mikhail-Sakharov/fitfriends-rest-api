@@ -96,7 +96,13 @@ export class OrdersService {
     const totalOrderPrice = existingOrder.totalOrderPrice + dto.totalOrderPrice;
     const paymentMethod = dto.paymentMethod;
 
-    const orderEntity = new OrderEntity({...existingOrder, quantity, totalOrderPrice, paymentMethod});
+    const orderEntity = new OrderEntity({
+      ...existingOrder,
+      quantity,
+      totalOrderPrice,
+      paymentMethod,
+      isCompleted: false
+    });
 
     await this.ordersRepository.update(existingOrder._id, orderEntity);
   }
@@ -112,17 +118,18 @@ export class OrdersService {
   }
 
   public async decrementTrainingsCount(trainingId: string, traineeId: string) {
-    const trainingOrder = await this.ordersRepository.findById(trainingId);
+    const trainingOrder = await this.ordersRepository.findByTrainingId(trainingId);
     if (trainingOrder.traineeId !== traineeId) {
       throw new ForbiddenException('Access denied');
     }
-    if (trainingOrder.quantity > 0) {
+    if (trainingOrder.quantity > 1) {
       const quantity = trainingOrder.quantity - 1;
       const orderEntity = new OrderEntity({...trainingOrder, quantity});
-      await this.ordersRepository.update(trainingId, orderEntity);
-    } else {
-      const orderEntity = new OrderEntity({...trainingOrder, isCompleted: true});
-      await this.ordersRepository.update(trainingId, orderEntity);
+      await this.ordersRepository.update(trainingOrder._id, orderEntity);
+    } else if (trainingOrder.quantity === 1) {
+      const quantity = trainingOrder.quantity - 1;
+      const orderEntity = new OrderEntity({...trainingOrder, isCompleted: true, quantity});
+      await this.ordersRepository.update(trainingOrder._id, orderEntity);
     }
   }
 

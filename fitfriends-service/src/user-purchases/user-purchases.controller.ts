@@ -78,7 +78,7 @@ export class UserPurchasesController {
   })
   // ДЕКРЕМЕНТ КОЛИЧЕСТВА В ЗАКАЗЕ НА ТРЕНИРОВКУ (для перерасчёта баланса)
   @UseGuards(AccessTokenGuard)
-  @Get('trainings/decrement:trainingId')
+  @Get('trainings/decrement/:trainingId')
   @HttpCode(HttpStatus.OK)
   public async decrementTrainingsCount(
     @Param('trainingId') trainingId: string,

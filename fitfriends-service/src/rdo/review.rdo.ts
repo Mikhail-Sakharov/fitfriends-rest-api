@@ -15,6 +15,12 @@ export class ReviewRdo {
   public userId: string;
 
   @Expose()
+  public userName: string;
+
+  @Expose()
+  public userAvatarPath: string;
+
+  @Expose()
   public text: string;
 
   @Expose()
