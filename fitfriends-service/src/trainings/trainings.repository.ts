@@ -9,6 +9,7 @@ import {TrainingEntity} from './training.entity';
 import {TrainingModel} from './training.model';
 import {GetTrainingsCatalogQuery} from 'src/query/get-trainings-catalog.query';
 import {RATING_DEFAULT_VALUE, RESPONSE_ENTITIES_MAX_COUNT, ReviewRatingCount, TrainingCaloriesCount, TrainingPrice} from 'src/app.constant';
+import {GetRecommendedTrainingsQuery} from 'src/query/get-recommended-trainings.query';
 
 @Injectable()
 export class TrainingRepository implements CRUDRepository<TrainingEntity, string, Training> {
@@ -51,6 +52,80 @@ export class TrainingRepository implements CRUDRepository<TrainingEntity, string
       .sort({[sortType ?? SortType.Date]: sortOrder ? SortOrderMap[sortOrder] : SortOrder.Down})
       .skip(page > 0 ? (page - 1) * limit : 0)
       .limit(limit && limit <= RESPONSE_ENTITIES_MAX_COUNT ? limit : RESPONSE_ENTITIES_MAX_COUNT);
+  }
+
+  public async findRecommended(query?: GetRecommendedTrainingsQuery) {
+    const {
+      minCaloriesCount,
+      maxCaloriesCount,
+      duration,
+      trainingType,
+      trainingLevel,
+      sortType,
+      sortOrder,
+      page,
+      limit
+    } = query;
+
+    const firstRecommendedTrainingsQueue = await this.trainingModel
+      .find()
+      .where('caloriesCount')
+        .gte(minCaloriesCount ?? TrainingCaloriesCount.MIN)
+        .lte(maxCaloriesCount ?? TrainingCaloriesCount.MAX)
+      .where(duration ? {duration: {$in: duration.split(',')}} : {})
+      .where(trainingType ? {type: {$in: trainingType.split(',')}} : {})
+      .where(trainingLevel ? {level: {$in: trainingLevel.split(',')}} : {})
+      .sort({[sortType ?? SortType.Date]: sortOrder ? SortOrderMap[sortOrder] : SortOrder.Down})
+      .skip(page > 0 ? (page - 1) * limit : 0)
+      .limit(limit && limit <= RESPONSE_ENTITIES_MAX_COUNT ? limit : RESPONSE_ENTITIES_MAX_COUNT);
+
+    const secondRecommendedTrainingsQueue = await this.trainingModel
+      .find()
+      .where(trainingType ? {type: {$in: trainingType.split(',')}} : {})
+      .sort({[sortType ?? SortType.Date]: sortOrder ? SortOrderMap[sortOrder] : SortOrder.Down})
+      .skip(page > 0 ? (page - 1) * limit : 0)
+      .limit(limit && limit <= RESPONSE_ENTITIES_MAX_COUNT ? limit : RESPONSE_ENTITIES_MAX_COUNT);
+
+    const thirdRecommendedTrainingsQueue = await this.trainingModel
+      .find()
+      .where(trainingLevel ? {level: {$in: trainingLevel.split(',')}} : {})
+      .sort({[sortType ?? SortType.Date]: sortOrder ? SortOrderMap[sortOrder] : SortOrder.Down})
+      .skip(page > 0 ? (page - 1) * limit : 0)
+      .limit(limit && limit <= RESPONSE_ENTITIES_MAX_COUNT ? limit : RESPONSE_ENTITIES_MAX_COUNT);
+
+    const forthRecommendedTrainingsQueue = await this.trainingModel
+      .find()
+      .where('caloriesCount')
+        .gte(minCaloriesCount ?? TrainingCaloriesCount.MIN)
+        .lte(maxCaloriesCount ?? TrainingCaloriesCount.MAX)
+      .sort({[sortType ?? SortType.Date]: sortOrder ? SortOrderMap[sortOrder] : SortOrder.Down})
+      .skip(page > 0 ? (page - 1) * limit : 0)
+      .limit(limit && limit <= RESPONSE_ENTITIES_MAX_COUNT ? limit : RESPONSE_ENTITIES_MAX_COUNT);
+
+    const fifthRecommendedTrainingsQueue = await this.trainingModel
+      .find()
+      .where(duration ? {duration: {$in: duration.split(',')}} : {})
+      .sort({[sortType ?? SortType.Date]: sortOrder ? SortOrderMap[sortOrder] : SortOrder.Down})
+      .skip(page > 0 ? (page - 1) * limit : 0)
+      .limit(limit && limit <= RESPONSE_ENTITIES_MAX_COUNT ? limit : RESPONSE_ENTITIES_MAX_COUNT);
+
+    const allQueues = [
+      ...firstRecommendedTrainingsQueue,
+      ...secondRecommendedTrainingsQueue,
+      ...thirdRecommendedTrainingsQueue,
+      ...forthRecommendedTrainingsQueue,
+      ...fifthRecommendedTrainingsQueue
+    ];
+
+    let allUniqueRecommendedTrainingsIds = Array.from(new Set(allQueues.map((training) => training._id.toString())));
+
+    const allUniqueTraining = allQueues.filter((training) => {
+      const filteredTrainingCondition = allUniqueRecommendedTrainingsIds.includes(training.id);
+      allUniqueRecommendedTrainingsIds = [...allUniqueRecommendedTrainingsIds].filter((id) => id !== training.id);
+      return filteredTrainingCondition;
+    });
+
+    return allUniqueTraining;
   }
 
   public async findManyByCoachId(coachId: string, query?: GetTrainingsQuery): Promise<Training[]> {

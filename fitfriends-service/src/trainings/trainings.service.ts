@@ -9,6 +9,7 @@ import {RABBITMQ_SERVICE} from 'src/app.constant';
 import {ClientProxy} from '@nestjs/microservices';
 import {CommandEvent} from 'src/types/command-event.enum';
 import {GetTrainingsCatalogQuery} from 'src/query/get-trainings-catalog.query';
+import {GetRecommendedTrainingsQuery} from 'src/query/get-recommended-trainings.query';
 
 @Injectable()
 export class TrainingsService {
@@ -44,6 +45,11 @@ export class TrainingsService {
     return trainings;
   }
 
+  public async getRecommendedTrainings(query?: GetRecommendedTrainingsQuery) {
+    const trainings = await this.trainingsRepository.findRecommended(query);
+    return trainings;
+  }
+
   public async findTrainings(coachId: string, query?: GetTrainingsQuery) {
     const trainings = await this.trainingsRepository.findManyByCoachId(coachId, query);
     return trainings;
@@ -72,7 +78,7 @@ export class TrainingsService {
       throw new NotFoundException('No trainings found with such id');
     }
     const currentTrainingRating = training.rating;
-    const rating = (currentTrainingRating * currentReviewsCount + currentReviewRating)/(currentReviewsCount + 1);
+    const rating = +((currentTrainingRating * currentReviewsCount + currentReviewRating)/(currentReviewsCount + 1)).toFixed(1);
     const updatedTrainingEntity = new TrainingEntity({...training, rating});
     await this.trainingsRepository.update(trainingId, updatedTrainingEntity);
   }

@@ -31,6 +31,7 @@ import {Payload} from 'src/types/payload.interface';
 import {TrainingsService} from './trainings.service';
 import {UserRole} from 'src/types/user-role.enum';
 import {GetTrainingsCatalogQuery} from 'src/query/get-trainings-catalog.query';
+import {GetRecommendedTrainingsQuery} from 'src/query/get-recommended-trainings.query';
 
 @ApiTags('trainings')
 @Controller('trainings')
@@ -100,6 +101,27 @@ export class TrainingsController {
     }
     const catalog = await this.trainingsService.getTrainingsCatalog(query);
     return fillObject(TrainingRdo, catalog);
+  }
+
+  @ApiResponse({
+    type: TrainingRdo,
+    status: HttpStatus.OK,
+    description: 'The list of recommended trainings was received'
+  })
+  // ПОДБОРКА ТРЕНИРОВОК (СПИСОК РЕКОМЕНДОВАННЫХ)
+  @UseGuards(AccessTokenGuard)
+  @Get('recommended')
+  @HttpCode(HttpStatus.OK)
+  public async getRecommendedTrainings(
+    @Req() req: RawBodyRequest<{user: Payload}>,
+    @Query() query?: GetRecommendedTrainingsQuery
+  ) {
+    const role = req.user.userRole;
+    if (role !== UserRole.User) {
+      throw new ForbiddenException('Only for Users');
+    }
+    const recommendedTrainings = await this.trainingsService.getRecommendedTrainings(query);
+    return fillObject(TrainingRdo, recommendedTrainings);
   }
 
   @ApiResponse({
