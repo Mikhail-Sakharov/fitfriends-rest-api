@@ -30,6 +30,8 @@ import {getFileInterceptorOptions} from 'src/config/multer.config';
 import {AVATAR_MAX_SIZE, AVATAR_URL_REG_EXP, CERTIFICATE_URL_REG_EXP, UPLOAD_DIRECTORY_REG_EXP} from 'src/app.constant';
 import {GetUsersQuery} from 'src/query/get-users.query';
 import {DeleteCertificateQuery} from 'src/query/delete-certificate.query';
+import {CoachQuestionnaire, UserQuestionnaire} from 'src/types/user.interface';
+import {UserRole} from 'src/types/user-role.enum';
 
 @ApiTags('users')
 @Controller('users')
@@ -69,6 +71,19 @@ export class UsersController {
     @Query() query?: GetUsersQuery
   ) {
     const users = await this.usersService.getUsers(query);
+  
+    if (query && query.isReadyForTraining === true) {
+      const lookForCompanyUsers = users
+        .filter((user) => user.userRole === UserRole.User)
+        .filter((user) => (user.questionnaire as UserQuestionnaire).isReadyToGetTrained === true);
+
+      const lookForCompanyCoaches = users
+        .filter((coach) => coach.userRole === UserRole.Coach)
+        .filter((coach) => (coach.questionnaire as CoachQuestionnaire).isReadyToTrain === true);
+
+      return fillObject(UserRdo, [...lookForCompanyUsers, ...lookForCompanyCoaches]);
+    }
+  
     return fillObject(UserRdo, users);
   }
 

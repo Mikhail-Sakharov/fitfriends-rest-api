@@ -2,7 +2,8 @@ export enum SortType {
   Date = 'createdAt',
   Price = 'price',
   Quantity = 'totalSoldQuantity',
-  AmountOfMoney = 'totalSoldAmountOfMoney'
+  AmountOfMoney = 'totalSoldAmountOfMoney',
+  Rating = 'rating'
 }
 
 export enum SortOrder {
