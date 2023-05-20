@@ -2,12 +2,18 @@ import {Document} from 'mongoose';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {FoodDiary} from 'src/types/food-diary.interface';
 import {MealType} from 'src/types/meal-type.enum';
+import {WeekDay} from 'src/types/week-day.enum';
 
 @Schema({
   collection: 'food-diary', 
   timestamps: true,
 })
 export class FoodDiaryModel extends Document implements FoodDiary {
+  @Prop({
+    required: true
+  })
+  weekDay: WeekDay;
+
   @Prop({
     required: true
   })

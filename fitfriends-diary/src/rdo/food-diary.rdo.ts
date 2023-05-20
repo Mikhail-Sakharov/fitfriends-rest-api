@@ -1,6 +1,7 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {Expose, Transform} from 'class-transformer';
 import {MealType} from 'src/types/meal-type.enum';
+import {WeekDay} from 'src/types/week-day.enum';
 
 export class FoodDiaryRdo {
   @ApiProperty({
@@ -17,6 +18,13 @@ export class FoodDiaryRdo {
   })
   @Expose()
   public createdAt: string[];
+
+  @ApiProperty({
+    description: 'The day of a week the diary was created for',
+    example: WeekDay.Friday
+  })
+  @Expose()
+  public weekDay: WeekDay;
 
   @ApiProperty({
     description: 'The unique MongoDB ID of the user who has created the diary',
