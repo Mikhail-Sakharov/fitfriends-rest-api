@@ -1,6 +1,5 @@
 import {ApiProperty} from '@nestjs/swagger';
 import {Expose, Transform} from 'class-transformer';
-import {Duration} from 'src/types/duration.enum';
 
 export class TrainingsDiaryRdo {
   @ApiProperty({
@@ -16,7 +15,7 @@ export class TrainingsDiaryRdo {
     example: '2023-03-14T16:58:30.805Z'
   })
   @Expose()
-  public createdAt: string[];  
+  public createdAt: string;  
 
   @ApiProperty({
     description: 'The Mongo ID of the respective training in the DB',
@@ -48,8 +47,8 @@ export class TrainingsDiaryRdo {
 
   @ApiProperty({
     description: 'Training duration',
-    example: '30-50 мин'
+    example: 10
   })
   @Expose()
-  public duration: Duration;
+  public duration: number;
 }

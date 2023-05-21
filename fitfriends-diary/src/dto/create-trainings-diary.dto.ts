@@ -1,7 +1,6 @@
 import {ApiProperty} from '@nestjs/swagger';
-import {IsEnum, IsMongoId, IsNumber, IsString, Max, MaxLength, Min, MinLength} from 'class-validator';
+import {IsMongoId, IsNumber, IsString, Max, MaxLength, Min, MinLength} from 'class-validator';
 import {TrainingCaloriesCount, TrainingTitleLength} from 'src/app.constant';
-import {Duration} from 'src/types/duration.enum';
 
 export class CreateTrainingsDiaryDto {
   @ApiProperty({
@@ -31,8 +30,8 @@ export class CreateTrainingsDiaryDto {
 
   @ApiProperty({
     description: 'Training duration',
-    example: '30-50 мин'
+    example: 10
   })
-  @IsEnum(Duration)
-  public duration: Duration;
+  @IsNumber()
+  public duration: number;
 }
