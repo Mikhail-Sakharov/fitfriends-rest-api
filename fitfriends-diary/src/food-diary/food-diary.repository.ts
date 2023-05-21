@@ -5,6 +5,7 @@ import {CRUDRepository} from 'src/types/crud-repository.interface';
 import {FoodDiary} from 'src/types/food-diary.interface';
 import {FoodDiaryEntity} from './food-diary.entity';
 import {FoodDiaryModel} from './food-diary.model';
+import {getCurrentWeekRange} from 'common/helpers';
 
 @Injectable()
 export class FoodDiaryRepository implements CRUDRepository<FoodDiaryEntity, string, FoodDiary> {
@@ -18,7 +19,16 @@ export class FoodDiaryRepository implements CRUDRepository<FoodDiaryEntity, stri
   }
 
   public async find(userId: string): Promise<FoodDiary[]> {
-    return await this.foodDiaryModel.find({userId});
+    const range = getCurrentWeekRange();
+
+    return await this.foodDiaryModel
+      .find({userId})
+      .where({
+        'createdAt': {
+          $gte: range.startDate, 
+          $lt: range.endDate
+        }
+      });
   }
 
   public async findById(id: string): Promise<FoodDiary | null> {
